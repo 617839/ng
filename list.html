@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>列表</title>
+<link href="assets/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="assets/css/visual.css" rel="stylesheet" type="text/css" media="all" />
+<script src="assets/js/library/jquery.min.js" type="text/javascript"></script>
+<script src="assets/js/library/d3.min.js" type="text/javascript"></script>
+<script src="assets/js/library/template.js" type="text/javascript"></script>
+<script src="data/33.js" type="text/javascript"></script>
+<script src="assets/js/help.js" type="text/javascript"></script>
+<script src="assets/js/doc.js" type="text/javascript"></script>
+<script src="assets/js/init.js" type="text/javascript"></script>
+<style>
+uls{font: 14px/2 "Helvetica Neue",Helvetica,Arial,sans-serif;
+font-family: Arial, 'Microsoft Yahei', Simsun, sans-serif;}
+</style>
+</head>
+<body>
+<aside>
+<button data-type="upMarginRef" class="current">上间隔</button>
+<button data-type="downMarginRef">下间隔</button>
+<button data-type="singleDigitRef">数尾</button>
+</aside>
+<div class="container">
+<div class="title"></div>
+<ul class="content"></ul>
+</div>
+
+<script>
+	var view = function(data) {
+		
+		var m = 40;
+		var h = 20;
+		
+		//////////////////////////////////////////////////
+		
+		var i = d3.select('.title').selectAll('i')
+		.data(d3.range(0, 36));
+		
+		i.enter()
+		.append('i');
+		
+		i.text(function(d) {
+					return d;
+				})
+		.style('left', function(d) {
+					return (d) * m + (d + 1) * 1 + 'px';
+				});
+		
+		//////////////////////////////////////////////////
+		
+		var li = d3.select(".content").selectAll("li")
+		.data(data);
+		
+		li.enter().append("li");
+		
+		//li.style('top', function(d, i) {
+			//return i * h + (i + 1) * 1 + 'px';
+		//});
+
+		li.exit().remove();
+		
+		//////////////////////////////////////////////////
+		
+		var p = li.selectAll('p')
+		.data(d3.values);
+		
+		p.enter().append("p");
+		
+		p.transition().duration(500)
+		.style('left', function(d, i) {
+			return i * 8*41 + 'px';
+		});
+		
+		p.exit().remove();
+		
+		//////////////////////////////////////////////////
+		
+		var em = p.selectAll('em')
+		.data(function(d) {
+			return d;
+		});
+		
+		em.enter().append("em");
+		
+		em.text(function(d) {
+			return d;
+		})
+		.transition().duration(500)
+		.style('left', function(d, i) {
+			return i * m + (i + 1) * 1 + 'px';
+		});
+		
+		em.exit().remove();		
+		
+		$('body').scrollTop((data.length-20) * 21);
+	};
+	
+	////////////////////////////////////////////
+	
+	$('aside button').click(function(){
+		var th = $(this);
+		var type = th.attr('data-type');
+		var data = NGGLOBAL[type].slice();
+		
+		th.addClass('current');
+		th.siblings().removeClass('current');
+		
+		$('title').text('列表'+type);
+		
+		data = groupRefListModel(data);
+		view(data);		
+	});
+	
+	////////////////////////////////////////////
+	//init	
+
+	var type = getUrlParam('type') || 'upMarginRef';
+	var push = getUrlParam('push');
+
+	var data = NGGLOBAL[type].slice();
+	
+	if(push){
+		data.push(JSON.parse(push));
+	}
+	
+	data = groupRefListModel(data);
+	
+	view(data);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</script>
+</body>
+</html>
