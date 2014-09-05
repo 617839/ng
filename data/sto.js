@@ -91,6 +91,12 @@ module.exports = {
 
         ////////////////////////////////////////////////////////////////////////////////////////
 
+        var bMargin = [];
+
+        for(var i in bsto){
+            bMargin[i] = bsto[i];
+        }
+
 
         var reds = [];
         var prev = [];
@@ -186,6 +192,7 @@ module.exports = {
             singleDigitRef: singleDigitRef,
             colMap: colMap,
             redMargin: reds,
+            bMargin: bMargin,
             downMarginRef: prev,
             next: next,
             upMarginRef: up
