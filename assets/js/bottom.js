@@ -19,6 +19,12 @@
     });
 
 
+    ctrls.controller('bMarginCtrl', function ($scope) {
+
+        $scope.bMarginList = window.bMargin;
+
+    });
+
 
     ctrls.controller('bottomCtrl', function ($scope) {
 
