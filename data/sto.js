@@ -16,6 +16,8 @@ module.exports = {
         var bsto = {};
         var rtop = [];
 
+        var colCountRef = [];
+
         for (var i = 0, ngl = ng.length; i < ngl; i++) {
 
             var num = ng[i];
@@ -32,6 +34,10 @@ module.exports = {
                     if (k === r) {
 
                         var rstoItem = rsto[k] = rsto[k] || { margin: [] };
+
+                        var col = colCountRef[i] = colCountRef[i] || [];
+
+                        col.push(rstoItem.col);
 
                         rstoItem.col = j+1;
 
@@ -87,6 +93,49 @@ module.exports = {
             }
 
         }
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////
+
+        (function(colCountRef){
+
+            function count(arr){
+                var length = arr.length;
+                var result = {};
+                var item;
+
+                for(var i = 0; i< length; i++){
+                    item = arr[i];
+                    result[item] = result[item] ? result[item]+1 : 1;
+                }
+
+                return result;
+            }
+
+            function countCol(arr) {
+                var length = arr.length;
+                var result = [];
+                var obj = count(arr);
+
+                for(var i = 0; i < length; i++){
+                    result[i] = 0;
+                }
+
+                for(var j in obj){
+                    result[j*1-1] = obj[j];
+                }
+
+                return result;
+            }
+
+            colCountRef.forEach(function(v, k, list){
+
+                list[k] = countCol(v);
+
+            }) ;
+
+        })(colCountRef);
 
 
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -158,14 +207,20 @@ module.exports = {
         //////////////////////////////////////////////////////////////////////////////////////////
 
         var singleDigitRef = [];
+        var bdgs = [];
 
         (function(ng){
 
             var result;
             var cloneReds;
             var el;
+            var blue;
 
             for(var i in ng){
+
+                var blue = ng[i].blue + '';
+                blue = blue.substr(blue.length-1);
+                bdgs.push(blue*1);
 
                 result = [];
                 cloneReds = ng[i].red.slice();
@@ -190,6 +245,8 @@ module.exports = {
             ng: ng,
             opnRedBall: ng[ng.length - 1].red.slice(),
             singleDigitRef: singleDigitRef,
+            bdgs : bdgs,
+            colCountRef : colCountRef,
             colMap: colMap,
             redMargin: reds,
             bMargin: bMargin,

@@ -20,15 +20,19 @@ http.createServer(function (req, res) {
 
     req.on('end', function () {
 
-        fs.writeFileSync('data.json', data);
+        if(data) {
 
-        data = JSON.parse(data);
+            fs.writeFileSync('data.json', data);
 
-        // data = querystring.parse(data);
+            data = JSON.parse(data);
 
-        f(data);
+            // data = querystring.parse(data);
 
-        res.end('<script src="http://code.jquery.com/jquery-latest.js"></script>');
+            f(data);
+
+        }
+
+        res.end(data + '<script src="http://code.jquery.com/jquery-latest.js"></script>');
     });
 
 
@@ -57,7 +61,11 @@ function f(data) {
 
 }
 
+try{
+    var data = require('./data.json');
 
-var data = require('./data.json');
+    if (data) f(data);
+}catch(e){
+    console.log(e);
+}
 
-if (data) f(data);
