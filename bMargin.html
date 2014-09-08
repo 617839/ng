@@ -19,11 +19,23 @@
             margin: 21px 0 0 0;
         }
 
+        .dg{
+            position:absolute;
+            left:864px;
+        }
     </style>
 </head>
 <body>
 
 <div id="view" class="wraper-4 bg-3">
+
+
+    <ul class="list-3 dg" ng-controller="bMarginCtrl">
+        <li>
+            <i>-</i>
+            <em ng-repeat="v in bdgs track by $index" ng-bind="v"></em>
+        </li>
+    </ul>
 
     <ul class="list-3" ng-controller="bMarginCtrl">
         <li ng-repeat="(k, item) in bMarginList">
