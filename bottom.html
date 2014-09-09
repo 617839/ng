@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <link rel="stylesheet" type="text/css" href="assets/css/libs/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/libs/main.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/libs/normalize.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/libs/main.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/base.css"/>
 
     <script src="assets/js/libs/underscore-1.6.0.min.js"></script>
     <script src="assets/js/libs/jquery.min.js"></script>
@@ -14,8 +14,13 @@
     <script src="data/33.js"></script>
     <script src="assets/js/bottom.js"></script>
     <style>
-        body{
-            padding:0em 0em 0em 2em;
+        body {
+            padding: 0em 0em 0em 2em;
+        }
+
+        .disabled {
+            opacity: 0.4;
+            background: lightblue;
         }
     </style>
 </head>
@@ -50,8 +55,15 @@
     <dl class="list-4">
         <li ng-repeat="item in nextList">
             <em ng-if="!obj.over" ng-repeat="obj in item | orderBy:'v'" ng-bind="obj.v"></em>
+            <i ng-if=""></i>
         </li>
     </dl>
 </div>
+
+<script>
+    $('body').delegate('.list-4 li', 'click', function (e) {
+        $(this).toggleClass('disabled');
+    })
+</script>
 </body>
 </html>
