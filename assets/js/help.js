@@ -801,14 +801,20 @@ function groupRefListModel(arr){
 		current = arr.pop();
 		loca = locaCompare(getArrayLast(arr),current);
 		
-		unique = $.unique( current.slice() );
-		unique.sort(function(a,b){
+		unique = current.slice();
+        unique = $.unique(unique);
+
+        console.log(JSON.stringify(unique),JSON.stringify($.unique(unique)) );
+
+        unique.sort(function(a,b){
 			return a - b;
 		});
-		
+
+        console.log(JSON.stringify(unique),JSON.stringify($.unique(unique)) );
+
 		obj = {
 				group: current,
-				unique : unique,
+				unique : unique.reverse(),
 				loca: loca
 		};
 		
