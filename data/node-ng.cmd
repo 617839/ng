@@ -1,0 +1,1 @@
+@node "D:\Julien\git\ng\data\node-script.js" %*

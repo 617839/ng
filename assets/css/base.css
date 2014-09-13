@@ -156,7 +156,7 @@ body {
     display: inline-block;
     height: auto;
     width: 36px;
-@vertical-align : top;
+    @vertical-align : top;
 }
 
 .list-3 i {
