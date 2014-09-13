@@ -32,7 +32,7 @@
 
     <ul class="list-3 dg" ng-controller="bMarginCtrl">
         <li>
-            <i>-</i>
+            <i>dg</i>
             <em ng-repeat="v in bdgs track by $index" ng-bind="v"></em>
         </li>
     </ul>
@@ -46,5 +46,17 @@
 
 </div>
 
+<div id="menuBox">
+    <button>vertical-align</button>
+</div>
+<script>
+    $('body').delegate('.list-3 li', 'click', function (e) {
+        $(this).toggleClass('disabled');
+    });
+
+    $('#menuBox button').click(function(){
+        $('.list-3').toggleClass('v-bottom');
+    })
+</script>
 </body>
 </html>

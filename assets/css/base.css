@@ -98,6 +98,13 @@ body {
     font-size: 1em;
     font-family: 'Segoe UI', Arial, 'Microsoft Yahei', 'Simsun', 'sans-serif';
 }*/
+body{
+    color:#000;
+}
+.disabled {
+    opacity: 0.4;
+    background: rgb(170,170,170);
+}
 
 .f-red {
     color: red;
@@ -156,7 +163,10 @@ body {
     display: inline-block;
     height: auto;
     width: 36px;
-    @vertical-align : top;
+    vertical-align : top;
+}
+.list-3.v-bottom li{
+    vertical-align : bottom;
 }
 
 .list-3 i {
@@ -179,4 +189,15 @@ body {
     font-style: normal;
     margin: 1px 0 0 1px;
     float: left;
+}
+
+
+#menuBox{
+    position:fixed;
+    left:0;
+    bottom:0;
+    min-width:4em;
+    min-height:2em;
+    padding:0.5em;
+    background: rgba(160,160,160,0.4);
 }

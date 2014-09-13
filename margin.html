@@ -34,5 +34,18 @@
 
 </div>
 
+<div id="menuBox">
+    <button>vertical-align</button>
+</div>
+
+<script>
+    $('body').delegate('.list-3 li', 'click', function (e) {
+        $(this).toggleClass('disabled');
+    });
+
+    $('#menuBox button').click(function(){
+        $('.list-3').toggleClass('v-bottom');
+    })
+</script>
 </body>
 </html>

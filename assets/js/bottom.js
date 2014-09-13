@@ -23,7 +23,7 @@
 
         $scope.bMarginList = window.bMargin;
 
-        $scope.bdgs = window.bdgs.slice(window.bdgs.length-40);
+        $scope.bdgs = window.bdgs.slice(window.bdgs.length-24);
 
     });
 
