@@ -17,11 +17,6 @@
         body {
             padding: 0em 0em 0em 2em;
         }
-
-        .disabled {
-            opacity: 0.4;
-            background: lightblue;
-        }
     </style>
 </head>
 <body>
@@ -33,7 +28,7 @@
         </li>
     </dl>
 
-    <dl class="list-4">
+    <dl class="list-4" style="display: none;">
         <li ng-repeat="item in upList">
             <em ng-repeat="v in item | orderBy:vs:false track by $index" ng-bind="v"></em>
         </li>
