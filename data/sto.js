@@ -7,7 +7,7 @@ module.exports = {
 
     resolve: function (ng) {
 
-        if (typeof ng === 'string') ng = JSON.stringify(ng);
+        if (typeof ng === 'string') ng = JSON.parse(ng);
 
 
         /////////////////////////////////////////////////////////////////////////////////////
