@@ -10,7 +10,7 @@
     <script src="assets/js/libs/underscore-1.6.0.min.js"></script>
     <script src="assets/js/libs/jquery.min.js"></script>
     <script src="assets/js/libs/angular.min.js"></script>
-    <script src="assets/js/libs/angular-route.js"></script>
+    <script src="assets/js/help.js"></script>
     <script src="data/33.js"></script>
     <script src="assets/js/bottom.js"></script>
     <style>
@@ -28,12 +28,11 @@
         </li>
     </dl>
 
-    <dl class="list-4" style="display: none;">
+    <dl class="list-4" ng-if="false">
         <li ng-repeat="item in upList">
             <em ng-repeat="v in item | orderBy:vs:false track by $index" ng-bind="v"></em>
         </li>
     </dl>
-
 
     <dl class="list-4">
         <li ng-repeat="item in prevList">
@@ -53,6 +52,14 @@
             <i ng-if=""></i>
         </li>
     </dl>
+
+
+    <dl class="list-4">
+        <li ng-repeat="item in locaList">
+            <em ng-repeat="v in item | orderBy:vs:false track by $index" ng-bind="v"></em>
+        </li>
+    </dl>
+
 </div>
 
 <script>
