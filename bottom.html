@@ -56,7 +56,7 @@
 
     <dl class="list-4" style="margin-left:82px;">
         <li ng-repeat="item in locaList">
-            <em ng-repeat="v in item | orderBy:vs:false track by $index" ng-bind="v"></em>
+            <em ng-repeat="v in item track by $index" ng-bind="v"></em>
         </li>
     </dl>
 
