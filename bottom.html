@@ -28,6 +28,12 @@
         </li>
     </dl>
 
+    <dl class="list-4">
+        <li ng-repeat="item in locaList">
+            <em ng-repeat="v in item track by $index" ng-bind="v"></em>
+        </li>
+    </dl>
+
     <dl class="list-4" ng-if="false">
         <li ng-repeat="item in upList">
             <em ng-repeat="v in item | orderBy:vs:false track by $index" ng-bind="v"></em>
@@ -50,13 +56,6 @@
         <li ng-repeat="item in nextList">
             <em ng-if="!obj.over" ng-repeat="obj in item | orderBy:'v'" ng-bind="obj.v"></em>
             <i ng-if=""></i>
-        </li>
-    </dl>
-
-
-    <dl class="list-4" style="margin-left:82px;">
-        <li ng-repeat="item in locaList">
-            <em ng-repeat="v in item track by $index" ng-bind="v"></em>
         </li>
     </dl>
 
