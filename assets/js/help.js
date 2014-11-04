@@ -808,7 +808,8 @@ function groupRefListModel(arr){
 		});
 
 		obj = {
-				group: current,
+				group: current.sort(function(a, b){return a-b;}),
+                //sort: current.slice().sort(function(a, b){return a-b;}),
 				unique : unique,
 				loca: loca
 		};
