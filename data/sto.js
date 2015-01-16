@@ -1,5 +1,7 @@
 /**
  * Created by julien.zhang on 2014/9/2.
+ *
+ * 把数据转换为特定格式;
  */
 
 
