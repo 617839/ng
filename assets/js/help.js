@@ -45,7 +45,7 @@ function getArrayUnique( arr ){
 /*
  * 控制台打印输出
  */
-function cc(obj,prefix){
+function cc(obj,prefix){return;
 	var prefix = prefix || '';
 	if(typeof obj == 'object'){
 		console.log(prefix +  ' = ' + JSON.stringify(obj) + ';');
@@ -440,8 +440,6 @@ function combineWrap(classifyListMap, groupScheme) {
 		item = group(classifyListMap[i], number);
 		args.push(item);
 	}
-
-	//cc(args, 'combine args');
 
 	return (combine.apply(null, args));
 }

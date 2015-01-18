@@ -60,6 +60,7 @@ window.classifyByUpMargin = classify(1);
 cc(classifyByUpMargin,'classifyByUpMargin');
 
 //classify by DownMargin
+
 window.classifyByDownMargin = classify(2);
 cc(classifyByDownMargin,'classifyByDownMargin');
 
@@ -94,6 +95,18 @@ cc(singleDigitLocaMap,'singleDigitLocaMap');
 //classify by singleDigitLocaMap
 window.classifyBySingleDigitLocaMap = classify(singleDigitLocaMap);
 cc(classifyBySingleDigitLocaMap,'classifyBySingleDigitLocaMap');
+
+
+//xx
+classifyByxx = (function(){
+
+	var arr = [];
+	for(var i in classifyByDownMargin){
+		arr.push(i);
+	}
+
+	return {0:arr,1:arr.slice()}
+})();
 
 
 
