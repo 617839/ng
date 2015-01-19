@@ -156,7 +156,9 @@ function countLocation(data) {
 
 
 /*
- * 
+ * example:
+ * var r = combine([1,2,3],[0],[9]);
+ * JSON.stringify(r) == "[[1,0,9],[2,0,9],[3,0,9]]";
  */
 function combine(){
 	var  args = Array.prototype.slice.call(arguments, 0);
@@ -206,6 +208,10 @@ function combine(){
 
 /*
  * 对数字进行编组
+ *
+ * example:
+ * var r = group([1,2,3,4],3);
+ * JSON.stringify(r) == "[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]";
  */
 function group(nu, groupl, result){
 	
