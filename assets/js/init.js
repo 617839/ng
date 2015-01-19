@@ -76,7 +76,7 @@ $(function(){
 		var gruopSize = dobjBox.find('.setBox input[type="number"]').val()*1 || 6;
 		var q;
 		
-		dobjBox.find('.dobj .key input:checked').each(function(){
+		dobjBox.find('.setBox .key input:checked').each(function(){
 			var $th = $(this);
 			var val = $th.val() * 1;
 			groupNum.push(val);
@@ -84,8 +84,8 @@ $(function(){
 		
 		refName && ( window.groupRefList = window[refName] );
 		window.classifyList = window[name];
-		//cc(classifyList,'debug')
-		
+
+
 		q = combineWrap(window.classifyList,groupNum);
 		q = groupWrap(q);
 
