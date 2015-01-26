@@ -196,7 +196,6 @@ $(function(){
 		
 		dobj.find('input[name="'+ name + '"]:checked').each(call);
 		
-		cc(obj,name);
 		window[name] = obj;
 	})	
 	//
