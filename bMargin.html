@@ -11,6 +11,7 @@
     <script src="assets/js/libs/jquery.min.js"></script>
     <script src="assets/js/libs/angular.min.js"></script>
     <script src="assets/js/libs/angular-route.js"></script>
+    <script src="assets/js/common.js"></script>
     <script src="data/33.js"></script>
     <script src="assets/js/bottom.js"></script>
     <style>
@@ -47,16 +48,59 @@
 </div>
 
 <div id="menuBox">
-    <button>vertical-align</button>
+    <button role="verticalAlign">vertical-align</button>
+    <button onclick="saveStatus();">保存状态</button>
+    <button onclick="getStatus();">取得状态</button>
 </div>
+
 <script>
+
+    jQuery.support.cors = true;
+
     $('body').delegate('.list-3 li', 'click', function (e) {
         $(this).toggleClass('disabled');
     });
 
-    $('#menuBox button').click(function(){
+    $('[role=verticalAlign]').click(function(){
         $('.list-3').toggleClass('v-bottom');
-    })
+    });
+
+
+    function getStatus(){
+        $.ajax({
+            type:'get',
+            url:'http://localhost:2014/status'
+        }).done(function(data){
+            var dobj = data.bMargin; console.log(dobj)
+            dobj.forEach(function(v, i, list){
+                $('.list-3 li:eq(?)'.replace('?',++v)).click();
+            })
+
+        }).fail(function(err){
+
+        });
+    }
+
+
+    function saveStatus(){
+        var data = [];
+        $('.list-3 li.disabled').each(function(i){
+            var index = $(this).index();
+            data.push(index);
+        });
+        console.log(data);
+        if(!data.length) return alert('data is null');
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url: 'http://localhost:2014/status/bMargin',
+            data: {data:data, type:'bMargin'}
+        }).done(function(data){
+            console.log(data);
+        }).fail(function(err){
+            console.log(err);
+        })
+    }
 </script>
 </body>
 </html>
