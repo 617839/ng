@@ -53,11 +53,33 @@
 
         $scope.locaList = locaList;
 
-        console.log(locaList);
+        //console.log(locaList);
 
     });
 
 
 })();
+
+
+$(function(){
+
+
+    $('body').on('dblclick', function(e) {
+
+        var x = e.pageX;
+        var y = e.pageY;
+
+        x = Math.ceil(x/41)*41-41+'px';
+        y = Math.ceil(y/21)*21-21+'px';
+
+        console.log(x,y)
+
+        $('<input type="text" style="position:absolute;width:40px;height:20px;border:none;background:transparent;margin:1px 0 0 1px;text-align: center;line-height: 20px;">').appendTo('body').css({left:x, top:y});
+
+
+    });
+
+
+});
 
 
