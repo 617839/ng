@@ -3,7 +3,7 @@
 
 aside{
 	position:fixed;
-	width:64px;
+	width:82px;
 	height:100%;
 	background:#dfe3e8;
 }
@@ -55,14 +55,14 @@ button[data-type="singleDigitRef"]{
 }
 .title,
 .content{
-	left:64px;
+	left:82px;
 	right:0;
 	background: url(../img/bg3.png) repeat 0 0;	
 }
 
 .title {
 	position: fixed;
-	top: 0;
+	top: 1px;
 	z-index:100000;
 	height:20px;
 	overflow: hidden;
@@ -70,7 +70,7 @@ button[data-type="singleDigitRef"]{
 
 .content {
 	position:absolute;
-	top:20px;
+	top:21px;
 	min-height: 1400px;
 	padding-bottom: 320px;
 }

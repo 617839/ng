@@ -201,3 +201,21 @@ body{
     padding:0.5em;
     background: rgba(160,160,160,0.4);
 }
+
+
+.input-x{
+    position:absolute;
+    width:40px;
+    height:20px;
+    border:none;
+    background:transparent;
+    margin:1px 0 0 1px;
+    text-align: center;
+    line-height: 20px;
+    transition: all 0.3s ease-in;
+}
+
+.input-x:focus, .input-x:hover{
+    background: blue!important;
+    color: #fff;
+}
