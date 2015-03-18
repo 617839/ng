@@ -205,8 +205,12 @@ $(function(){
 		var q;
 		
 		$('title').text(group.join(''));
-		
-		q = combineWrap(window.classifyList,group);
+		try{
+			q = combineWrap(window.classifyList,group);
+		}catch (e){
+			console.log(1,e)
+		}
+
 		
 		q = filterByRef(q, window.filterByRefArr);
 		q = window.NUMLIST = redBlueBallModel(q);

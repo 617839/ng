@@ -437,12 +437,15 @@ function groupWrap(groupList, patch) {
 function combineWrap(classifyListMap, groupScheme) {
 	var countList = count(groupScheme);
 
+	console.log(countList)
+
 	var args = [];
 	var number;
 	var item;
 
 	for ( var i in countList) {
 		number = countList[i];
+		console.log(2222,classifyListMap[i])
 		item = group(classifyListMap[i], number);
 		args.push(item);
 	}
