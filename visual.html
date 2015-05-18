@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="dbApp">
 <head>
     <meta charset="utf-8"/>
     <title>可视化</title>
     <link rel="stylesheet" type="text/css" href="assets/css/style.css"/>
     <link rel="stylesheet" type="text/css" href="assets/css/visual.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/css/base.css"/>
 
     <script src="assets/js/libs/underscore-1.6.0.min.js"></script>
     <script src="assets/js/libs/jquery.min.js"></script>
+    <script src="assets/js/libs/angular.min.js"></script>
     <script src="assets/js/libs/d3.min.js"></script>
     <script src="data/33.js"></script>
     <script src="assets/js/help.js"></script>
     <script src="assets/js/doc.js"></script>
     <script src="assets/js/init.js"></script>
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/bottom.js"></script>
     <style>
         .input-x{
             color:#fff;
@@ -27,6 +31,14 @@
     <button data-type="downMarginRef" class="current">下间隔</button>
     <button data-type="singleDigitRef">数尾</button>
 </aside>
+<div class="wraper-4 bg-4" ng-controller="bottomCtrl">
+
+    <ul class="list-4">
+        <li ng-repeat="item in ng track by $index">
+            <em class="t-r" ng-bind="item.num"></em>
+        </li>
+    </ul>
+</div>
 <div class="container">
     <div class="title"></div>
     <div class="content visual"></div>

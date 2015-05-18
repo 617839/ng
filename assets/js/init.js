@@ -89,6 +89,24 @@ $(function(){
 		q = combineWrap(window.classifyList,groupNum);
 		q = groupWrap(q);
 
+
+			(function (q, groupSize) {
+
+				var qLength = q.length;
+				var qItem;
+				while(qLength--){
+					qItem = _.uniq(q[qLength]);
+					q[qLength] = qItem;
+					if(qItem.length != groupSize){
+						q.splice(qLength, 1);
+					}
+				}
+
+				q = _.uniq(q,function(a,b){return JSON.stringify(a)===JSON.stringify(b)});
+
+			})(q, gruopSize);
+
+
 		q = groupListModel(q);
 
 		$(template('boxTemp', {
