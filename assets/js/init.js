@@ -541,7 +541,13 @@ $(function(){
 //init
 
 
+function xxReverse(e){
+	var box = $(e.target).parent();
 
+	box.find('span em').each(function(){
+		$(this).click();
+	});
+}
 
 
 

@@ -193,6 +193,12 @@
 					<input type="checkbox" value="<%=item[i]%>" data-key="<%= k %>" name="<%= name %>" checked />
 				<%}%>
 			</span>
+
+			<% if(xx) { %>
+
+			&nbsp;&nbsp;<button role="reverse" onclick="xxReverse(event);">reverse</button>
+
+			<% } %>
 		</li>
     <%}%>
 </ul>
@@ -370,6 +376,7 @@
 			dobj : classifyByxx,
 			name: 'classifyByxx',
 			id : 'classifyByxx',
+			xx : true,
 			embedTemp: 'btnGroup2Temp',
 			refName : 'downMarginRef'
 		})).appendTo('body');
