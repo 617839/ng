@@ -90,21 +90,7 @@ $(function(){
 		q = groupWrap(q);
 
 
-			(function (q, groupSize) {
-
-				var qLength = q.length;
-				var qItem;
-				while(qLength--){
-					qItem = _.uniq(q[qLength]);
-					q[qLength] = qItem;
-					if(qItem.length != groupSize){
-						q.splice(qLength, 1);
-					}
-				}
-
-				q = _.uniq(q,function(a,b){return JSON.stringify(a)===JSON.stringify(b)});
-
-			})(q, gruopSize);
+		q =	xxUniq(q, gruopSize);
 
 
 		q = groupListModel(q);
@@ -540,6 +526,52 @@ $(function(){
 ////////////////////////////////////////////////////////////////////////////////////
 //init
 
+$('body')
+	.delegate('[role=store]','click',function(e){
+
+	var box = $(this).parent();
+
+		var name = box.attr('name');
+
+
+		localStorage.setItem(name+'_0', JSON.stringify(window[name]));
+
+	var html = box.find('ul').html();
+
+
+	localStorage.setItem(name+'_1', html);
+		//html = box.find('[role=setBox]').html();
+		//localStorage.setItem(name+'_2',html);
+
+})
+	.delegate('[role=apply]','click',function(e){
+
+	var box = $(this).parent();
+
+	var name = box.attr('name');
+
+		window[name] = JSON.parse(localStorage.getItem(name+'_0'));
+
+	var html = localStorage.getItem(name+'_1');
+
+	html && box.find('ul').html(html);
+		html = localStorage.getItem(name+'_2');
+		//html && box.find('[role=setBox]').html(html);
+
+})
+	.delegate('[role=reset]','click',function(e){
+
+	var box = $(this).parent();
+
+	var html = box.find('ul').html();
+
+	var id = box.attr('id');
+
+	localStorage.setItem(id, html);
+
+
+
+});
 
 function xxReverse(e){
 	var box = $(e.target).parent();
@@ -550,7 +582,21 @@ function xxReverse(e){
 }
 
 
+function xxUniq(q1, groupSize) {
 
+	var qLength = q1.length;
+	var qItem;
+	while(qLength--){
+		qItem = _.uniq(q1[qLength]);
+		q1[qLength] = qItem;
+		if(qItem.length != groupSize){
+			q1.splice(qLength, 1);
+		}
+	}
+
+	return _.uniq(q1,function(a,b){console.log(a,b);return JSON.stringify(a)});
+
+}
 
 
 

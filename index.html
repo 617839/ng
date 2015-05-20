@@ -174,7 +174,7 @@
 </script>
 
 <script id="dobjTemp" type="text/html">
-<div id="<%= id && id+'Box' %>" class="dobjBox">
+<div id="<%= id && id+'Box' %>" class="dobjBox" name="<%= id %>">
 <span class="name"><%= name %></span>
 
 <% include( embedTemp || 'btnGroup1Temp') %>
@@ -202,7 +202,7 @@
 		</li>
     <%}%>
 </ul>
-<div class="setBox">
+<div class="setBox" role="setBox">
     <% for (var k in dobj) { var item = dobj[k]; %>
         	<div class="key">
 				<a href="#" class="lessen">—</a>
@@ -250,6 +250,13 @@
 <button class="combine">combine</button>
 </script>
 
+	<script id="btnGroup4Temp" type="text/html">
+		<!--<button role="store" style="position: absolute;top:-28px;right:108px;">store</button>
+		<button role="apply" style="position: absolute;top:-28px;right:162px;">apply</button>
+		<button role="reset" style="position: absolute;top:-28px;right:218px;">reset</button>-->
+		<button class="set">set</button>
+		<button class="make2" data-name="<%= name %>" data-refName="<%= refName %>" >make2</button>
+	</script>
 <!-- template
   	================================================== 
     ================================================== -->
@@ -372,12 +379,14 @@
 			refName : ''
 		})).appendTo('body');
 
+
+
 		$(template('dobjTemp', {
 			dobj : classifyByxx,
 			name: 'classifyByxx',
 			id : 'classifyByxx',
 			xx : true,
-			embedTemp: 'btnGroup2Temp',
+			embedTemp: 'btnGroup4Temp',
 			refName : 'downMarginRef'
 		})).appendTo('body');
 

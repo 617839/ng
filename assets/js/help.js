@@ -437,8 +437,6 @@ function groupWrap(groupList, patch) {
 function combineWrap(classifyListMap, groupScheme) {
 	var countList = count(groupScheme);
 
-	console.log(countList)
-
 	var args = [];
 	var number;
 	var item;
