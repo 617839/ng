@@ -396,7 +396,7 @@ input[name="reg"]{
 	background:red;
 }
 #bluesBox{
-	top:760px;
+	top:800px;
 	left:40px;
 	width:700px;
 }
@@ -406,7 +406,7 @@ input[name="reg"]{
 	width:360px;
 }
 #classifyByDownMarginLocaMapListBox{
-	top:560px;
+	top:640px;
 	left:20px;
 	width:400px;	
 }

@@ -162,6 +162,8 @@ function countLocation(data) {
  */
 function combine(){
 	var  args = Array.prototype.slice.call(arguments, 0);
+
+	console.log('combine => ', JSON.stringify(args));
 	
 	var arr1;
 	var arr2;
@@ -170,25 +172,25 @@ function combine(){
 	function func(arr1,arr2){
 		var arr3 = [];
 		var item1,item2,item1c;
-		
+
 		if(arr1.length == 0) return arr2;
 		if(arr2.length == 0) return arr1;
-		
+
 		for(var i in arr1){
 			item1 = arr1[i];
 			item1 = item1.constructor === Array ? item1 : [item1];
-			
+
 			for(var j in arr2){
 				item1c = item1.slice();
 				item2 = arr2[j];
 				item1c = item1c.concat(item2);
 				arr3.push(item1c);
 			}
-			
+
 		}
-		
+
 		return arr3;
-		
+
 	}
 	
 	if(args.length == 1) {
@@ -200,9 +202,63 @@ function combine(){
 		arr2 = args.shift();
 		arr3 = func(arr1,arr2);
 		args.unshift(arr3);
-		return combine.apply(null,args);
+		//return combine.apply(null,args);
+		return _combine(args);
 	}
 	
+}
+
+function _combine(args){
+
+	function func(arr1,arr2){
+		var arr3 = [];
+		var item1,item2,item1c;
+
+		if(arr1.length == 0) return arr2;
+		if(arr2.length == 0) return arr1;
+
+		for(var i in arr1){
+			item1 = arr1[i];
+			item1 = item1.constructor === Array ? item1 : [item1];
+
+			for(var j in arr2){
+				item1c = item1.slice();
+				item2 = arr2[j];
+				item1c = item1c.concat(item2);
+				arr3.push(item1c);
+			}
+
+		}
+
+		return _.unique(arr3);
+
+	}
+
+	var arr1;
+	var arr2;
+	var arr3;
+
+
+	while(args.length > 1){
+		arr1 = args.shift();
+		arr2 = args.shift();
+		arr3 = func(arr1,arr2);
+		args.unshift(arr3);
+	}
+
+	if(args.length == 1) {
+		return args[0];
+	}
+
+	/*if(args.length > 1){
+		arr1 = args.shift();
+		arr2 = args.shift();
+		arr3 = func(arr1,arr2);
+		args.unshift(arr3);
+		console.log(arr1, arr2, arr3);
+		return _combine(args);
+	}*/
+
 }
 
 
@@ -263,6 +319,89 @@ function group(nu, groupl, result){
 	}
 	
 }
+
+
+function group2(array, num) {
+	var arraySize = array.length;
+	var res=[];
+	if (0 > num || num > arraySize) {
+		return;
+	}
+
+	var loop = 0;
+	var numZuhe = 0;
+	var stopCondNum = 0;
+	var currIdx = num - 1;
+	var changeIdx = num - 1;
+	var arrayIdx = new Array(array.length); //(int *)malloc(num * sizeof(int));
+	var isChanged = true;
+
+	if (null == arrayIdx) {
+		return;
+	}
+
+	for (loop = 0; loop < num; ++loop) {
+		arrayIdx[loop] = loop;
+	}
+
+	while (1) {
+		var loop = 0;
+		var stopCondNum = 0;
+
+		if (isChanged) {
+			var tem = [];
+			for (loop = 0; loop < num; ++loop) {
+				tem.push( array[arrayIdx[loop]]);
+
+			}
+			++numZuhe;
+			res.push(tem);
+		}
+
+		// 判断终止条件
+		for (loop = 0; loop < num; ++loop) {
+			if (arrayIdx[num - loop - 1] == arraySize - loop - 1) {
+				++stopCondNum;
+			}
+			else {
+				break;
+			}
+		}
+		if (num == stopCondNum) {
+			break;
+		}
+
+		// 当前位已经达到最大值
+		if (arrayIdx[currIdx] == arraySize - num + currIdx) {
+			if (changeIdx == currIdx) // 是否变化到最左侧位数
+			{
+				changeIdx--;
+				currIdx = num - 1;
+				arrayIdx[changeIdx] = arrayIdx[changeIdx] + 1;
+				for (loop = changeIdx + 1; loop < num; ++loop) {
+					arrayIdx[loop] = arrayIdx[loop - 1] + 1;
+				}
+
+				isChanged = true;
+			}
+			else {
+				currIdx--;
+
+				isChanged = false;
+			}
+		}
+		else {
+			arrayIdx[currIdx] = arrayIdx[currIdx] + 1;
+			isChanged = true;
+		}
+	}
+
+	console.log('group => ', JSON.stringify(res));
+	return res;
+}
+
+
+
 
 /*
  * 
@@ -443,7 +582,7 @@ function combineWrap(classifyListMap, groupScheme) {
 
 	for ( var i in countList) {
 		number = countList[i];
-		console.log(2222,classifyListMap[i])
+		//console.log(2222,classifyListMap[i])
 		item = group(classifyListMap[i], number);
 		args.push(item);
 	}

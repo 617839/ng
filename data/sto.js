@@ -210,6 +210,7 @@ module.exports = {
 
         var singleDigitRef = [];
         var bdgs = [];
+        var bmr = [];
 
         (function(ng){
 

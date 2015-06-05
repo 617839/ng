@@ -527,51 +527,58 @@ $(function(){
 //init
 
 $('body')
-	.delegate('[role=store]','click',function(e){
+	.delegate('[role=store]', 'click', function (e) {
 
-	var box = $(this).parent();
+		if(!confirm('确认缓存？')) return;
+
+		var box = $(this).parent();
 
 		var name = box.attr('name');
 
+		localStorage.setItem(name + '_0', JSON.stringify(window[name]));
 
-		localStorage.setItem(name+'_0', JSON.stringify(window[name]));
+		var html = box.find('ul').html();
 
-	var html = box.find('ul').html();
+		localStorage.setItem(name + '_1', html);
 
-
-	localStorage.setItem(name+'_1', html);
 		//html = box.find('[role=setBox]').html();
 		//localStorage.setItem(name+'_2',html);
 
-})
-	.delegate('[role=apply]','click',function(e){
+	})
+	.delegate('[role=apply]', 'click', function (e) {
 
-	var box = $(this).parent();
+		if(!confirm('确认应用？')) return;
 
-	var name = box.attr('name');
+		var box = $(this).parent();
 
-		window[name] = JSON.parse(localStorage.getItem(name+'_0'));
+		var name = box.attr('name');
 
-	var html = localStorage.getItem(name+'_1');
+		window[name] = JSON.parse(localStorage.getItem(name + '_0'));
 
-	html && box.find('ul').html(html);
-		html = localStorage.getItem(name+'_2');
+		var html = localStorage.getItem(name + '_1');
+
+		box.find('ul').html(html);
+		box.find('.dobj input:checkbox:first').trigger('change');
+
+
+		//html = localStorage.getItem(name+'_2');
 		//html && box.find('[role=setBox]').html(html);
 
-})
-	.delegate('[role=reset]','click',function(e){
+	})
+	.delegate('[role=reset]', 'click', function (e) {
 
-	var box = $(this).parent();
+		return;
 
-	var html = box.find('ul').html();
+		var box = $(this).parent();
 
-	var id = box.attr('id');
+		var html = box.find('ul').html();
 
-	localStorage.setItem(id, html);
+		var id = box.attr('id');
+
+		localStorage.setItem(id, html);
 
 
-
-});
+	});
 
 function xxReverse(e){
 	var box = $(e.target).parent();
@@ -594,7 +601,7 @@ function xxUniq(q1, groupSize) {
 		}
 	}
 
-	return _.uniq(q1,function(a,b){console.log(a,b);return JSON.stringify(a)});
+	return _.uniq(q1,function(a){return JSON.stringify(a)});
 
 }
 
