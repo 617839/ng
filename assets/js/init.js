@@ -169,10 +169,17 @@ $(function(){
 		var checkbox = $th.next('input:checkbox');
 		$th.toggleClass('cancel');
 		checkbox.trigger('click');
+			if(checkbox.is(':checked')){
+					//checkbox.prop('checked', 'checked');
+				checkbox[0].setAttribute('checked', 'checked');
+			}else{
+				console.log(2);
+				checkbox.removeAttr('checked');
+			}
 		checkbox.trigger('change');
 	})	
 	//
-	.delegate('.dobj input:checkbox','change',function(){
+	.delegate('.dobj input:checkbox','change',function(){ console.log(this);
 		var th = $(this);
 		var name = th.attr('name');
 		var dobj = th.closest('.dobj');
@@ -199,6 +206,8 @@ $(function(){
 		}
 		
 		dobj.find('input[name="'+ name + '"]:checked').each(call);
+
+			console.log(name);
 		
 		window[name] = obj;
 	})	

@@ -184,6 +184,7 @@ function combine(){
 				item1c = item1.slice();
 				item2 = arr2[j];
 				item1c = item1c.concat(item2);
+
 				arr3.push(item1c);
 			}
 
@@ -210,6 +211,22 @@ function combine(){
 
 function _combine(args){
 
+	function xxUniq(q1) {
+
+		var qLength = q1.length;
+		var qItem;
+		while(qLength--){
+			qItem = _.uniq(q1[qLength]);
+			q1[qLength] = qItem;
+			if(qItem.length > 6){
+				q1.splice(qLength, 1);
+			}
+		}
+
+		return _.uniq(q1,function(a){return typeof a == 'object' ? JSON.stringify(a) : a; });
+
+	}
+
 	function func(arr1,arr2){
 		var arr3 = [];
 		var item1,item2,item1c;
@@ -225,12 +242,15 @@ function _combine(args){
 				item1c = item1.slice();
 				item2 = arr2[j];
 				item1c = item1c.concat(item2);
+				//console.log(item1c);
 				arr3.push(item1c);
 			}
 
 		}
 
-		return _.unique(arr3);
+		console.log('#### ',arr3.length);
+
+		return xxUniq(arr3);
 
 	}
 
@@ -243,6 +263,7 @@ function _combine(args){
 		arr1 = args.shift();
 		arr2 = args.shift();
 		arr3 = func(arr1,arr2);
+		console.log(arr3.length);
 		args.unshift(arr3);
 	}
 
