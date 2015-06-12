@@ -255,7 +255,50 @@ module.exports = {
             bMargin: bMargin,
             downMarginRef: prev,
             next: next,
-            upMarginRef: up
+            upMarginRef: up,
+
+            countRm: (function(ng){
+
+                return require('./lib/count-down-margin.js')(ng);
+
+            })(ng),
+
+            countUm: (function(up){
+
+                var result = require('./lib/count-margin.js')(up, {start:0, end:40});
+
+                for(var i in result){
+                    result[i].num =  ng[i] && ng[i].num;
+                }
+
+                return result;
+
+            })(up),
+
+            countDm: (function(prev){
+
+                var result = require('./lib/count-margin.js')(prev, {start:0, end:40});
+
+                for(var i in result){
+                    result[i].num =  ng[i] && ng[i].num;
+                }
+
+                return result;
+
+            })(prev),
+
+            countSm: (function(singleDigitRef){
+
+                var result = require('./lib/count-margin.js')(singleDigitRef, {start:0, end:10});
+
+                for(var i in result){
+                    result[i].num =  ng[i] && ng[i].num;
+                }
+
+                return result;
+
+            })(singleDigitRef)
+
         };
 
 
