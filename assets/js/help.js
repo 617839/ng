@@ -163,8 +163,6 @@ function countLocation(data) {
 function combine(){
 	var  args = Array.prototype.slice.call(arguments, 0);
 
-	console.log('combine => ', JSON.stringify(args));
-	
 	var arr1;
 	var arr2;
 	var arr3;	
@@ -248,8 +246,6 @@ function _combine(args){
 
 		}
 
-		console.log('#### ',arr3.length);
-
 		return xxUniq(arr3);
 
 	}
@@ -263,7 +259,6 @@ function _combine(args){
 		arr1 = args.shift();
 		arr2 = args.shift();
 		arr3 = func(arr1,arr2);
-		console.log(arr3.length);
 		args.unshift(arr3);
 	}
 
@@ -1008,7 +1003,89 @@ function groupCall(groupnum,patch,size) {
 	})).appendTo('body');
 }
 
+/**
+ * 统计组合数量
+ * @param all
+ * @param active
+ */
+function countComb(all, active){
+
+	var result = {};
+	var item;
+
+	for(var i = 0, v; i < all.length; i++){
+
+		v = all[i];
+
+		item = result[v] = result[v] || [];
+
+		item.push(i+1);
+
+	}
+
+	return combineWrap(result, active);
+
+}
+
+
+function u2d(){
+
+	var sm = NGGLOBAL.countUm[countUm.length-1].all.slice();
+
+	var cache = {};
+
+	_.forEach(sm, function(v, i, list){
+
+		for(var j = 1; j < colMap.length; j++){
+
+			if( colMap[j][1] === i  ){
+
+				cache[v] = cache[v] || [];
+
+				cache[v].push(colMap[j][2]);
+
+			}
+
+		}
+
+	});
+
+
+	console.log(cache);
+
+}
 
 
 
+function s2d(){
 
+	var sm = NGGLOBAL.countSm[countSm.length-1].all.slice();
+
+	var cache = {};
+
+	_.forEach(sm, function(v, i, list){
+
+		for(var j = 1; j < colMap.length; j++){
+
+			if( i === (j+'').replace(/\d*(?=\d)/,'') * 1 ){
+
+				cache[v] = cache[v] || [];
+
+				cache[v].push(colMap[j][2]);
+
+			}
+
+		}
+
+	});
+
+
+	for(var i in cache){
+		cache[i] = _.uniq(cache[i]);
+	}
+
+
+	console.log(cache);
+
+
+}

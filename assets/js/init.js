@@ -485,7 +485,7 @@ $(function(){
 		var refList = box.find('#refList,#numSelRefList');
 		
 		if(!th.attr('expandable')){
-			th.css({'position':'absolute','left':0, 'top':0}).text('展开');
+			th.css({'position':'fixed','left':0, 'top':0}).text('展开');
 			box.addClass('collapse');
 			operateBar.css({'position':'static'});
 			refList.css({'position':'static'});

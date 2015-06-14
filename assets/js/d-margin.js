@@ -46,35 +46,12 @@
 
 
 
-    ctrls.controller('m2dCtrl', function($scope){
+    ctrls.controller('m2dCtrl', );
 
 
 
-        var sm = NGGLOBAL.countSm[countSm.length-1].all.slice();
-
-        var cache = {};
-
-        _.forEach(sm, function(v, i, list){
-
-            for(var j = 1; j < colMap.length; j++){
-
-                if( i === (j+'').replace(/\d*(?=\d)/,'') * 1 ){
-
-                    cache[v] = cache[v] || [];
-
-                    cache[v].push(colMap[j][2]);
-
-                }
-
-            }
-
-        });
 
 
-        console.log(cache);
-
-
-    });
 
 
 
