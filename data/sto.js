@@ -247,15 +247,15 @@ module.exports = {
         return {
             ng: ng,
             opnRedBall: ng[ng.length - 1].red.slice(),
-            singleDigitRef: singleDigitRef,
-            bdgs : bdgs,
-            colCountRef : colCountRef,
             colMap: colMap,
+            bdgs : bdgs,
             redMargin: reds,
             bMargin: bMargin,
+            colCountRef : colCountRef,
+            singleDigitRef: singleDigitRef,
             downMarginRef: prev,
-            next: next,
             upMarginRef: up,
+            next: next,
 
             countRm: (function(ng){
 

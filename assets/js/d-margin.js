@@ -5,11 +5,19 @@
 
 (function () {
 
-    var dbApp = angular.module('dbApp', ['ctrls', 'servs']);
+    var dbApp = angular.module('dbApp', ['ctrls', 'servs', 'dires']);
 
     var ctrls = angular.module('ctrls', []);
 
     var servs = angular.module('servs', []);
+
+    var dires = angular.module('dires', []);
+
+    dires.directive('vs', function(){
+        return function(v){
+            return v;
+        };
+    });
 
 
     ctrls.controller('cdmCtrl', function ($scope) {
@@ -46,10 +54,36 @@
 
 
 
-    ctrls.controller('m2dCtrl', );
+    //统计
+    ctrls.controller('countCtrl', function($scope){
+
+        $scope.vs = function(v) { return v; };
+
+        var downRef = $scope.downRef = NGGLOBAL.downMarginRef;
+
+        var upRef = $scope.upRef = NGGLOBAL.upMarginRef;
+
+        var sdRef = $scope.sdRef = NGGLOBAL.singleDigitRef.shift() && NGGLOBAL.singleDigitRef;
+
+        var countDm = $scope.countDm = NGGLOBAL.countDm;
+
+        var countUm = $scope.countUm = NGGLOBAL.countUm;
+
+        var countSm = $scope.countSm = NGGLOBAL.countSm.shift() && NGGLOBAL.countSm;
 
 
 
+
+
+
+
+
+
+
+
+
+
+    });
 
 
 
