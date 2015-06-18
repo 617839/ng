@@ -1052,6 +1052,7 @@ function u2d(){
 
 
 	console.log(cache);
+	return cache;
 
 }
 
@@ -1086,6 +1087,8 @@ function s2d(){
 
 
 	console.log(cache);
+
+	return cache;
 
 
 }

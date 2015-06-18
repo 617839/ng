@@ -78,7 +78,7 @@ b{
 body{
 	/*min-height:1200px;
 	 font: 12px/1.5 tahoma,arial,simsun,sans-serif; */
-	min-height:1800px;
+	min-height:2400px;
 }
 pre{
 	font-size:1.2em;
@@ -446,7 +446,19 @@ input[name="reg"]{
 #classifyByxxBox{
 	top:1200px;
 	left:20px;
-	width:80%;
+	width:70%;
+}
+
+#classifyByS2dBox{
+	top:1800px;
+	left:20px;
+	width:40%;
+}
+
+#classifyByU2dBox{
+	top:1800px;
+	right:20px;
+	width:40%;
 }
 
 /******************************************/

@@ -111,9 +111,12 @@ classifyByxx = (function(){
 
 
 
+//s2d
+classifyByS2d = s2d();
 
 
-
+//u2d
+classifyByU2d = u2d();
 
 
 
