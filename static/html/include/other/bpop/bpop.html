@@ -1,0 +1,48 @@
+<div>
+    <a id="bpop" href="/download?from=wx" style="display:block;width:100%;height:15%;position:fixed;bottom:0%;left:0;background:url('<<<uri: bpop.png>>>') no-repeat center bottom;background-size:100% auto;"></a>
+</div>
+
+<script>
+    $(document).ready(function() {
+
+        if (getUrlParam("sorce") == 'app' || getUrlParam("from") == 'android' || getUrlParam("from") == 'ios') {
+            $("#bpop").hide();
+            return;
+        }
+
+        var ua = navigator.userAgent;
+
+        if(ua.match(/MicroMessenger/)) {
+
+            return;
+        }
+        if (ua.match(/Mac OS X/)) {
+
+            $("#bpop").attr('href', 'csfsamradar://');
+            $("#bpop").click(function(event) {
+                setTimeout(function () {
+                    location.href = "https://itunes.apple.com/cn/app/zhi-tou/id924359187?l=zh&ls=1&mt=8";
+                }, 300);
+            });
+            return;
+        }
+        if (ua.match(/Android/)){
+
+            $("#bpop").attr('href', 'samradar://scan/');
+            $("#bpop").click(function(event) {
+                setTimeout(function () {
+                    location.href = "http://m.chinascopefinancial.com.cn/www/mobile/android/SamRadar_21.apk";
+                }, 300);
+            });
+            return;
+        }
+
+    });
+
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r!=null) return unescape(r[2]);
+        return null;
+    }
+</script>

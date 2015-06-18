@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html ng-app="dbApp">
+<head>
+    <meta charset="UTF-8">
+    <title>bottom</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/libs/normalize.css"/>
+    <link rel="stylesheet" type="text/css" href="../assets/css/libs/main.css"/>
+    <link rel="stylesheet" type="text/css" href="../assets/css/base.css"/>
+
+    <script src="../assets/js/libs/underscore-1.6.0.min.js"></script>
+    <script src="../assets/js/libs/jquery.min.js"></script>
+    <script src="../assets/js/libs/angular.min.js"></script>
+    <script src="../assets/js/help.js"></script>
+    <script src="../data/33.js"></script>
+    <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/bottom.js"></script>
+    <style>
+        body {
+            padding: 0 0 0 0;
+        }
+        input:focus{
+            background:blue!important;
+            color:#fff;
+        }
+    </style>
+</head>
+<body>
+<div class="wraper-4 bg-4" ng-controller="bottomCtrl">
+
+    <ul class="list-4">
+        <li ng-repeat="item in ng track by $index">
+            <em class="t-r" ng-bind="item.num"></em>
+        </li>
+    </ul>
+
+    <ul class="list-4">
+        <li ng-repeat="item in locaList">
+            <em ng-repeat="v in item track by $index" ng-bind="v"></em>
+        </li>
+    </ul>
+
+    <ul class="list-4" ng-if="false">
+        <li ng-repeat="item in upList">
+            <em ng-repeat="v in item | orderBy:vs:false track by $index" ng-bind="v"></em>
+        </li>
+    </ul>
+
+    <ul class="list-4">
+        <li ng-repeat="item in prevList">
+            <em ng-repeat="v in item | orderBy:vs:false track by $index" ng-bind="v"></em>
+        </li>
+    </ul>
+
+    <ul class="list-4">
+        <li ng-repeat="item in nextList">
+            <em ng-repeat="obj in item" ng-bind="obj.v" ng-class="obj.over && 'f-red'"></em>
+        </li>
+    </ul>
+
+    <ul class="list-4">
+        <li ng-repeat="item in nextList">
+            <em ng-if="!obj.over" ng-repeat="obj in item | orderBy:'v'" ng-bind="obj.v"></em>
+            <i ng-if=""></i>
+        </li>
+    </ul>
+
+</div>
+
+<script>
+    $('body').on('click', '.list-4 li', function (e) {
+        $(this).toggleClass('disabled');
+    });
+</script>
+</body>
+</html>

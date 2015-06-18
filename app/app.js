@@ -2,122 +2,76 @@
  * Created by julien.zhang on 2015/1/26.
  */
 
-var fs = require('fs');
-var path = require('path');
 var express = require('express');
-var bodyParser = require('body-parser');
 var app = express();
 
 
-//全局变量定义
-global.ROOT_DIR = path.join(__dirname, '../');
-global.HELP_DIR = path.join(__dirname, './helper/');
-global.DATA_DIR = path.join(ROOT_DIR, './data/');
+//目录
+var path = require("path");
+GLOBAL.ROOT_DIR = path.join(__dirname, '../');
+GLOBAL.DATA_DIR = path.join(ROOT_DIR, './data/');
+GLOBAL.LOG_DIR = path.join(ROOT_DIR, './log/');
+GLOBAL.ASSETS_DIR = path.join(ROOT_DIR, '/assets');
+GLOBAL.USER_DIR = path.join(ROOT_DIR, './app/');
+GLOBAL.CONF_DIR = path.join(USER_DIR, './conf/');
+GLOBAL.SERVICE_DIR = path.join(USER_DIR, './services/');
+GLOBAL.HELPER_DIR = path.join(USER_DIR, './helper/');
+GLOBAL.ACTION_DIR = path.join(USER_DIR, './action/');
+GLOBAL.FILTER_DIR = path.join(USER_DIR, './filter/');
+GLOBAL.VIEW_DIR = path.join(USER_DIR, './view/');
+GLOBAL.STATIC_DIR = path.join(USER_DIR, './static/');
 
 
-//设置静态文件服务器目录
-app.use(express.static(__dirname + '/../'));
+//全局配置
+require(CONF_DIR + 'global.js');
 
+//环境相关配置
+require(CONF_DIR + app.get('env') + '.js')(app);
+
+
+//logger
+//app.use(require(CONF_DIR + 'logger.js').useLog());
 //控制台打印日志
 app.use(function(req, res, next){
     console.log('%s %s', req.method, req.url);
     next();
 });
 
-//允许跨域请求
-app.use( function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.header("X-Powered-By",'3.2.1');
-    if(req.method=="OPTIONS"){
-        res.send(200);//让options请求快速返回
-    }
-    else {
-        next();
-    }
-});
 
-//bodyParser组件
+//配置模板引擎
+var swig = require('swig');
+app.engine('html', swig.renderFile);
+app.set('view engine', 'html');
+app.set('views', VIEW_DIR);
+
+//express 视图缓存
+app.set('view cache', VIEWCACHE);
+//swig 视图缓存
+swig.setDefaults({ cache: false });
+
+
+
+//请求体解析
+var bodyParser = require('body-parser');
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
-//数据收集接口
-app.post('/gather/:type', function(req, res){
 
-    var lotteryParser = require(HELP_DIR + 'lottery-parser.js');
 
-    var data = req.body;
+//处理静态视图
+app.use('/static', express.static(STATIC_DIR.replace(/\/$/, '')));
 
-    var type = req.params.type;
+//处理静态资源文件,实际产品环境中静态资源由nginx或cdn处理
+app.use('/assets', express.static(ASSETS_DIR));
 
-    var jsonPath = path.join(DATA_DIR, type + '/data.json');
 
-    var jsPath = path.join(DATA_DIR, type + '/data.js');
+//应用路由
+require(HELPER_DIR + 'routes.js')(require(CONF_DIR + 'routes.js'), app);
 
-    fs.writeFileSync(jsonPath, JSON.stringify(data));
-    fs.writeFileSync(jsPath, 'window.NGGLOBAL = window.NGGLOBAL || {};');
-    
-    var dob = lotteryParser.resolve(data);
 
-    var t;
 
-    for (var i in dob) {
-
-        t = '\r\n' + 'NGGLOBAL.' + i + ' = window.' + i + ' = ' + JSON.stringify(dob[i]) + ';';
-
-        fs.appendFile(jsPath, t, function(err) {
-
-            err && console.log(err);
-
-        });
-
-    }
-
-    res.send('It\'s ok. To complete the receiving.');
-
+//start
+app.listen(2017, function () {
+    console.log('server start on port 2017.');
 });
 
-//
-app.get('/status', function(req, res){
-    var path = '../data/status.json';
-    var dobj = require(path);
-    res.send(dobj);
-});
-
-//
-app.post('/status/:type?', function(req, res){
-
-    var path = '../data/status.json';
-    var type = req.params.type;
-    var dobj = require(path);
-
-    dobj[req.body.type||type] = req.body.data;
-
-    //console.log(req.body);
-
-    fs.writeFileSync(path, JSON.stringify(dobj));
-    res.send({code:1});
-});
-
-//
-app.del('/status/:type?', function(reg, res){
-
-    var path = '../data/status.json';
-    var type = req.params.type;
-    var dobj = require(path);
-
-    if(type){
-        delete dobj[type];
-    }else{
-        dobj = {};
-    }
-
-    fs.writeFileSync(path, JSON.stringify(dobj));
-    res.send({code:1});
-});
-
-
-//启动server
-app.listen(2017);
-console.log('server start on port 2017.');

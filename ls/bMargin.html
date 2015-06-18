@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html ng-app="dbApp">
+<head>
+    <meta charset="UTF-8">
+    <title>bmargin</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/libs/normalize.css"/>
+    <link rel="stylesheet" type="text/css" href="../assets/css/libs/main.css"/>
+    <link rel="stylesheet" type="text/css" href="../assets/css/base.css"/>
+
+    <script src="../assets/js/libs/underscore-1.6.0.min.js"></script>
+    <script src="../assets/js/libs/jquery.min.js"></script>
+    <script src="../assets/js/libs/angular.min.js"></script>
+    <script src="../assets/js/libs/angular-route.js"></script>
+    <script src="../assets/js/common.js"></script>
+    <script src="../data/33.js"></script>
+    <script src="../assets/js/bottom.js"></script>
+    <style>
+        #view {
+            position: relative;
+            margin: 21px 0 0 0;
+        }
+
+        .dg{
+            position:absolute;
+            left:864px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="view" class="wraper-4 bg-3">
+
+
+    <ul class="list-3 dg" ng-controller="bMarginCtrl">
+        <li>
+            <i>dg</i>
+            <em ng-repeat="v in bdgs track by $index" ng-bind="v"></em>
+        </li>
+    </ul>
+
+    <ul class="list-3" ng-controller="bMarginCtrl">
+        <li ng-repeat="(k, item) in bMarginList">
+            <i ng-bind="k" ng-if="item"></i>
+            <em ng-repeat="v in item.margin track by $index" ng-bind="v"></em>
+        </li>
+    </ul>
+
+</div>
+
+<div id="menuBox">
+    <button role="verticalAlign">vertical-align</button>
+    <button onclick="saveStatus();">保存状态</button>
+    <button onclick="getStatus();">取得状态</button>
+</div>
+
+<script>
+
+    jQuery.support.cors = true;
+
+    $('body').delegate('.list-3 li', 'click', function (e) {
+        $(this).toggleClass('disabled');
+    });
+
+    $('[role=verticalAlign]').click(function(){
+        $('.list-3').toggleClass('v-bottom');
+    });
+
+
+    function getStatus(){
+        $.ajax({
+            type:'get',
+            url:'http://localhost:2014/status'
+        }).done(function(data){
+            var dobj = data.bMargin; console.log(dobj)
+            dobj.forEach(function(v, i, list){
+                $('.list-3 li:eq(?)'.replace('?',++v)).click();
+            })
+
+        }).fail(function(err){
+
+        });
+    }
+
+
+    function saveStatus(){
+        var data = [];
+        $('.list-3 li.disabled').each(function(i){
+            var index = $(this).index();
+            data.push(index);
+        });
+        console.log(data);
+        if(!data.length) return alert('data is null');
+        $.ajax({
+            type:'post',
+            dataType:'json',
+            url: 'http://localhost:2014/status/bMargin',
+            data: {data:data, type:'bMargin'}
+        }).done(function(data){
+            console.log(data);
+        }).fail(function(err){
+            console.log(err);
+        })
+    }
+</script>
+</body>
+</html>

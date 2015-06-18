@@ -1,0 +1,95 @@
+<!-- 微信分享组件模板 by Julien.zhang -->
+
+{% if UserAgent.isWeixin && isWeixinShare %}
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+<script>
+
+    (function () {
+
+        var _wxShare = window.wxShareConf || {
+            title: '',
+            desc: '',
+            imgUrl:'',
+            link:''
+        };
+
+        _wxShare.title = _wxShare.title || $('title').text();
+        _wxShare.desc = _wxShare.desc || _wxShare.title;
+        _wxShare.link = _wxShare.link || location.href;
+        _wxShare.imgUrl = _wxShare.imgUrl || __uri('../../../img/pic/share-icon.png');
+
+        wx.error(function (res) {
+            // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+            callWxApi(res);
+            //避免递归调用
+            callWxApi = function(){};
+        });
+
+        (function callWxApi(err) {
+
+            var data = {url: location.href};
+            if (err) data.err = err;
+
+            $.ajax({
+                url: '/weixin/sign',
+                type: "POST",
+                dataType: 'json',
+                data: data,
+                success: function (a) {
+                    var _a = a;
+                    wx.config({
+                        debug: false,
+                        appId: _a.appId,
+                        timestamp: _a.timestamp,
+                        nonceStr: _a.nonceStr,
+                        signature: _a.signature,
+                        jsApiList: ['checkJsApi', 'onMenuShareTimeline', 'onMenuShareAppMessage']
+                    });
+
+                    wx.ready(function () {
+
+                        wx.onMenuShareTimeline({
+                            title: _wxShare.title,
+                            link: _wxShare.shareLink,
+                            imgUrl: _wxShare.imgUrl,
+                            trigger: function () {
+                            },
+                            success: function () {
+                                //window.location.href = wxData.shareCallback
+                            },
+                            cancel: function () {
+                            },
+                            fail: function () {
+                            }
+                        });
+
+                        wx.onMenuShareAppMessage({
+                            title: _wxShare.title,
+                            desc: _wxShare.desc,
+                            link: _wxShare.shareLink,
+                            imgUrl: _wxShare.imgUrl,
+                            trigger: function () {
+                            },
+                            success: function () {
+                                //window.location.href = wxData.shareCallback
+                            },
+                            cancel: function () {
+                            },
+                            fail: function () {
+                            }
+                        })
+                    })
+                }
+            });
+        })();
+
+
+    })();
+
+
+</script>
+
+
+{% endif %}
