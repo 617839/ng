@@ -1,0 +1,36 @@
+/*
+布局相关样式定义
+=====================================================
+ */
+
+#page-wrap {
+
+}
+
+.lh-p1{
+    line-height: 1;
+}
+
+.lh-1d5{
+    line-height: 1.5;
+}
+.lh-2{
+    line-height: 2;
+}
+.lh-2d2{
+    line-height: 2.2;
+}
+.m-r-p1{
+    margin-right:1em;
+}
+.m-l-p1{
+    margin-left:1em;
+}
+
+
+.p-r-p1{
+    padding-right:1em;
+}
+.p-l-p1{
+    padding-left:1em;
+}

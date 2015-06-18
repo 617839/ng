@@ -105,15 +105,18 @@ classifyByxx = (function(){
 		arr.push(i);
 	}
 
-	return {0:arr,1:arr.slice(),2:arr.slice(),3:arr.slice(),4:arr.slice(),5:arr.slice(),6:arr.slice(),7:arr.slice()};
+	return {0:arr,1:arr.slice(),2:arr.slice(),3:arr.slice(),4:arr.slice(),5:arr.slice(),6:arr.slice(),7:arr.slice(),8:arr.slice(),9:arr.slice(),10:arr.slice(),11:arr.slice(),12:arr.slice(),13:arr.slice()};
 })();
 
 
 
 
+//s2d
+classifyByS2d = s2d();
 
 
-
+//u2d
+classifyByU2d = u2d();
 
 
 

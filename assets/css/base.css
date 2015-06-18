@@ -153,6 +153,7 @@ body{
     text-align: center;
     font-style: normal;
     margin: 1px 0 0 1px;
+    overflow: hidden;
 }
 
 .list-3 {

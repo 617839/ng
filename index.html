@@ -251,9 +251,9 @@
 </script>
 
 	<script id="btnGroup4Temp" type="text/html">
-		<!--<button role="store" style="position: absolute;top:-28px;right:108px;">store</button>
+		<button role="store" style="position: absolute;top:-28px;right:108px;">store</button>
 		<button role="apply" style="position: absolute;top:-28px;right:162px;">apply</button>
-		<button role="reset" style="position: absolute;top:-28px;right:218px;">reset</button>-->
+		<button role="reset" style="position: absolute;top:-28px;right:218px;">reset</button>
 		<button class="set">set</button>
 		<button class="make2" data-name="<%= name %>" data-refName="<%= refName %>" >make2</button>
 	</script>
@@ -391,6 +391,24 @@
 		})).appendTo('body');
 
 
+
+	$(template('dobjTemp', {
+		dobj : classifyByS2d,
+		name: 'classifyByS2d',
+		id : 'classifyByS2d',
+		embedTemp: 'btnGroup4Temp',
+		refName : 'downMarginRef'
+	})).appendTo('body');
+
+
+
+	$(template('dobjTemp', {
+		dobj : classifyByU2d,
+		name: 'classifyByU2d',
+		id : 'classifyByU2d',
+		embedTemp: 'btnGroup4Temp',
+		refName : 'downMarginRef'
+	})).appendTo('body');
 
 
 </script>

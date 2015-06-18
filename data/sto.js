@@ -210,6 +210,7 @@ module.exports = {
 
         var singleDigitRef = [];
         var bdgs = [];
+        var bmr = [];
 
         (function(ng){
 
@@ -246,15 +247,58 @@ module.exports = {
         return {
             ng: ng,
             opnRedBall: ng[ng.length - 1].red.slice(),
-            singleDigitRef: singleDigitRef,
-            bdgs : bdgs,
-            colCountRef : colCountRef,
             colMap: colMap,
+            bdgs : bdgs,
             redMargin: reds,
             bMargin: bMargin,
+            colCountRef : colCountRef,
+            singleDigitRef: singleDigitRef,
             downMarginRef: prev,
+            upMarginRef: up,
             next: next,
-            upMarginRef: up
+
+            countRm: (function(ng){
+
+                return require('./lib/count-down-margin.js')(ng);
+
+            })(ng),
+
+            countUm: (function(up){
+
+                var result = require('./lib/count-margin.js')(up, {start:0, end:40});
+
+                for(var i in result){
+                    result[i].num =  ng[i] && ng[i].num;
+                }
+
+                return result;
+
+            })(up),
+
+            countDm: (function(prev){
+
+                var result = require('./lib/count-margin.js')(prev, {start:0, end:40});
+
+                for(var i in result){
+                    result[i].num =  ng[i] && ng[i].num;
+                }
+
+                return result;
+
+            })(prev),
+
+            countSm: (function(singleDigitRef){
+
+                var result = require('./lib/count-margin.js')(singleDigitRef, {start:0, end:10});
+
+                for(var i in result){
+                    result[i].num =  ng[i] && ng[i].num;
+                }
+
+                return result;
+
+            })(singleDigitRef)
+
         };
 
 
