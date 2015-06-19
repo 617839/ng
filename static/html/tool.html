@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>方案-1</title>
+<link href="../css/common/style.css" rel="stylesheet" type="text/css" />
+
+<script src="../js/vendor/underscore-1.6.0.min.js"></script>
+<script src="../js/vendor/jquery.min.js"></script>
+<script src="../js/vendor/template.js"></script>
+
+<script src="../../data/33/data.js"></script>
+<script src="../js/common/help.js"></script>
+<script src="../js/common/doc.js"></script>
+<script src="../js/common/init.js"></script>
+<!-- template
+  	================================================== 
+    ================================================== -->
+    
+<script id="groupListItemTemp" type="text/html">
+    <% var i, j, k, obj, group, data, details, item;
+	for ( i in list ) { obj = list[i]; group = obj.group; data = obj.data; details = obj.details; %>
+        <li optional="1"  <% for( j in data ) { %> data-<%=j%>="<%= data[j] %>" <% } %> >
+			<p>
+				<input type="checkbox" name="itemIsSelected" />&nbsp;&nbsp;
+            	<span> 
+					<% for ( k in group ) {  %>
+						<b><%=group[k]%></b>
+					<%}%>
+           		</span>
+				&nbsp;&nbsp;
+				<button class="make"  data-group="<%= data.group %>">make</button>
+				&nbsp;&nbsp;
+				<button class="visual" data-type="<%= type %>" data-push="<%= data.group %>" >visual</button>
+			</p>
+			<div class="details">
+				<%  for (j in details) { item = details[j] %>
+                		<p class="<%= j %>" >
+							<% for (k in item) {  %>
+									<b><%=item[k]%></b>
+							<%}%>
+							<% if(data[j]){ %>
+								<button class="sortBtn" data-name="<%= j %>" data-value="<%= data[j] %>" > &gt;&gt; </button>
+							<%}%>
+                		</p>
+				<%}%>
+			</div>
+		</li>
+    <%}%>
+</script>
+<script id="numSelListItemTemp" type="text/html">
+    <% for (var i in list) { 
+				 var obj = list[i];
+				 var redBall = obj.redBall;
+				 var details = obj.details;
+				 var data = obj.data;
+				 var map = {upMarginRef: 'up', downMarginRef: 'down', singleDigitRef: 'digit'};
+     %>
+        <li optional="1" <% for( i in data ) { %> data-<%=i%>="<%= data[i] %>" <% } %> >
+			 <input type="checkbox" name="itemIsSelected" />
+			 &nbsp;&nbsp;
+             <p class="redBall" >
+					<% for (var k in redBall) { %>
+							<b><%=redBall[k]%></b>
+					<%}%>
+             </p>
+			
+           <div class="details">
+				<%  for (var i in details) { var wraper = details[i] %>
+					<div class="<%= i %> wraper">
+						<%  for (var j in wraper) { var item = wraper[j] %>
+                			<p class="<%= j %>" >
+								<% for (var k in item) { %>
+									<b><%=item[k]%></b>
+								<%}%>
+								<% if(data[j]){ %>
+									<button class="sortBtn" data-name="<%= j %>" data-value="<%= data[j] %>" > &gt;&gt; </button>
+								<%}%>
+                			</p>
+						<%}%>
+						<% if(/Ref$/.test(i)) { %>
+						<button class="visual" data-type="<%= i %>" data-push="<%= data[map[i]] %>" >visual</button>
+						<%}%>
+					</div>
+				<%}%>
+			</div>
+		</li>
+    <%}%>
+</script>
+<script id="sortTemp" type="text/html">
+    <div id="sortBox" >
+		<div>
+			<label> ^ </label><input type="radio" name="reg" value="^" checked />&nbsp;&nbsp;
+			<label> $ </label><input type="radio" name="reg" value="$" />&nbsp;&nbsp;
+			<label> * </label><input type="radio" name="reg" value="*" />&nbsp;&nbsp;
+			<label> ! </label><input type="radio" name="reg" value="!" />&nbsp;&nbsp;&nbsp;
+			
+			<% if(filterPattern){ %>
+				<label> P- </label><input type="checkbox" name="filterPattern" checked />
+			<%}%>
+		</div>
+		<label> <%= name %> </label>
+		<input type="text" value="<%= val %>" />&nbsp;
+		<button data-name="<%= name %>" >sort</button>
+		<span class="remove"> X </span>
+    </div>
+</script>
+<script id="numSelRefListItemTemp" type="text/html">
+    <% for (var i in list) { var obj = list[i]; %>
+        <li class="<%= className %>">
+				<% for (var j in obj) { var item = obj[j] %>
+                		<p class="<%= j %>" >
+							<% for (var k in item) {  %>
+									<b><%=item[k]%></b>
+							<%}%>
+                		</p>
+				<%}%>
+		</li>
+    <%}%>
+</script>
+<script id="boxTemp" type="text/html">
+<div  id="<%= id && id+'Box' || '' %>" class="layer" data-type="<%= type %>" >
+	<% include( 'listTemp' ) %>
+
+	<div class="operateBar">
+		<strong id="lScroll"> &lt; </strong>
+		<strong id="tScroll"> ▲ </strong>
+		<strong id="bScroll"> ▼ </strong>
+		<strong id="rScroll"> &gt; </strong>
+
+		<span class="sortInfo">选择: <b></b></span>
+		<span class="info"><b><%= info %></b></span>
+		<button role="allComb">组合所有</button>
+		<button class="cancel">撤消删除</button>
+		<button class="not">取消所选</button>
+		<button class="reset">反选</button>
+		<button class="del">删除所选</button>
+		<button class="expandable">收缩</button>
+		<button class="showRef" data-type="<%= type %>">显示参照</button>
+		<button class="toggle">切换细节</button>
+		<button class="copy">拷贝</button>
+		<button class="close">关闭窗口</button>
+	</div>
+	<div class="tabBar">
+		<% var map = {}; var detailss = list[0].details; %>
+		<% for (var ii in detailss) { %>
+			<strong data-tab="<%= ii %>"><%= ii %></strong>
+		<%}%>
+	</div>
+	<div class="copyBox"></div>
+</div>
+</script>
+<script id="listTemp" type="text/html">
+    <ul id="<%= id || '' %>" class="optionalList">
+			<% include( embedTemp || 'groupListItemTemp') %>
+    </ul>
+</script>
+<script id="list2Temp" type="text/html">
+    <ul id="<%= id || '' %>" >
+			<% include( embedTemp || 'groupListItemTemp') %>
+    </ul>
+</script>
+<script id="refListItemTemp" type="text/html">
+    <% for (var i in list) { var obj = list[i]; %>
+        <li class="<%= className || '' %>">
+				<% for (var j in obj) { var item = obj[j] %>
+                		<p class="<%= j %>" >
+							<% for (var k in item) {  %>
+									<b><%=item[k]%></b>
+							<%}%>
+                		</p>
+				<%}%>
+		</li>
+    <%}%>
+</script>
+
+<script id="dobjTemp" type="text/html">
+<div id="<%= id && id+'Box' %>" class="dobjBox" name="<%= id %>">
+<span class="name"><%= name %></span>
+
+<% include( embedTemp || 'btnGroup1Temp') %>
+
+<ul class="dobj" id="<%= id %>">
+    <% for (var k in dobj) { var item = dobj[k]; %>
+		<li>
+        	<div class="key">
+				<a href="#" class="lessen">—</a>
+				<span><i class="selected"><%= k %></i> <input type="checkbox" value="<%=k %>" checked /> </span>
+				<a href="#" class="add">+</a>
+			</div>
+			<span>
+				<% for (var i in item) {  %>
+					<em> <%=item[i]%> </em>
+					<input type="checkbox" value="<%=item[i]%>" data-key="<%= k %>" name="<%= name %>" checked />
+				<%}%>
+			</span>
+
+			<% if(xx) { %>
+
+			&nbsp;&nbsp;<button role="reverse" onclick="xxReverse(event);">reverse</button>
+
+			<% } %>
+		</li>
+    <%}%>
+</ul>
+<div class="setBox" role="setBox">
+    <% for (var k in dobj) { var item = dobj[k]; %>
+        	<div class="key">
+				<a href="#" class="lessen">—</a>
+				<span><i><%= k %></i> <input type="checkbox" value="<%=k %>" /> </span>
+				<a href="#" class="add">+</a>
+			</div>
+    <%}%>
+	<input type="number" value="6" />
+</div>
+</div>
+</script>
+
+<script id="dobj2Temp" type="text/html">
+<div id="<%= id && id+'Box' %>" class="dobjBox dobj2Box">
+<span class="name"><%= name %></span>
+
+<% include( embedTemp || 'btnGroup3Temp') %>
+
+<ul class="dobj dobj2" id="<%= id %>">
+    <% for (var i in dobj) { %>
+		<li>
+			<em> <%=dobj[i]%> </em>
+			<input type="checkbox" value="<%=dobj[i]%>" name="<%= name %>" checked />
+		</li>
+    <% } %>
+</ul>
+<% if (name == 'reds') { %>
+	<div id="filterByRefArr">
+		<input type="text" name="" /> <button class="add">add</button>
+	</div>
+<% } %>
+</div>
+</script>
+
+<script id="btnGroup1Temp" type="text/html">
+<button class="set">set</button>
+<button class="make" data-name="<%= name %>" data-refName="<%= refName %>" >make</button>
+</script>
+<script id="btnGroup2Temp" type="text/html">
+<button class="set">set</button>
+<button class="make2" data-name="<%= name %>" data-refName="<%= refName %>" >make2</button>
+</script>
+<script id="btnGroup3Temp" type="text/html">
+<button class="invert">invert</button>
+<button class="combine">combine</button>
+</script>
+
+	<script id="btnGroup4Temp" type="text/html">
+		<button role="store" style="position: absolute;top:-28px;right:108px;">store</button>
+		<button role="apply" style="position: absolute;top:-28px;right:162px;">apply</button>
+		<button role="reset" style="position: absolute;top:-28px;right:218px;">reset</button>
+		<button class="set">set</button>
+		<button class="make2" data-name="<%= name %>" data-refName="<%= refName %>" >make2</button>
+	</script>
+<!-- template
+  	================================================== 
+    ================================================== -->
+</head>
+<body>
+<div id="delBox"></div>
+<script>
+	
+	window.classifyByIndex = 2;
+	window.blueBallIsRandom = 0;
+
+	window.groupRefList = window[ refMap[classifyByIndex] ];
+
+	window.classifyList = window[window.classifyBy[classifyByIndex]];
+	
+
+	
+	////////////////////////////////////////////////////////////
+	
+	window.filter = function(loca, col, upMargin, downMargin, singleDigit) {
+		//if(loca[1] != 1) return false;
+		//if(compare(col,colNumberRef[colNumberRef.length-1],2)) return false;
+		//if(compare(upMargin,upMarginRef[upMarginRef.length-1],1)) return false;
+		//if(compare(downMargin,downMarginRef[downMarginRef.length-1],1)) return false;
+		//if(compare(singleDigit,singleDigitRef[singleDigitRef.length-1],2)) return false;
+		//if(singleDigit[5] != 7 ) return false;
+	};
+	
+	window.groupFilter = function(group,unique,loca){
+		//if(loca[0] > 2) return false;
+		//if(loca[1] == 2) return false;
+		
+	}
+
+
+	////////////////////////////////////////////////////////////
+	
+		$(template('dobjTemp', {
+			dobj : classifyByDownMargin,
+			name: 'classifyByDownMargin',
+			id : 'classifyByDownMarginList',
+			refName : 'downMarginRef'
+		})).appendTo('body');	
+	
+	
+	
+		$(template('dobjTemp', {
+			dobj : classifyByDownMarginLocaMap,
+			name: 'classifyByDownMarginLocaMap',
+			id : 'classifyByDownMarginLocaMapList',
+			embedTemp: 'btnGroup2Temp',
+			refName : 'downMarginRef'
+		})).appendTo('body');	
+		
+		
+	
+		$(template('dobjTemp', {
+			dobj : classifyByUpMargin,
+			name: 'classifyByUpMargin',
+			id : 'classifyByUpMarginList',
+			refName : 'upMarginRef'
+		})).appendTo('body');	
+		
+		
+		$(template('dobjTemp', {
+			dobj : classifyByUpMarginLocaMap,
+			name: 'classifyByUpMarginLocaMap',
+			id : 'classifyByUpMarginLocaMapList',
+			embedTemp: 'btnGroup2Temp',
+			refName : 'upMarginRef'
+		})).appendTo('body');			
+	
+	
+	
+		
+		$(template('dobjTemp', {
+			dobj : classifyByColCount,
+			name: 'classifyByColCount',
+			id : 'classifyByColCountList',
+			refName : 'colCountRef'
+		})).appendTo('body');		
+	
+	
+	
+	
+		$(template('dobjTemp', {
+			dobj : classifyBySingleDigit,
+			name: 'classifyBySingleDigit',
+			id : 'classifyBySingleDigitList',
+			refName : 'singleDigitRef'
+		})).appendTo('body');			
+	
+	
+		
+		
+		$(template('dobjTemp', {
+			dobj : classifyBySingleDigitLocaMap,
+			name: 'classifyBySingleDigitLocaMap',
+			id : 'classifyBySingleDigitLocaMapList',
+			embedTemp: 'btnGroup2Temp',
+			refName : 'singleDigitRef'
+		})).appendTo('body');		
+	
+	
+	
+	
+		$(template('dobj2Temp', {
+			dobj : blues,
+			name: 'blues',
+			id : 'blues',
+			refName : ''
+		})).appendTo('body');		
+	
+	
+	
+		$(template('dobj2Temp', {
+			dobj : reds,
+			name: 'reds',
+			id : 'reds',
+			refName : ''
+		})).appendTo('body');
+
+
+
+		$(template('dobjTemp', {
+			dobj : classifyByxx,
+			name: 'classifyByxx',
+			id : 'classifyByxx',
+			xx : true,
+			embedTemp: 'btnGroup4Temp',
+			refName : 'downMarginRef'
+		})).appendTo('body');
+
+
+
+	$(template('dobjTemp', {
+		dobj : classifyByS2d,
+		name: 'classifyByS2d',
+		id : 'classifyByS2d',
+		embedTemp: 'btnGroup4Temp',
+		refName : 'downMarginRef'
+	})).appendTo('body');
+
+
+
+	$(template('dobjTemp', {
+		dobj : classifyByU2d,
+		name: 'classifyByU2d',
+		id : 'classifyByU2d',
+		embedTemp: 'btnGroup4Temp',
+		refName : 'downMarginRef'
+	})).appendTo('body');
+
+
+</script>
+</body>
+</html>

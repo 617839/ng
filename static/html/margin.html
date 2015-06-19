@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="dbApp">
+<head>
+    <meta charset="UTF-8">
+    <title>margin</title>
+    <link rel="stylesheet" type="text/css" href="../css/vendor/normalize.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/vendor/main.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common/base.css"/>
+
+    <script src="../js/vendor/underscore-1.6.0.min.js"></script>
+    <script src="../js/vendor/jquery.min.js"></script>
+    <script src="../js/vendor/angular.min.js"></script>
+
+    <script src="../../data/33/data.js"></script>
+    <script src="../js/common/common.js"></script>
+    <script src="../js/common/bottom.js"></script>
+
+    <style>
+        #view {
+            position: relative;
+            margin: 21px 0 0 0;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="view" class="wraper-4 bg-3">
+
+    <ul class="list-3" ng-controller="marginCtrl">
+        <li ng-repeat="(k, item) in reds">
+            <i ng-bind="k" ng-if="item"></i>
+            <em ng-repeat="v in item.margin track by $index" ng-bind="' '+v"></em>
+        </li>
+    </ul>
+
+</div>
+
+<div id="menuBox">
+    <button>vertical-align</button>
+</div>
+
+<script>
+    $('body').delegate('.list-3 li', 'click', function (e) {
+        $(this).toggleClass('disabled');
+    });
+
+    $('#menuBox button').click(function(){
+        $('.list-3').toggleClass('v-bottom');
+    })
+</script>
+</body>
+</html>

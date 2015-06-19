@@ -1,0 +1,731 @@
+@charset "utf-8";
+/**********************************************************************/
+/* reset */
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+	margin: 0;
+	padding: 0;
+}
+fieldset, img {
+	border: 0;
+}
+/* remember to define focus styles! */
+:focus {
+	outline: 0;
+}
+address, caption, cite, code, dfn, em, strong, th, var, optgroup {
+	font-style: normal;
+	font-weight: normal;
+}
+abbr, acronym {
+	border: 0;
+	font-variant: normal;
+}
+input, button, textarea, select, optgroup, option {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	font-weight: inherit;
+}
+code, kbd, samp, tt {
+	font-size: 100%;
+}
+/*@purpose To enable resizing for IE */
+/*@branch For IE6-Win, IE7-Win */
+input, button, textarea, select {
+ *font-size: 100%;
+}
+body {
+	line-height: 1.5;
+}
+ol, ul {
+	list-style: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+caption, th {
+	text-align: left;
+	white-space: nowrap;
+}
+sup, sub {
+	font-size: 100%;
+	vertical-align: baseline;
+}
+/* remember to highlight anchors and inserts somehow! */
+:link, :visited, ins {
+	text-decoration: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
+button{
+	padding:2px;
+	cursor:pointer;
+}
+b{
+	font-weight:normal;
+}
+/* reset */
+/**********************************************************************/
+/**********************************************************************/
+/* 基本设置  */
+body{
+	/*min-height:1200px;
+	 font: 12px/1.5 tahoma,arial,simsun,sans-serif; */
+	min-height:2400px;
+}
+pre{
+	font-size:1.2em;
+}
+b{
+	display:inline-block;
+	width:1em;
+	text-align:center;
+}
+
+/* 基本设置 */
+/**********************************************************************/
+/**********************************************************************/
+/* 通用类 */
+
+.table{
+	border-collapse: collapse;
+	line-height:1.4!important;
+}
+.table td {
+	border:solid 1px #c2c5d8;
+	width:3.6em;
+	text-align:center;
+}
+.ls{
+	border-top:solid 1px #eee!important;
+}
+.bg{
+	background-color:#eee!important;
+}
+
+input[name="itemIsSelected"]{
+	width:24px;
+	height:24px;
+}
+input[name="reg"]{
+	width:16px;
+	height:16px;
+}
+/* 通用类 */
+/**********************************************************************/
+/**********************************************************************/
+/* 模块类 */
+.layer{
+	width:100%;
+	min-height:1200px;
+	background:#fff;
+}
+.layer li[optional="1"]:hover{
+	background-color:#eee!important;
+}
+.operateBar,
+.tabBar
+{
+	position:fixed;
+	width:100%;
+	height:32px;
+	line-height:32px;
+	top:0px;
+	left:0;
+	background:blue;
+	text-align:right;
+}
+.tabBar{
+	top:32px;
+	background:#E7E7E7;
+	background:rgba(175, 175, 175, 0.82);
+	font-size:0.8em;
+	text-align:left;
+}
+
+.tabBar strong[data-tab]{
+	margin-left:16px;
+	color:#000;
+	cursor:pointer;
+}
+.tabBar strong:nth-child(1){
+	margin-left:45px;
+}
+.tabBar strong[data-tab]:after{
+	content:':hide';
+}
+.tabBar strong.white[data-tab]{
+	color:#fff;
+}
+.tabBar strong.white[data-tab]:after{
+	content:':show';
+}
+.copyBox{
+	position:absolute;
+	top:32px;
+	left:0;
+	z-index:2000;
+	display:none;
+	width:290px;
+	padding:10px;
+	background:#fff;
+	border:solid 1px gray;
+	white-space: pre-line;
+}
+.copyBox textarea{
+	width:280px;
+	height:240px;
+	border:solid 1px gray;
+}
+.info{
+	font-weight:bold;
+	color:#fff;
+	font-size:16px;
+	padding:0 20px;
+}
+.sortInfo{
+	padding:0 20px;
+	color:#fff;
+	font-size:16px;
+}
+
+.selected{
+	background:#FADCDE;
+}
+
+.collapse{
+	width:40px!important;
+	height:26px!important;
+	min-height:26px!important;
+	overflow:hidden!important;
+}
+
+.remove{
+	position:absolute;
+	right:0;
+	top:0;
+	padding:0 6px;
+	background:#E7E7E7;
+	line-height:1.2;
+	cursor:pointer;
+}
+
+.optionalList{
+	margin:64px 0 0 0;
+}
+
+.optionalList li[optional="1"]{
+	
+}
+.optionalList li[optional="1"] .redBall{
+	color:#000;
+}
+
+.optionalList .details,
+.optionalList .wraper,
+.optionalList p
+{
+	display:inline-block;
+	/*font-family: Arial, 'Microsoft Yahei', Simsun, sans-serif;*/
+}
+
+.details{
+	margin:0 0 0 30px;
+}
+
+.details p{
+	position:relative;
+	margin:0 45px 0 25px;
+	color:#4E4E4E;
+}
+.details .wraper{
+	display:none;
+}
+.details .wraper.show{
+	display:inline-block;
+}
+.details .red,
+.details .col
+{
+}
+.details .upUnique,
+.details .downUnique,
+.details .digitUnique{
+	width:136px;
+	margin: 0 45px 0 -15px;
+	color: #ADADAD;
+}
+.details .upLoca,
+.details .downLoca,
+.details .digitLoca
+{
+	margin: 0 75px 0 -15px;
+	color: #ADADAD;
+}
+.details .sortBtn{
+	position:absolute;
+	top:4px;
+	right:-28px;
+	font-size: 0.8em;
+	opacity: 0.4;
+	border: none;
+	background: none;	
+}
+
+
+
+/*****************************************************/
+
+.dobjBox{
+	position:absolute;
+	top:48px;
+	font: 12px/1.5 tahoma,arial,simsun,sans-serif;
+	border:solid 1px blue;
+}
+.dobjBox .name{
+	position:absolute;
+	top:-32px;
+	font-size:1.4em;
+}
+.dobjBox .make, .dobjBox .make2, .dobjBox .combine{
+	position:absolute;
+	top:-28px;
+	right:0;	
+}
+.dobjBox .set, .dobj2Box .invert{
+	position:absolute;
+	top:-28px;
+	right:64px;
+}
+.dobjBox .setBox{
+	display:none;
+	position:absolute;
+	width:240px;
+	top:-1px;
+	right:-1px;
+	background:#fff;
+	border:solid 1px gray;
+}
+.dobjBox .setBox .key{
+	margin:7px 5px;
+}
+.dobjBox .setBox input[type="number"]{
+	position:absolute;
+	top:-1px;
+	right:-1px;
+	width:36px;
+	padding:3px 0;
+}
+.dobj li{
+	margin:7px 5px;
+}
+ .dobj .key, .dobj span{
+	display:inline-block;
+}
+.dobj .key{
+	width:108px;
+	padding:0 5px 0 10px;
+	position:relative;
+}
+.dobj .key .add, .dobj .key .lessen{
+	position:absolute;
+}
+ .dobj .key .add{
+ 	margin-left:5px;
+}
+ .dobj .key .lessen{
+ 	left:0px;
+}
+.key i, .dobj em{
+	display:inline-block;
+	width:24px;
+	margin:0 2px;
+	line-height:24px;
+	text-align:center;
+	font-weight:bold;
+	border-radius:12px;
+	cursor:pointer;	
+}
+.key i{
+	margin:0 0 0 3px;
+	font-style:normal;
+	color: #4B4B4B;
+	background: #E2E2E2;	
+}
+.key i.selected{
+	color:#fff;
+	background:blue;
+}
+
+.dobj em{
+	color:#fff;	
+	background:red;
+}
+.dobj em.cancel{
+	color: #4B4B4B;
+	background: #E2E2E2!important;
+}
+.dobjBox input[type="checkbox"]{
+	display:none;
+}
+
+.dobj2 li{
+	display:inline-block;
+}
+.dobj2 em{
+	background:blue;
+}
+
+
+/* 模块类 */
+/**********************************************************************/
+/**********************************************************************/
+/* 具体模块  */
+#redsBox{
+	top:900px;
+	left:40px;
+	width:480px;
+}
+#reds em{
+	background:red;
+}
+#bluesBox{
+	top:800px;
+	left:40px;
+	width:700px;
+}
+#classifyByDownMarginListBox{
+	top:40px;
+	left:40px;
+	width:360px;
+}
+#classifyByDownMarginLocaMapListBox{
+	top:640px;
+	left:20px;
+	width:400px;	
+}
+#classifyByUpMarginListBox{
+	top:40px;
+	left:440px;
+	width:440px;
+}
+#classifyByUpMarginLocaMapListBox{
+	top:560px;
+	left:460px;
+	width:400px;	
+}
+#classifyBySingleDigitListBox{
+	top:40px;
+	left:920px;
+	width:320px;	
+}
+#classifyBySingleDigitListBox .dobj .key{
+	width:120px;
+}
+#classifyBySingleDigitLocaMapListBox{
+	top:420px;
+	left:920px;
+	width:340px;	
+}
+#classifyByColCountListBox{
+	top:760px;
+	left:840px;
+	width:420px;
+}
+#classifyByColCountListBox .dobj .key{
+	width:110px;
+}
+
+
+#classifyByxxBox{
+	top:1200px;
+	left:20px;
+	width:70%;
+}
+
+#classifyByS2dBox{
+	top:1800px;
+	left:20px;
+	width:40%;
+}
+
+#classifyByU2dBox{
+	top:1800px;
+	right:20px;
+	width:40%;
+}
+
+/******************************************/
+/*  */
+
+#numSelListBox{
+	position:absolute;
+	z-index:100;
+	background:#fff;
+	border-bottom: 8px solid #2CAA2C;
+}
+#numSelList{
+}
+#numSelList li{
+	padding:20px 5px 5px 30px;
+	border-bottom:1px #eee solid;
+	height:48px;
+	position:relative;
+}
+
+#numSelList .loca, #numSelList .col, #numSelList .up, #numSelList .down, #numSelList .digit, 
+#numSelList .locaRef, #numSelList .colRef, #numSelList .upRef, .downRef, .digitRef
+{
+}
+#numSelList .locaRef, #numSelList .colRef, #numSelList .upRef, #numSelList .downRef, #numSelList .digitRef{
+	display:none;
+}
+
+#numSelList .loca, #numSelList .locaRef{
+}
+#numSelList .col, #numSelList .colRef{
+}
+#numSelList .up, #numSelList .upRef{
+}
+#numSelList .down, #numSelList .downRef{
+}
+#numSelList .digit, #numSelList .digitRef{
+}
+
+#numSelList .upLoca{
+}
+#numSelList .downLoca{
+}
+#numSelList .digitLoca{
+}
+#numSelList .upLoca b,
+#numSelList .downLoca b,
+#numSelList .digitLoca b
+{
+	width:7px;
+}
+/** **/
+
+#numSelList .loca b, #numSelList .col b, #numSelList .digit b,
+#numSelList .locaRef b, #numSelList .colRef b, #numSelList .digitRef b
+{
+}
+
+#sortBox{
+	background:#fff;
+	width:328px;
+	padding:2px 0 2px 4px;
+	border:solid 2px silver;
+	position: absolute;
+	top: 0;
+	right: -348px;
+	z-index:10000;
+	box-shadow: 2px 2px 1px #D3D3D3;
+	font-family: Arial, 'Microsoft Yahei', Simsun, sans-serif;
+}
+#sortBox input[type="text"]{
+	width:170px;
+}
+
+#filterByRefArr input[type="text"]{
+	width:420px;
+}
+/******************************************/
+/*  */
+#numSelRefList{
+	position:fixed;
+	z-index:101;
+	top:32px;
+	right:0px;
+	padding:10px;
+	color:rgba(20,20,20,1);
+	background-color:rgba(199, 223, 228, 1);
+	pointer-events: none;
+}
+
+#numSelRefList li{
+	position:relative;
+	padding:0 5px;
+	height:28px;
+	border-bottom:solid 1px rgba(230,230,234,1);
+}
+#numSelRefList li:last-child{
+	border-bottom:none;
+}
+#numSelRefList li.ls{
+	border-top:solid 1px rgba(230,230,234,1);
+	border-bottom:none;
+}
+#numSelRefList li p{
+	display:inline-block;
+	width:180px;
+	margin-left:50px;
+	line-height:2;
+}
+#numSelRefList li p.loca{
+	width:120px;
+}
+#numSelRefList li p:first-child{
+	margin-left:10px;
+}
+#numSelRefList li b{
+	width:18px;
+}
+
+/******************************************/
+/*  */
+
+#groupListBox{
+	position:absolute;
+	left:0;
+	border: solid 0px #c2c5d8;
+}
+#groupListBox .tabBar{
+	display:none;
+}
+#groupList{
+}
+#groupList li{
+	line-height:1.6;
+	height:48px;
+	padding: 5px 5px 5px 30px;
+	border-bottom:1px #eee solid;
+}
+#groupList li:hover{
+	background-color:#eee;
+}
+
+#groupList .details p{
+	display:inline-block;
+	margin:0 30px;
+	position:relative;
+}
+/******************************************/
+/*  */
+
+#refList{
+	position:fixed;
+	top:32px;
+	right:0px;
+	width:700px;
+	padding:2px 10px;
+	background-color:rgba(199, 223, 228, 1);
+	pointer-events: none;
+}
+#refList li{
+	position:relative;
+	padding:0 5px;
+	height:28px;
+	line-height:1.6;
+	border-bottom:solid 1px #efefef;	
+}
+#refList li:last-child{
+	border-bottom:none;
+}
+#refList li p{
+	display:inline-block;
+	width:220px;
+	margin:0 0 0 40px;
+}
+#refList li p.loca{
+	width:120px;
+}
+#refList li b{
+	width:1.5em;
+}
+
+#refList li p:nth-child(1){
+	margin:0;
+}
+
+#delBox{
+	display:none;
+}
+#tScroll,
+#bScroll,
+#lScroll,
+#rScroll{
+	position:absolute;
+	width:32px;
+	height:32px;
+	text-align:center;
+	vertical-align:middle;
+	background:rgba(0,0,0,0);
+	cursor:pointer;
+	color: #fff;
+	font-size: large;
+	font-weight: bold;
+}
+#tScroll{
+	left:42px;
+}
+#bScroll{
+	left:84px;
+}
+#lScroll{
+	left:0;
+}
+#rScroll{
+	left:130px;
+}
+
+/**********************************************/
+/* */
+
+
+
+.input-x{
+	position:absolute;
+	width:40px;
+	height:20px;
+	border:none;
+	background:transparent;
+	margin:1px 0 0 1px;
+	text-align: center;
+	line-height: 20px;
+	transition: all 0.3s ease-in;
+}
+
+.input-x:focus, .input-x:hover{
+	background: blue!important;
+	color: #fff;
+}
+
+
+/**********************************************************************/
+/**********************************************************************/
+/* 滚动条样式
+
+ ::-webkit-scrollbar {
+    width: 10px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(231,231,231,0.8); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(231,231,231,0.4); 
+}
+
+/* 滚动条样式 */
+/**********************************************************************/
+/**********************************************************************/
+/* ▲△☆★□ ■○●▽▼◇◆ */

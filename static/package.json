@@ -1,0 +1,10 @@
+{
+    "name": "ng front end",
+    "version": "0.1.0",
+    "description": "",
+    "devDependencies": {
+        "fis":"1.8.6",
+        "fis-postpackager-simple":"0.0.18"
+    },
+    "scripts": {}
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/common/common.css">
+</head>
+
+<body>
+<a class="btn btn-0" href="tool.html">tool</a>
+<a class="btn btn-0" href="margin.html">margin</a>
+<a class="btn btn-0" href="bMargin.html">bMargin</a>
+<a class="btn btn-0" href="list.html">list</a>
+<a class="btn btn-0" href="visual.html">visual</a>
+<a class="btn btn-0" href="bottom.html">bottom</a>
+<a class="btn btn-0" href="count.html">count</a>
+<a class="btn btn-0" href="sdMargin.html">sdMargin</a>
+
+<button class="btn btn-1-1">open</button>
+<script src="../js/vendor/jquery.min.js"></script>
+<script>
+    var links = [];
+    var ws = [];
+
+    $('a').each(function(i){
+        i && links.push(this.href);
+    });
+
+
+    var isOpen;
+    $('button').on('click', function(e){
+        var w;
+        if(isOpen && confirm('确定关闭所有窗口？')){
+
+            this.innerText = 'open';
+
+            while(w = ws.pop()) w.close();
+
+        }else{
+
+            this.innerText = 'close';
+
+            while(w = ws.pop()) w.close();
+            links.forEach(function(link){
+                ws.push(window.open(link));
+            });
+
+        }
+
+        isOpen = !isOpen;
+    });
+
+
+
+
+</script>
+</body>
