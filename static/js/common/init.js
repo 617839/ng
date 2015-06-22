@@ -417,11 +417,11 @@ $(function(){
 	.on('click', '.copy',function() {
 		var box = $(this).closest('.layer');
 		var copyBox = box.find('.copyBox').empty().toggle();
-		var textarea = $('<textarea></textarea>');
 		var red = $('#numSelList .redBall').clone().appendTo(copyBox);
 		
 		$('body').scrollTop(0);
-		
+
+		//var textarea = $('<textarea></textarea>');
 		//textarea.text(copyBox[0].innerText).appendTo(copyBox);
 		//red.remove();
 	})	
@@ -561,8 +561,6 @@ $(function(){
 					groupList.push(group);
 				}
 
-
-
 			});
 
 			console.log(groupList);
@@ -586,7 +584,9 @@ $(function(){
 
 			console.log(numList);
 			console.log('all comb length is %s', numList.length);
-			alert('所有组合一共?注。'.replace('?',numList.length));
+			$(this).find('sup').text(numList.length);
+			$('title').text('方案-' + numList.length);
+
 
 			var str = '';
 
@@ -595,12 +595,8 @@ $(function(){
 			}
 
 			var copyBox = box.find('.copyBox').empty().toggle().html(str);
-			//var textarea = $('<textarea></textarea>');
 
 			$('body').scrollTop(0);
-
-			//textarea.text(str).appendTo(copyBox);
-
 
 
 		});

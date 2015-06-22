@@ -54,7 +54,8 @@
 
     });
 
-    html = '<div style="position: fixed;bottom:0;right:0;color: #fff;background: blue;overflow: hidden;"> <button class="btn" onclick="$(this).parent().find(\'a\').toggle();">==</button>?</div>'
+    html = '<div style="position: fixed;bottom:0;right:0;color: #fff;background: blue;overflow: hidden;">' +
+           '<button class="btn btn-0" onclick="$(this).parent().find(\'a\').toggle();">==</button>?</div>'
             .replace('?', html);
 
     console.log(html);
