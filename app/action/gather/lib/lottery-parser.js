@@ -4,6 +4,7 @@
  * 把数据转换为特定格式;
  */
 
+var _ = require('underscore');
 
 module.exports = {
 
@@ -242,6 +243,75 @@ module.exports = {
         })(ng);
 
 
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        //间隔统计
+
+        var countRm = (function(ng){
+
+                return require('./count-down-margin.js')(ng);
+
+            })(ng);
+
+
+        var countUm = (function(up){
+
+            var result = require('./count-margin.js')(up, {start:0, end:40});
+
+            for(var i in result){
+                result[i].num =  ng[i] && ng[i].num;
+            }
+
+            return result;
+
+        })(up);
+
+
+        var countDm = (function(prev){
+
+            var countRm = require('./count-down-margin.js')(ng).r;
+
+            var result = require('./count-margin.js')(prev, {start:0, end:40});
+
+            for(var l = result.length- 1, item, filter, all; l >= 0; l-- ){
+
+                filter = [];
+
+                all = result[l].all;
+
+                item = _.uniq( countRm.pop().all);
+
+                for(var j in item) filter.push( all[ item[j] ] );
+
+                result[l].all = filter;
+
+            }
+
+
+            for(var i in result){
+                result[i].num =  ng[i] && ng[i].num;
+            }
+
+            return result;
+
+        })(prev);
+
+
+        var countSm = (function(singleDigitRef){
+
+            var result = require('./count-margin.js')(singleDigitRef, {start:0, end:10});
+
+            for(var i in result){
+                result[i].num =  ng[i] && ng[i].num;
+            }
+
+            return result;
+
+        })(singleDigitRef);
+
+
+
         ////////////////////////////////////////////////////////////////////////////////////////////
 
         return {
@@ -257,48 +327,13 @@ module.exports = {
             upMarginRef: up,
             next: next,
 
-            countRm: (function(ng){
+            countRm: countRm,
 
-                return require('./count-down-margin.js')(ng);
+            countUm: countUm,
 
-            })(ng),
+            countDm: countDm,
 
-            countUm: (function(up){
-
-                var result = require('./count-margin.js')(up, {start:0, end:40});
-
-                for(var i in result){
-                    result[i].num =  ng[i] && ng[i].num;
-                }
-
-                return result;
-
-            })(up),
-
-            countDm: (function(prev){
-
-                var result = require('./count-margin.js')(prev, {start:0, end:40});
-
-                for(var i in result){
-                    result[i].num =  ng[i] && ng[i].num;
-                }
-
-                return result;
-
-            })(prev),
-
-            countSm: (function(singleDigitRef){
-
-                var result = require('./count-margin.js')(singleDigitRef, {start:0, end:10});
-
-                for(var i in result){
-                    result[i].num =  ng[i] && ng[i].num;
-                }
-
-                return result;
-
-            })(singleDigitRef)
-
+            countSm: countSm
         };
 
 

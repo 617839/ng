@@ -14,17 +14,18 @@
 //事件绑定
 
 $(function(){
+
 	
 	$('body')
 	
 	//设定编组补丁及编组长度
-	.delegate('.dobjBox .set','click',function(){
+	.on('click', '.dobjBox .set',function(){
 		var th = $(this);
 		var box = th.closest('.dobjBox');
 		box.find('.setBox').toggle();
 	})		
 	//
-	.delegate('.dobjBox .make','click',function(){
+	.on('click', '.dobjBox .make',function(){
 		var th = $(this);
 		var dobjBox = th.closest('.dobjBox');
 		var name = th.attr('data-name');
@@ -67,7 +68,7 @@ $(function(){
 		
 	})	
 	//
-	.delegate('.dobjBox .make2','click',function(){
+	.on('click', '.dobjBox .make2',function(){
 		var th = $(this);
 		var dobjBox = th.closest('.dobjBox');
 		var name = th.attr('data-name');
@@ -104,7 +105,7 @@ $(function(){
 		})).appendTo('body');
 	})	
 	//
-	.delegate('.dobj2Box .invert','click',function(){
+	.on('click', '.dobj2Box .invert',function(){
 		var th = $(this);
 		var dobjBox = th.closest('.dobj2Box');
 		
@@ -114,7 +115,7 @@ $(function(){
 		
 	})
 	//
-	.delegate('#filterByRefArr .add','click',function(){
+	.on('click', '#filterByRefArr .add',function(){
 		var str, arr;
 		str = $('#filterByRefArr input:text').val().trim();
 		str = str.replace(/\(/,'').replace(/\)/,' ');
@@ -123,7 +124,7 @@ $(function(){
 		cc(filterByRefArr, 'filterByRefArr')
 	})		
 	//
-	.delegate('#redsBox .combine','click',function(){
+	.on('click', '#redsBox .combine',function(){
 		if(reds.length > 14) {
 			if(!confirm('组合数量太大,是否继续')){
 				return false;
@@ -142,20 +143,20 @@ $(function(){
 		return false;
 	})	
 	//
-	.delegate('.key i','click',function(){
+	.on('click', '.key i',function(){
 		var $th = $(this);
 		var checkbox = $th.next('input:checkbox');
 		$th.toggleClass('selected');
 		checkbox.trigger('click');
 	})
 	//
-	.delegate('.key .add','click',function(){
+	.on('click', '.key .add',function(){
 		var th = $(this);
 		var prev = th.prev('span').clone(true).insertBefore(th);
 		return false;
 	})
 	//
-	.delegate('.key .lessen','click',function(){
+	.on('click', '.key .lessen',function(){
 		var th = $(this);
 		var nextAll = th.nextAll('span');
 		if(nextAll.length > 1){
@@ -164,7 +165,7 @@ $(function(){
 		return false;
 	})		
 	//
-	.delegate('.dobj em','click',function(){
+	.on('click', '.dobj em',function(){
 		var $th = $(this);
 		var checkbox = $th.next('input:checkbox');
 		$th.toggleClass('cancel');
@@ -178,7 +179,7 @@ $(function(){
 		checkbox.trigger('change');
 	})	
 	//
-	.delegate('.dobj input:checkbox','change',function(){
+	.on('change', '.dobj input:checkbox',function(){
 		var th = $(this);
 		var name = th.attr('name');
 		var dobj = th.closest('.dobj');
@@ -209,7 +210,7 @@ $(function(){
 		window[name] = obj;
 	})	
 	//
-	.delegate('#groupList li .make','click',function(){
+	.on('click', '#groupList li .make',function(){
 		var $th = $(this);
 		var group = JSON.parse( $th.attr('data-group') );
 		var q;
@@ -233,7 +234,7 @@ $(function(){
 		
 	})
 	//
-	.delegate('li .visual','click',function(){
+	.on('click', 'li .visual',function(){
 		var $th = $(this);
 		var group =  $th.attr('data-push');
 		var type = $th.attr('data-type');
@@ -248,7 +249,7 @@ $(function(){
 		}
 	})	
 	//
-	.delegate('#groupList li', 'mouseover', function() {
+	.on('mouseover', '#groupList li', function() {
 		if( !$('#refList:visible').length) return;
 		$('#refList li.ls:last').remove();
 		
@@ -266,11 +267,11 @@ $(function(){
 		$( template('refListItemTemp',{list: list, className: 'ls'}) ).appendTo('#refList');
 	})
 	//
-	.delegate('#groupList li', 'mouseout', function() {
+	.on('mouseout', '#groupList li', function() {
 		$('#refList li.ls:last').remove();
 	})
 	//
-	.delegate('#groupListBox .showRef','click',function() {
+	.on('click', '#groupListBox .showRef',function() {
 		var refList = $('#refList');
 		var refName, q;
 		
@@ -292,7 +293,7 @@ $(function(){
 	
 	/////////////////////////////////////////////////////////////////////
 	//
-	.delegate('#numSelListBox .showRef','click',function() {
+	.on('click', '#numSelListBox .showRef',function() {
 		var numSelRefList = $('#numSelRefList');
 		var refName, q;
 		
@@ -313,7 +314,7 @@ $(function(){
 		}
 	})		
 	//
-	.delegate('#numSelList li', 'mouseover', function() {
+	.on('mouseover', '#numSelList li', function() {
 		if( !$('#numSelRefList:visible').length) return;
 		$('#numSelRefList li.ls:last').remove();
 		
@@ -331,11 +332,11 @@ $(function(){
 		$( template('refListItemTemp',{list: list, className: 'ls'}) ).appendTo('#numSelRefList');
 	})
 	//
-	.delegate('#numSelList li', 'mouseout', function() {
+	.on('mouseout', '#numSelList li', function() {
 		$('#numSelRefList li.ls:last').remove();
 	})
 	//显示筛选框
-	.delegate('.sortBtn', 'click', function() { 
+	.on('click', '.sortBtn', function() {
 		$('#sortBox ').remove();
 		var th = $(this);
 		var size = th.closest('li[optional=1]').filter('.selected').length;
@@ -349,11 +350,11 @@ $(function(){
 		 e.stopPropagation();
 	})	
 	//分类排序筛选
-	.delegate('#sortBox button', 'click', function() {
+	.on('click', '#sortBox button', function() {
 		var th = $(this);
 		var box = th.closest('.layer');
 		var sortBox = th.closest('#sortBox');
-		var filterPattern = sortBox.find('input[name="filterPattern"]').attr('checked');
+		var filterPattern = sortBox.find('input[name="filterPattern"]').prop('checked');
 		var reg = sortBox.find('input[name="reg"]:checked').val();
 		var name = th.attr('data-name');
 		var val = th.prev('input').val();
@@ -363,7 +364,7 @@ $(function(){
 		
 		if(filterPattern){
 			limit = box.find('li.selected');
-			limit.find('input[name="itemIsSelected"]:checkbox').attr('checked',false).trigger('change');
+			limit.find('input[name="itemIsSelected"]:checkbox').prop('checked',false).trigger('change');
 		}
 		
 		var list = limit.filter('li' + attr);
@@ -371,7 +372,7 @@ $(function(){
 		
 		box.find('.sortInfo b').text(size);
 		
-		list.prependTo( list.parent() ).find('input[name="itemIsSelected"]:checkbox').attr('checked',true).trigger('change');
+		list.prependTo( list.parent() ).find('input[name="itemIsSelected"]:checkbox').prop('checked',true).trigger('change');
 		
 		/*list.each(function(){
 			var th = $(this);
@@ -386,7 +387,7 @@ $(function(){
 		return false;
 	})
 	//单列细节隐藏或显示
-	.delegate('.tabBar strong[data-tab]', 'click', function() {
+	.on('click', '.tabBar strong[data-tab]', function() {
 		var th = $(this);
 		var box = th.closest('.layer');
 		var tab = th.attr('data-tab');
@@ -401,7 +402,7 @@ $(function(){
 	/////////////////////////////////////////////////////////////////////
 	//选中
 	/*
-	.delegate('li[optional=1]', 'click', function() {
+	.on('click', 'li[optional=1]', function() {
 		var $th = $(this);
 		var input = $th.find('input[name="itemIsSelected"]:checkbox');
 		
@@ -413,7 +414,7 @@ $(function(){
 	})
 	*/
 	//拷贝
-	.delegate('.copy','click',function() {
+	.on('click', '.copy',function() {
 		var box = $(this).closest('.layer');
 		var copyBox = box.find('.copyBox').empty().toggle();
 		var textarea = $('<textarea></textarea>');
@@ -425,7 +426,7 @@ $(function(){
 		//red.remove();
 	})	
 	//删除所选
-	.delegate('.del','click',function() {
+	.on('click', '.del', function() {
 		var box = $(this).closest('.layer');
 		var delBox = $('#delBox').empty();
 		box.find('li[optional=1] input[name="itemIsSelected"]:checked').each(function() {
@@ -434,51 +435,51 @@ $(function(){
 		box.find('.info b').text(box.find('li[optional=1]').length);
 	})
 	//撤销删除
-	.delegate('.cancel','click',function() {
+	.on('click', '.cancel',function() {
 		var box = $(this).closest('.layer');
 		var optionalList = box.find('.optionalList');
 		$('#delBox li').prependTo(optionalList);
 	})	
 	//反选
-	.delegate('.reset','click',function() {
+	.on('click', '.reset',function() {
 		var box = $(this).closest('.layer');
 		
 		box.find('li input[name="itemIsSelected"]:checkbox').each(function() {
 			var input = $(this);
-			if (input.attr('checked')) {
-				input.attr('checked', false).trigger('change');
+			if (input.prop('checked')) {
+				input.prop('checked', false).trigger('change');
 			} else {
-				input.attr('checked', true).trigger('change');
+				input.prop('checked', true).trigger('change');
 			}
 		});
 	})
 	//全不选
-	.delegate('.not','click',function() {
+	.on('click', '.not',function() {
 		var box = $(this).closest('.layer');
 		box.find('li[optional=1] input[name="itemIsSelected"]:checked').each(function() {
 			var input = $(this);
-			input.attr('checked', false).trigger('change');;
+			input.prop('checked', false).trigger('change');;
 		});
 	})	
 	/////////////////////////////////////////////////////////////////////
 	//选中样式
-	.delegate('li[optional=1] input[name="itemIsSelected"]:checkbox', 'change', function() { 
+	.on('change', 'li[optional=1] input[name="itemIsSelected"]:checkbox', function() {
 		var th = $(this);
 		var li = th.closest('li');
 		
-		if (th.attr('checked')) {
+		if (th.prop('checked')) {
 			li.addClass('selected');
 		} else {
 			li.removeClass('selected');
 		}
 	})
 	//切换细节
-	.delegate('.toggle','click',function() {
+	.on('click', '.toggle',function() {
 		var box = $(this).closest('.layer');
 		box.find('.details').toggle();
 	})	
 	//层展开或收缩
-	.delegate('.expandable','click',function() {
+	.on('click','.expandable',function() {
 		var th = $(this);
 		var box = th.closest('.layer');
 		var operateBar = box.find('.operateBar,.tabBar');
@@ -499,110 +500,116 @@ $(function(){
 		}
 	})
 	//文档滚动
-	.delegate('#tScroll','click',function() {
+	.on('click', '#tScroll',function() {
 		$('body').scrollTop(0);
 	})
-	.delegate('#bScroll','click',function() {
+	.on('click', '#bScroll',function() {
 		var h = $('#numSelList').height() - $(window).height();
 		$('body').scrollTop(h);
 	})
-	.delegate('#lScroll','click',function() {
+	.on('click', '#lScroll',function() {
 		$('body').scrollLeft(0);
 	})
-	.delegate('#rScroll','click',function() {
+	.on('click', '#rScroll',function() {
 		$('body').scrollLeft(1287);
 	})		
 	//删除模块
-	.delegate('.remove','click',function() {
+	.on('click', '.remove',function() {
 		 $(this).parent().remove();
 	})	
 	//关闭box
-	.delegate('.close','click',function() {
+	.on('click', '.close',function() {
 		var box = $(this).closest('.layer');
 		if(confirm('确定关闭窗口?!')){
 			box.remove();
 		}
-	});	
-	
-	
-});
+	});
 
 
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 //all comb
-$('body')
+	$('body')
+		.on('click', '[role=allComb]', function (e) {
 
-	.delegate('[role=allComb]', 'click', function (e) {
+			var box = $(this).closest('.layer');
 
-		var box = $(this).closest('.layer');
+			var groupList = [];
 
-		var groupList = [];
+			var patch = window.allCombPatch || [];
 
-		var patch = [0,1,2];
+			box.find('#groupList li').each(function(i){
 
-		box.find('#groupList li').each(function(i){
+				var group = $(this).attr('data-group');
+				group = JSON.parse(group);
+				var len = group.length;
 
-			var group = $(this).attr('data-group');
-			group = JSON.parse(group);
-			var len = group.length;
+				if(patch.length){
 
-			_.forEach(patch, function(v, i, list){
-				var _group = group.slice();
+					_.forEach(patch, function(v, i, list){
+						var _group = group.slice();
 
-				_group = _group.concat(v);
+						_group = _group.concat(v);
 
-				if(_.uniq(_group).length == len){
-					groupList.push(_group);
+						if(_.uniq(_group).length == len){
+							groupList.push(_group);
+						}
+
+					});
+
+				}else{
+					groupList.push(group);
 				}
+
+
 
 			});
 
-		});
-
-	    console.log(groupList);
+			console.log(groupList);
 
 
-		var numList = [];
+			var numList = [];
 
-		_.forEach(groupList, function(v, i, list){
-			var q;
-			try{
-				q = combineWrap(window.classifyByDownMargin,v);
-			}catch (e){
-				console.log(1,e)
+			_.forEach(groupList, function(v, i, list){
+				var q;
+				try{
+					q = combineWrap(window.classifyByDownMargin,v);
+				}catch (e){
+					console.log(1,e)
+				}
+
+				q = filterByRef(q, window.filterByRefArr);
+				q = redBlueBallModel(q);
+				numList = numList.concat(q||[]);
+			});
+
+
+			console.log(numList);
+			console.log('all comb length is %s', numList.length);
+			alert('所有组合一共?注。'.replace('?',numList.length));
+
+			var str = '';
+
+			for(var i = 0; i < numList.length; i++){
+				str += (numList[i].redBall + '').replace(/,/g,'  ') + '<br>';
 			}
 
-			q = filterByRef(q, window.filterByRefArr);
-			//q = redBlueBallModel(q);
-			numList = numList.concat(q||[]);
+			var copyBox = box.find('.copyBox').empty().toggle().html(str);
+			//var textarea = $('<textarea></textarea>');
+
+			$('body').scrollTop(0);
+
+			//textarea.text(str).appendTo(copyBox);
+
+
+
 		});
-
-
-		console.log('all comb length is %s', numList.length);
-		alert('所有组合一共?注。'.replace('?',numList.length));
-
-		var str = '';
-
-		for(var i = 0; i < numList.length; i++){
-			str += (numList[i]+'').replace(/,/g,'  ') + '\r\n';
-		}
-
-		var copyBox = box.find('.copyBox').empty().toggle().text(str);
-		//var textarea = $('<textarea></textarea>');
-
-		$('body').scrollTop(0);
-
-		//textarea.text(str).appendTo(copyBox);
-
-
-
-	});
 
 ////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////
 //init
 
-$('body')
-	.delegate('[role=store]', 'click', function (e) {
+	$('body').on('click', '[role=store]', function (e) {
 
 		if(!confirm('确认缓存？')) return;
 
@@ -620,40 +627,48 @@ $('body')
 		//localStorage.setItem(name+'_2',html);
 
 	})
-	.delegate('[role=apply]', 'click', function (e) {
+		.on('click', '[role=apply]', function (e) {
 
-		if(!confirm('确认应用？')) return;
+			if(!confirm('确认应用？')) return;
 
-		var box = $(this).parent();
+			var box = $(this).parent();
 
-		var name = box.attr('name');
+			var name = box.attr('name');
 
-		window[name] = JSON.parse(localStorage.getItem(name + '_0'));
+			window[name] = JSON.parse(localStorage.getItem(name + '_0'));
 
-		var html = localStorage.getItem(name + '_1');
+			var html = localStorage.getItem(name + '_1');
 
-		box.find('ul').html(html);
-		box.find('.dobj input:checkbox:first').trigger('change');
-
-
-		//html = localStorage.getItem(name+'_2');
-		//html && box.find('[role=setBox]').html(html);
-
-	})
-	.delegate('[role=reset]', 'click', function (e) {
-
-		return;
-
-		var box = $(this).parent();
-
-		var html = box.find('ul').html();
-
-		var id = box.attr('id');
-
-		localStorage.setItem(id, html);
+			box.find('ul').html(html);
+			box.find('.dobj input:checkbox:first').trigger('change');
 
 
-	});
+			//html = localStorage.getItem(name+'_2');
+			//html && box.find('[role=setBox]').html(html);
+
+		})
+		.on('click', '[role=reset]', function (e) {
+
+			return;
+
+			var box = $(this).parent();
+
+			var html = box.find('ul').html();
+
+			var id = box.attr('id');
+
+			localStorage.setItem(id, html);
+
+		});
+
+
+	
+});
+
+
+
+/////////////////////////////////////////////////////////
+//global
 
 function xxReverse(e){
 	var box = $(e.target).parent();
@@ -679,8 +694,6 @@ function xxUniq(q1, groupSize) {
 	return _.uniq(q1,function(a){return JSON.stringify(a)});
 
 }
-
-
 
 
 

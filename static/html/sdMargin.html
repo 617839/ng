@@ -2,7 +2,7 @@
 <html ng-app="dbApp">
 <head>
     <meta charset="UTF-8">
-    <title>countDownMargin</title>
+    <title>dMargin</title>
 
     <link rel="stylesheet" type="text/css" href="../css/common/base.css"/>
     <link rel="stylesheet" type="text/css" href="../css/common/common.css"/>
@@ -37,7 +37,6 @@
 
     <ul class="list-4">
         <li ng-repeat="item in cdm">
-            <!--<em ng-bind="item.all.length"></em>-->
             <em ng-repeat="v in item.all | orderBy:vs:false  track by $index" ng-bind="v"></em>
         </li>
     </ul>
@@ -45,7 +44,6 @@
 
     <ul class="list-4">
         <li ng-repeat="item in cdm">
-            <!--<em ng-bind="item.all.length"></em>-->
             <em ng-repeat="v in item.active | orderBy:vs:false  track by $index" ng-bind="v"></em>
         </li>
     </ul>

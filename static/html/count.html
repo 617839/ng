@@ -20,15 +20,42 @@
     <style>
         body {
             padding: 0 0 0 0;
-            width: 110%;;
+            width: 160%;;
         }
         input:focus{
             background:blue!important;
             color:#fff;
         }
+        #c > div{
+            display:inline-block;
+            height: 100%;;
+            width:246px;
+            color:#fff;
+            background: blue;
+            margin:1px 41px 0 0;
+            float: left;
+            text-align: center;
+            line-height: 32px;
+        }
+        .shrink{
+            width:123px!important;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
+
+
+<div id="c" style="position: fixed;top:0;width:160%;height: 32px;">
+    <div>数尾</div>
+    <div>上间隔</div>
+    <div>下间隔</div>
+    <div>数尾间隔统计</div>
+    <div>下间隔统计</div>
+    <div>上间隔统计</div>
+</div>
+
+
 <div class="wraper-4 bg-4" ng-controller="countCtrl">
 
     <ul class="list-4">
@@ -37,17 +64,18 @@
         </li>
     </ul>
 
+
     <ul class="list-4">
         <li ng-repeat="item in sdRef">
             <em ng-repeat="v in item | orderBy:vs:false track by $index" ng-bind="v"></em>
         </li>
     </ul>
 
-<!--    <ul class="list-4">
+    <ul class="list-4">
         <li ng-repeat="item in upRef">
             <em ng-repeat="v in item | orderBy:vs:false track by $index" ng-bind="v"></em>
         </li>
-    </ul>-->
+    </ul>
 
     <ul class="list-4">
         <li ng-repeat="item in downRef">
@@ -74,19 +102,19 @@
     </ul>
 
 
-    <div style="position: fixed;bottom:0;width:100%;height: 42px;padding-left:1em;">
-        <button ng-click="active('')" ng-class="{active : activeIndex == 'countRm'}" class="btn">ng</button>
-        <button ng-click="active('countUm')" ng-class="{active : activeIndex == 'countUm'}" class="btn">上间隔</button>
-        <button ng-click="active('countDm')" ng-class="{active : activeIndex == 'countDm'}" class="btn">下间隔</button>
-        <button ng-click="active('countSm')" ng-class="{active : activeIndex == 'countSm'}" class="btn">数尾</button>
-    </div>
-
-
 </div>
 
 <script>
     $('body').on('click', '.list-4 li', function (e) {
         $(this).toggleClass('disabled');
+    });
+
+    $('#c > div').on('click', function(e){
+
+         var index = $(this).toggleClass('shrink').index();
+
+         $('[ng-controller="countCtrl"] ul').eq(index+1).toggleClass('shrink');
+
     });
 </script>
 </body>

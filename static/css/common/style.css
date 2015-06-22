@@ -177,7 +177,7 @@ input[name="reg"]{
 	padding:10px;
 	background:#fff;
 	border:solid 1px gray;
-	white-space: pre-line;
+	#white-space: pre-line;
 }
 .copyBox textarea{
 	width:280px;

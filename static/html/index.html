@@ -2,55 +2,104 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <title>ng index</title>
     <link rel="stylesheet" href="../css/common/common.css">
+    <style>
+        a{
+            display: block!important;
+        }
+    </style>
 </head>
 
 <body>
-<a class="btn btn-0" href="tool.html">tool</a>
-<a class="btn btn-0" href="margin.html">margin</a>
-<a class="btn btn-0" href="bMargin.html">bMargin</a>
-<a class="btn btn-0" href="list.html">list</a>
-<a class="btn btn-0" href="visual.html">visual</a>
-<a class="btn btn-0" href="bottom.html">bottom</a>
+<a class="btn btn-0" href="ng.html">ng</a>
+
 <a class="btn btn-0" href="count.html">count</a>
 <a class="btn btn-0" href="sdMargin.html">sdMargin</a>
 
+<a class="btn btn-0" href="margin.html">margin</a>
+<a class="btn btn-0" href="bMargin.html">bMargin</a>
+
+<a class="btn btn-0" href="list.html">list</a>
+<a class="btn btn-0" href="visual.html">visual</a>
+<a class="btn btn-0" href="bottom.html">bottom</a>
+
+<a class="btn btn-0 none" href="ng.html">ng</a>
+<a class="btn btn-0 none" href="ng.html">ng</a>
+<a class="btn btn-0 none" href="ng.html">ng</a>
+
+<br>
 <button class="btn btn-1-1">open</button>
+<!-- js part -->
 <script src="../js/vendor/jquery.min.js"></script>
 <script>
+
+    var tags = [];
     var links = [];
     var ws = [];
+    var html = '';
+
+    function _focus(i){
+        ws[i].focus();
+    }
 
     $('a').each(function(i){
-        i && links.push(this.href);
+
+        if(i){
+            links.push(this.href);
+            tags.push(this.innerText);
+            html += this.outerHTML.replace(/(<a[^>]*)(?=>)/,'$1 style="color:#fff;font-size:18px;line-height:1.8;margin:7px;"')
+                                  .replace(/(\s*href=")[^"]*/,'$1javascript:opener._focus('+ --i +');');
+        }
+
     });
+
+    html = '<div style="position: fixed;bottom:0;right:0;color: #fff;background: blue;overflow: hidden;"> <button class="btn" onclick="$(this).parent().find(\'a\').toggle();">==</button>?</div>'
+            .replace('?', html);
+
+    console.log(html);
 
 
     var isOpen;
+
     $('button').on('click', function(e){
+
         var w;
+
         if(isOpen && confirm('确定关闭所有窗口？')){
 
             this.innerText = 'open';
 
             while(w = ws.pop()) w.close();
 
-        }else{
+        }else if(!isOpen){
 
             this.innerText = 'close';
 
             while(w = ws.pop()) w.close();
+
             links.forEach(function(link){
-                ws.push(window.open(link));
+
+                var w = window.open(link);
+
+                !function(w){
+
+                    $(w).on('load', function(e){
+                        w.document.body.appendChild( $(html)[0] );
+                    })
+
+                }(w);
+
+                ws.push(w);
             });
 
+        }else{
+            return;
         }
 
         isOpen = !isOpen;
+
     });
-
-
-
 
 </script>
 </body>
