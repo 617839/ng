@@ -14,7 +14,7 @@ module.exports = {
      */
     filter: {
         before: ['cross-domain'],
-        after: ['404', '500']
+        after:  ['action_map', '404', '500']
     },
 
     /**
@@ -47,6 +47,11 @@ module.exports = {
             url: '/gather/:type',
             method: 'post',
             action: 'gather'
+        },
+        {
+            url: '/data/:type',
+            method: 'get',
+            action: 'data'
         },
         {
             url: '/status',

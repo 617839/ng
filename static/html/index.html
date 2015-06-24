@@ -12,27 +12,53 @@
 </head>
 
 <body>
-<a class="btn btn-0" href="ng.html">ng</a>
+<a class="btn btn-0" href="ng.html" target="_blank">ng</a>
 
-<a class="btn btn-0" href="count.html">count</a>
-<a class="btn btn-0" href="sdMargin.html">sdMargin</a>
+<a class="btn btn-0" href="count.html" target="_blank">count</a>
+<a class="btn btn-0" href="sdMargin.html" target="_blank">sdMargin</a>
 
-<a class="btn btn-0" href="margin.html">margin</a>
-<a class="btn btn-0" href="bMargin.html">bMargin</a>
+<a class="btn btn-0" href="margin.html" target="_blank">margin</a>
+<a class="btn btn-0" href="bMargin.html" target="_blank">bMargin</a>
 
-<a class="btn btn-0" href="list.html">list</a>
-<a class="btn btn-0" href="visual.html">visual</a>
-<a class="btn btn-0" href="bottom.html">bottom</a>
+<a class="btn btn-0" href="list.html" target="_blank">list</a>
+<a class="btn btn-0" href="visual.html" target="_blank">visual</a>
+<a class="btn btn-0" href="bottom.html" target="_blank">bottom</a>
 
-<a class="btn btn-0 none" href="ng.html">ng</a>
-<a class="btn btn-0 none" href="ng.html">ng</a>
-<a class="btn btn-0 none" href="ng.html">ng</a>
+<a class="btn btn-0" href="ng.html" target="_blank">ng</a>
+<a class="btn btn-0" href="ng.html" target="_blank">ng</a>
+<a class="btn btn-0" href="ng.html" target="_blank">ng</a>
 
 <br>
+<br>
+<div role="select-data">
+    <label><input name="data" value="33" type="radio" checked> 33</label>&nbsp;
+    <label><input name="data" value="30" type="radio"> 30</label>&nbsp;
+    <label><input name="data" value="15" type="radio"> 15</label>
+</div>
+<br>
+
 <button class="btn btn-1-1">open</button>
+
+
 <!-- js part -->
 <script src="../js/vendor/jquery.min.js"></script>
 <script>
+
+    var data = '33';
+
+    $(':radio').change(function(e){
+
+        data = this.value;
+
+        links.forEach(function(v, i, list){
+
+             list[i] = v + '?data=' + data;
+
+        });
+
+    });
+
+
 
     var tags = [];
     var links = [];
@@ -101,6 +127,11 @@
         isOpen = !isOpen;
 
     });
+
+
+
+
+
 
 </script>
 </body>
