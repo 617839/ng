@@ -18,9 +18,19 @@
     <script src="../js/common/common.js"></script>
     <script src="../js/common/bottom.js"></script>
     <style>
+        .none{
+            display: none;
+        }
         .input-x{
             color:#fff;
             background-color: #0070c0!important;
+        }
+
+        sup{
+            opacity:0.8;
+            font-size: 0.4em;
+            position: absolute;
+            margin: -3px 8px;
         }
     </style>
 
@@ -93,9 +103,13 @@
 
         em.each(function (d, i) {
             if (d[1] > 1) {
-                this.classList.add('red');
+                this.classList.add('red' + d[1]);
+                d[1] > 3 && $(this).append('<sup>?</sup>'.replace('?', d[1]));
             } else {
                 this.classList.remove('red');
+                this.classList.remove('red2');
+                this.classList.remove('red3');
+                //this.classList.add('none');
             }
         });
 

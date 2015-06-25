@@ -16,7 +16,9 @@
 
     var type = getUrlParam('data');
 
-    var url = 'http://localhost:2017/data' + ( type ? '/' + type : '');
+    var time = +(new Date);
+
+    var url = 'http://localhost:2017/data' + ( type ? '/' + type : '') + '?time=' + time;
 
     document.write('<script src="?"></script>'.replace('?', url));
 

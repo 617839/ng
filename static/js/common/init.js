@@ -536,7 +536,7 @@ $(function(){
 
 			var groupList = [];
 
-			var patch = window.allCombPatch || [];
+			var patch = getAllCombPatch() || window.allCombPatch || [];
 
 			box.find('#groupList li').each(function(i){
 
@@ -551,6 +551,8 @@ $(function(){
 
 						_group = _group.concat(v);
 
+						_group.sort(function(a, b){ return a - b;});
+
 						if(_.uniq(_group).length == len){
 							groupList.push(_group);
 						}
@@ -563,7 +565,7 @@ $(function(){
 
 			});
 
-			console.log(groupList);
+			console.log(JSON.stringify(groupList).replace(/],\[/img, '],\r\n['));
 
 
 			var numList = [];
@@ -654,6 +656,32 @@ $(function(){
 			var id = box.attr('id');
 
 			localStorage.setItem(id, html);
+
+		})
+		.on('click', '[role=combPatch]', function(e){
+
+			var str = prompt('allCombPatch is ' + getAllCombPatch() + '; reset. \r\n example:0 1,0 0 or 0,1,3');
+
+			if(!str) return alert('not set.');
+
+			var arr = str.split(',');
+
+			arr.forEach(function(v, i, list){
+				var a =  v.split(/\s+/img);
+				for(var j in a) a[j] = a[j] * 1;
+				list[i] = a;
+			});
+
+			window.allCombPatch = arr;
+
+			str = JSON.stringify(arr);
+
+			console.log('allCombPatch is =>', str);
+
+			var data = getUrlParam('data') || 33;
+
+			localStorage[ 'allCombPatch' + data ] = str;
+
 
 		});
 

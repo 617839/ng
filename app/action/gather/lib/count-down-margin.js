@@ -7,7 +7,7 @@ var _ = require('underscore');
 var countMargin = require('./count-margin.js');
 
 
-module.exports = function(ng){
+module.exports = function(ng, _kl){
 
     var result = {};
 
@@ -24,7 +24,7 @@ module.exports = function(ng){
 
     for(var i in r) r[i] = _.uniq(r[i]);
 
-    result.r = countMargin(r, {start:1, end:34});
+    result.r = countMargin(r, {start:1, end: _kl || 34});
 
     result.b = countMargin(b, {start:1, end:17});
 

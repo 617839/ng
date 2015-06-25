@@ -33,6 +33,7 @@
 <div role="select-data">
     <label><input name="data" value="33" type="radio" checked> 33</label>&nbsp;
     <label><input name="data" value="30" type="radio"> 30</label>&nbsp;
+    <label><input name="data" value="35" type="radio"> 35</label>&nbsp;
     <label><input name="data" value="15" type="radio"> 15</label>
 </div>
 <br>
@@ -52,7 +53,7 @@
 
         links.forEach(function(v, i, list){
 
-             list[i] = v + '?data=' + data;
+             list[i] = v.replace(/\?data=\d\d/i, '') + '?data=' + data;
 
         });
 

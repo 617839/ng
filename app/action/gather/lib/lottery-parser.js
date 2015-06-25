@@ -8,10 +8,27 @@ var _ = require('underscore');
 
 module.exports = {
 
-    resolve: function (ng) {
+    resolve: function (ng, type) {
 
         if (typeof ng === 'string') ng = JSON.parse(ng);
 
+        var _kl = 34;
+        var _jl = 6;
+
+        if(type == 30){
+            _kl = 31;
+            _jl = 7;
+        }
+
+        if(type == 15){
+            _kl = 16;
+            _jl = 5;
+        }
+
+        if(type == 35){
+            _kl = 36;
+            _jl = 5;
+        }
 
         /////////////////////////////////////////////////////////////////////////////////////
 
@@ -28,9 +45,9 @@ module.exports = {
             var bs = num.blue;
 
 
-            for (var k = 1; k < 34; k++) {
+            for (var k = 1; k < _kl; k++) {
 
-                for (var j = 0; j < 6; j++) {
+                for (var j = 0; j < _jl; j++) {
 
                     var r = rs[j];
 
@@ -250,7 +267,7 @@ module.exports = {
 
         var countRm = (function(ng){
 
-                return require('./count-down-margin.js')(ng);
+                return require('./count-down-margin.js')(ng, _kl);
 
             })(ng);
 

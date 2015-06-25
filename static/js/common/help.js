@@ -25,13 +25,16 @@ function getArrayLast(arr){
  * 判断数组元素是否全是偶数
  */
 function isAlloddOrEven( arr ){
+
+	var len = arr.length;
+
 	var j = 0;
 	
 	for(var i in arr){
 		j += arr[i] * 1 % 2;
 	}
 	
-	return j==0 || j==6 ? true : false;
+	return j==0 || j==len ? true : false;
 }
 
 /*
@@ -207,7 +210,17 @@ function combine(){
 	
 }
 
+function getLimitLengthByData(){
+	var type = getUrlParam('data');
+
+	if(type == 30) return 7;
+	if(type == 35 || type == 15) return 5;
+	return 6;
+}
+
 function _combine(args){
+
+	var limitLength = getLimitLengthByData();
 
 	function xxUniq(q1) {
 
@@ -216,7 +229,7 @@ function _combine(args){
 		while(qLength--){
 			qItem = _.uniq(q1[qLength]);
 			q1[qLength] = qItem;
-			if(qItem.length > 6){
+			if(qItem.length > limitLength){
 				q1.splice(qLength, 1);
 			}
 		}
@@ -508,6 +521,25 @@ function count(arr){
 	//console.log(JSON.stringify(result));
 	
 	return result;	
+}
+
+/**
+ * 计算数组元素重复次数
+ * @returns {{}}
+ * example：
+ * countRepeat([1,1,1,3])  //return {1:3,3:1}
+ */
+function countRepeat(arr){
+	var length = arr.length;
+	var result = {};
+	var item;
+
+	for(var i = 0; i< length; i++){
+		item = arr[i];
+		result[item] = result[item] ? result[item]+1 : 1;
+	}
+
+	return result;
 }
 
 /*
@@ -1090,5 +1122,23 @@ function s2d(){
 
 	return cache;
 
+
+}
+
+
+function getAllCombPatch(data){
+
+	data = data || getUrlParam('data') || 33;
+
+	var str = localStorage['allCombPatch'+data];
+
+	try{
+		var allCombPatch = JSON.parse(str);
+	}catch(e){
+		console.log(e);
+		alert('err on getAllCombPatch');
+	}
+
+	return allCombPatch;
 
 }

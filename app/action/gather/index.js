@@ -20,7 +20,7 @@ module.exports = function(req, res){
     fs.writeFileSync(jsonPath, JSON.stringify(data));
     fs.writeFileSync(jsPath, 'window.NGGLOBAL = window.NGGLOBAL || {};');
 
-    var dob = lotteryParser.resolve(data);
+    var dob = lotteryParser.resolve(data, type);
 
     var t;
 

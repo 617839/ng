@@ -50,8 +50,15 @@ button[data-type="singleDigitRef"]{
 	color:#fff;
 	background-color: #538927;
 }
-.content em.red{
+.content em.red, .content em.red2{
 	background-color:#c00000;	
+}
+.content em.red3{
+	background: #7E0101;
+}
+.content em.red4{
+	background: rgb(73, 7, 1);
+	background: #7E0101;
 }
 .title,
 .content{
