@@ -65,7 +65,7 @@ module.exports = {
         },
         {
             url: '/status/:type?',
-            method: 'del',
+            method: 'delete',
             action: 'status.del'
         }
 
