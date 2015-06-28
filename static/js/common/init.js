@@ -544,7 +544,7 @@ $(function(){
 				group = JSON.parse(group);
 				var len = group.length;
 
-				if(patch.length){
+				if(patch.length && len < getLimitLengthByData()){
 
 					_.forEach(patch, function(v, i, list){
 						var _group = group.slice();
