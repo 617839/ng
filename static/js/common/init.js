@@ -538,7 +538,15 @@ $(function(){
 
 			var patch = getAllCombPatch() || window.allCombPatch || [];
 
-			box.find('#groupList li').each(function(i){
+			var $list = box.find('#groupList li');
+
+			var $selectList = $list.filter('.selected');
+
+			$list = $selectList.length ? $selectList : $list;
+
+			alert($list.text());
+
+			$list.each(function(i){
 
 				var group = $(this).attr('data-group');
 				group = JSON.parse(group);
