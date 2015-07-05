@@ -101,7 +101,7 @@
     $('aside button').click(function () {
         var th = $(this);
         var type = th.attr('data-type');
-        var data = NGGLOBAL[type].slice(NGGLOBAL[type].length - 60);
+        var data = NGGLOBAL[type].slice(NGGLOBAL[type].length - 100);
 
         th.addClass('current');
         th.siblings().removeClass('current');
@@ -118,7 +118,7 @@
     var type = getUrlParam('type') || $('aside button.current').attr('data-type');
     var push = getUrlParam('push');
 
-    var data = NGGLOBAL[type].slice(NGGLOBAL[type].length - 60);
+    var data = NGGLOBAL[type].slice(NGGLOBAL[type].length - 100);
 
     if (push) {
         data.push(JSON.parse(push));

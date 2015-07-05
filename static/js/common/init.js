@@ -544,7 +544,7 @@ $(function(){
 
 			$list = $selectList.length ? $selectList : $list;
 
-			alert($list.text());
+			alert('gruop list is' + $list.length);
 
 			$list.each(function(i){
 
