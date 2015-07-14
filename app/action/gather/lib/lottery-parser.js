@@ -291,7 +291,9 @@ module.exports = {
 
             var result = require('./count-margin.js')(prev, {start:0, end:40});
 
-            for(var l = result.length- 1, item, filter, all; l >= 0; l-- ){
+            for(var l = result.length-1, item, filter, all, map, k; l >= 0; l-- ){
+
+                map = {};
 
                 filter = [];
 
@@ -299,7 +301,21 @@ module.exports = {
 
                 item = _.uniq( countRm.pop().all);
 
-                for(var j in item) filter.push( all[ item[j] ] );
+                for(var j in item) {
+
+                    k = all[ item[j] ];
+
+                    filter.push(k);
+
+                    map[k] = map[k] || [];
+                    map[k].push(item[j]);
+                }
+
+
+                if(l == result.length-1){
+                    result[l].map = map;
+                }
+
 
                 result[l].all = filter;
 
