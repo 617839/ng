@@ -456,6 +456,12 @@ input[name="reg"]{
 	width:40%;
 }
 
+#classifyByD2dBox{
+	top:2000px;
+	left:20px;
+	width:40%;
+}
+
 #classifyByU2dBox{
 	top:1800px;
 	right:20px;

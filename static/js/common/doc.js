@@ -110,7 +110,8 @@ classifyByxx = (function(){
 })();
 
 
-
+//d2d
+classifyByD2d = NGGLOBAL.countDm[countDm.length-1].map;
 
 //s2d
 classifyByS2d = s2d();
@@ -118,6 +119,8 @@ classifyByS2d = s2d();
 
 //u2d
 classifyByU2d = u2d();
+
+
 
 
 
