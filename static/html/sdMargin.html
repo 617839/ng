@@ -83,6 +83,19 @@
         </li>
     </ul>
 
+
+    <ul class="list-4">
+        <li ng-repeat="item in cdm">
+            <em ng-bind="item.change"></em>
+        </li>
+    </ul>
+
+    <ul class="list-4">
+        <li ng-repeat="item in cdm">
+            <em ng-bind="item.active.length"></em>
+        </li>
+    </ul>
+
     <div style="position: fixed;bottom:0;width:100%;height: 42px;padding-left:1em;">
         <button ng-click="active('')" ng-class="{active : activeIndex == 'countRm'}" class="btn">ng</button>
         <button ng-click="active('countUm')" ng-class="{active : activeIndex == 'countUm'}" class="btn">上间隔</button>

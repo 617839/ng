@@ -29,10 +29,14 @@
         $scope.active = function(select){
 
             var dob = select && NGGLOBAL[select] || NGGLOBAL.countRm.r;
+            var all;
+            var prev;
 
-            for(var j in dob){
-                dob[j].all = _.uniq(dob[j].all);
+            for(var j = 0,len=dob.length; j<len; j++){
+                all = dob[j].all = _.uniq(dob[j].all);
                 dob[j].active = _.uniq(dob[j].active);
+                dob[j].change = Math.abs(all.length - prev - 1);
+                prev = all.length;
             }
 
             $scope.cdm = dob;
