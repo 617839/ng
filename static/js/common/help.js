@@ -1142,3 +1142,18 @@ function getAllCombPatch(data){
 	return allCombPatch;
 
 }
+
+function getCurrentLottey(){
+
+	var str = localStorage['currentLottey'];
+
+	try{
+		var currentLottey = JSON.parse(str);
+	}catch(e){
+		console.log(e);
+		alert('err on getAllCombPatch');
+	}
+
+	return currentLottey;
+
+}

@@ -530,9 +530,40 @@ $(function(){
 ////////////////////////////////////////////////////////////////////////////////////
 //all comb
 	$('body')
+		.on('click', '[role=countMoney]', function(e){
+
+			var input = prompt(' 开奖结果是: ' + getCurrentLottey() +  ';reset,\r\n example: 4 9 10 24 27 33:9');
+
+			if(input){
+				var arr = input.split(':');
+				var blue = arr[1];
+				var red = arr[0].split(/\s+/img);
+				var dob = {red:red, blue: blue};
+				localStorage.setItem('currentLottey', JSON.stringify(dob));
+			}else{
+				dob = getCurrentLottey();
+			}
+
+
+			var result = countMoney(window.currentCombList, dob);
+
+			result.list.sort(function(a, b){
+				return a.money - b.money;
+			});
+
+			console.log('all money is ' + result.money + '; list length is ' + result.list.length);
+
+			console.log(JSON.stringify(result.list).replace(/},\{/img, '},\r\n{'));
+
+
+		})
 		.on('click', '[role=allComb]', function (e) {
 
 			var box = $(this).closest('.layer');
+
+			if( box.find('.copyBox').is(":visible") ){
+				return box.find('.copyBox').hide();
+			}
 
 			var groupList = [];
 
@@ -591,6 +622,13 @@ $(function(){
 				numList = numList.concat(q||[]);
 			});
 
+
+			window.currentCombList = numList.map(function(item){
+				var red = item.redBall.slice();
+				var blue = red.pop();
+				blue = blue.replace(/^\:/img, '');
+				return {red:red,blue:blue};
+			});
 
 			console.log(numList);
 			console.log('all comb length is %s', numList.length);

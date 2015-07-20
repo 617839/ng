@@ -14,6 +14,12 @@
  * var result = countMoney(list); // {list:[{red:[1, 5, 12, 13, 27, 30], blue:4, money:5}],money:5}
  *
  */
+
+if(window){
+    exports = window;
+}
+
+
 exports.countMoney = function(arr, refer){
 
     arr = JSON.parse(JSON.stringify(arr));
