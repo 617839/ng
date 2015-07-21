@@ -551,9 +551,11 @@ $(function(){
 				return a.money - b.money;
 			});
 
-			console.log('all money is ' + result.money + '; list length is ' + result.list.length);
+			$(this).find('sup').text(result.money);
 
 			console.log(JSON.stringify(result.list).replace(/},\{/img, '},\r\n{'));
+
+			console.log('all money is ' + result.money + '; list length is ' + result.list.length);
 
 
 		})
