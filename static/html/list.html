@@ -118,7 +118,7 @@
     var type = getUrlParam('type') || $('aside button.current').attr('data-type');
     var push = getUrlParam('push');
 
-    var data = NGGLOBAL[type].slice(NGGLOBAL[type].length - 100);
+    var data = NGGLOBAL[type].slice(NGGLOBAL[type].length - 240);
 
     if (push) {
         data.push(JSON.parse(push));
