@@ -71,6 +71,13 @@
     $('body').on('click', '.list-4 li', function (e) {
         $(this).toggleClass('disabled');
     });
+
+    setTimeout(function(){
+
+        $('body').scrollTop((countDm.length-16) * 21);
+
+
+    },2400)
 </script>
 </body>
 </html>

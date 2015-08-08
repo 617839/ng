@@ -19,6 +19,9 @@
     <button data-type="upMarginRef">上间隔</button>
     <button data-type="downMarginRef" class="current">下间隔</button>
     <button data-type="singleDigitRef">数尾</button>
+    <button onclick="showOverlap(event);">overlap</button>
+    <button onclick="showZero(event);">zero</button>
+
 </aside>
 <div class="container">
     <div class="title"></div>
@@ -27,6 +30,56 @@
 
 <script>
 
+    var showOverlap = function(e){
+
+        var cla = 'highlight';
+
+        var $prev;
+
+        $('ul li').each(function(){
+
+             var $th = $(this);
+
+            console.log(this.__data__.x);
+
+            if(this.__data__.x.length){
+                $th.find('p:nth-child(3)').toggleClass(cla);
+                $prev.find('p:nth-child(3)').toggleClass(cla);
+            }
+
+            $prev = $th;
+
+
+        })
+
+
+    };
+
+    var showZero = function(e){
+
+        $('ul li p:nth-child(3)').each(function(i){
+
+            var $em = $(this).find('em');
+
+            $em.each(function(){
+
+                var cla = 'highlight';
+
+                var $th = $(this);
+
+                if($th.hasClass(cla)) return $th.removeClass(cla);
+
+                if($th.text() == 0){
+
+                    $th.addClass(cla);
+                }
+
+            });
+
+        });
+
+    };
+
     var view = function (data) {
 
         var m = 40;
@@ -34,11 +87,11 @@
 
         //////////////////////////////////////////////////
 
-        var i = d3.select('.title').selectAll('i')
-                .data(d3.range(0, 36));
+        var i = d3.select('.title').selectAll('i').data(d3.range(0, 36));
 
-        i.enter()
-                .append('i');
+
+        i.enter().append('i');
+
 
         i.text(function (d) {
             return d;
@@ -49,8 +102,8 @@
 
         //////////////////////////////////////////////////
 
-        var li = d3.select(".content").selectAll("li")
-                .data(data);
+        var li = d3.select(".content").selectAll("li").data(data);
+
 
         li.enter().append("li");
 
@@ -62,14 +115,13 @@
 
         //////////////////////////////////////////////////
 
-        var p = li.selectAll('p')
-                .data(d3.values);
+        var p = li.selectAll('p').data(d3.values);
 
         p.enter().append("p");
 
         p.transition().duration(500)
                 .style('left', function (d, i) {
-                    return i * 9 * 41 + 'px';
+                    return i * 8 * 41 + 'px';
                 });
 
         p.exit().remove();
@@ -98,7 +150,7 @@
 
     ////////////////////////////////////////////////////////
 
-    $('aside button').click(function () {
+    $('aside button[data-type]').click(function () {
         var th = $(this);
         var type = th.attr('data-type');
         var data = NGGLOBAL[type].slice(NGGLOBAL[type].length - 100);
@@ -125,6 +177,34 @@
     }
 
     data = groupRefListModel(data);
+
+
+    var prev;
+
+    data.forEach(function(item, i){
+
+        if(!prev){
+            prev = item.loca;
+            item.x= [];
+            return;
+        }
+
+        var current = item.loca;
+
+        var x = _.difference(current, prev);
+
+        var pl = _.uniq(prev).length;
+        var cl = _.uniq(current).length;
+        var xl = x.length;
+
+        item.x = !xl && pl == cl ? [' '] : [];
+
+        prev = current;
+
+
+    });
+
+    console.log(data)
 
     view(data);
 

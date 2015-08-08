@@ -8,15 +8,22 @@ aside{
 	background:#dfe3e8;
 }
 aside button{
-	position:absolute;
-	left:5px;
-	font-size:0.6em;
+	display: flex;
+	margin:15px 0 10px 5px;
+	padding:0.2em;
+	font-size:1em;
 }
 aside button.current{
-	font-size:0.9em;
+	font-size:1.2em;
 	font-weight:bold;
 }
-button[data-type="upMarginRef"]{
+
+.highlight, .highlight em{
+	color:#fff;
+	background: rgb(192, 0, 0);
+	font-weight: bold;
+}
+/*button[data-type="upMarginRef"]{
 	top:40px;
 }
 button[data-type="downMarginRef"]{
@@ -24,7 +31,7 @@ button[data-type="downMarginRef"]{
 }
 button[data-type="singleDigitRef"]{
 	top:120px;
-}
+}*/
 
 /* */
 .title i,
