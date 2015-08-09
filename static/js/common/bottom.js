@@ -25,6 +25,8 @@
 
         $scope.bdgs = window.bdgs.slice(window.bdgs.length-32);
 
+        $scope.bcm = window.BCM.slice(window.BCM.length-84);
+
     });
 
 

@@ -10,7 +10,7 @@ $(function(){
 
     var $body = $('body');
 
-    var $ctrlBox = $('<div style="position:fixed;left:10px;bottom: 50px;;;"><button role="ctrlLight">light</button></div>').appendTo($body);
+    var $ctrlBox = $('<div style="position:fixed;right:10px;bottom: 50px;"><button role="ctrlLight">light</button></div>').appendTo($body);
 
     var $light = $('<div style="position: absolute;width:100%;height:21px;background:rgba(0,125,255,.1);pointer-events:none;"></div>').appendTo('body');
 

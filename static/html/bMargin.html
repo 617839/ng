@@ -20,34 +20,43 @@
             position: relative;
             margin: 21px 0 0 0;
         }
-
-        .dg{
-            position:absolute;
-            left:864px;
+        ul{
+            display: inline-block;
         }
 
-        .mr{
-            position:absolute;
-            left:960px;
+        .dg{
+        }
+
+
+        .BCM{
+            margin-left:108px;
+            margin-right:108px;
         }
     </style>
 </head>
 <body>
 
-<div id="view" class="wraper-4 bg-3">
+<div id="view" class="wraper-4 bg-3" ng-controller="bMarginCtrl">
 
-
-    <ul class="list-3 dg" ng-controller="bMarginCtrl">
-        <li>
-            <i>dg</i>
-            <em ng-repeat="v in bdgs track by $index" ng-bind="v"></em>
-        </li>
-    </ul>
-
-    <ul class="list-3" ng-controller="bMarginCtrl">
+    <ul class="list-3">
         <li ng-repeat="(k, item) in bMarginList">
             <i ng-bind="k" ng-if="item"></i>
             <em ng-repeat="v in item.margin track by $index" ng-bind="v"></em>
+        </li>
+    </ul><ul class="list-3 BCM">
+
+
+        <li>
+            <i>bcm</i>
+            <em ng-repeat="v in bcm track by $index" ng-bind="v"></em>
+        </li>
+    </ul><ul class="list-3 dg">
+
+
+
+        <li>
+            <i>dg</i>
+            <em ng-repeat="v in bdgs track by $index" ng-bind="v"></em>
         </li>
     </ul>
 

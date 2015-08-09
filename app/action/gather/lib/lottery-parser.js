@@ -35,6 +35,7 @@ module.exports = {
         var rsto = {};
         var bsto = {};
         var rtop = [];
+        var bcm = []; //blue common  margin
 
         var colCountRef = [];
 
@@ -97,6 +98,7 @@ module.exports = {
 
                     if ('start' in bstoItem) {
                         bstoItem.margin.push(i - bstoItem.start - 1);
+                        bcm.push(i - bstoItem.start - 1);
                     }
 
                     bstoItem.start = i;
@@ -352,6 +354,7 @@ module.exports = {
             opnRedBall: ng[ng.length - 1].red.slice(),
             colMap: colMap,
             bdgs : bdgs,
+            BCM: bcm,
             redMargin: reds,
             bMargin: bMargin,
             colCountRef : colCountRef,

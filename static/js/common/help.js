@@ -662,8 +662,8 @@ function numSelFilter( numSelObj ){
 		if( colCount[i] > 3) return false;
 	}
 	
-	if( getArrayUnique(upMargin).length < 4 ) return false;
-	if( getArrayUnique(downMargin).length < 4 ) return false;
+	if( getArrayUnique(upMargin).length < 3 ) return false;
+	if( getArrayUnique(downMargin).length < 3 ) return false;
 	if( getArrayUnique(singleDigit).length < 4 ) return false;
 	
 	//upMargin check
@@ -813,7 +813,7 @@ function redBlueBallModel(arr) {
 		});
 
 		// 过滤
-		//if ( filter(locaCount, colCount, upMargin, downMargin, singleDigit) === false ) continue;
+		if ( filter(locaCount, colCount, upMargin, downMargin, singleDigit) === false ) continue;
 		
 		
 		var colCountRefLast = getArrayLast(colCountRef);
@@ -878,7 +878,7 @@ function redBlueBallModel(arr) {
 				
 		};	
 		
-		if(1|| numSelFilter(obj) ){
+		if(numSelFilter(obj) ){
 			if(window.blueBallIsRandom){
 				// 随机提取篮球
 				blue = blues[Math.round(Math.random() * (blues.length - 1))];			

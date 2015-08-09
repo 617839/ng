@@ -81,8 +81,23 @@
 
 
 
+        $scope.xx = function(){
+
+            var map = ['downRef', 'upRef', 'sdRef'];
+
+            var f = function(item){
+                return [_.uniq(item).length];
+            }
 
 
+            $scope.downRef = downRef.map(f);
+            $scope.upRef = upRef.map(f);
+            $scope.sdRef = sdRef.map(f);
+
+        };
+
+
+        $scope.xx();
 
 
 

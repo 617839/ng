@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ball</title>
+
+    <link rel="stylesheet" type="text/css" href="../../css/common/base.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css"/>
+
+    <script src="../../js/vendor/underscore-1.6.0.min.js"></script>
+    <script src="../../js/vendor/jquery.min.js"></script>
+    <script src="../../js/vendor/d3.min.js"></script>
+
+    <script src="../../js/common/getData.js"></script>
+    <script src="../../js/common/help.js"></script>
+    <script src="../../js/common/common.js"></script>
+    
+    <link rel="stylesheet" href="style.scss">
+
+    <style>
+        html, body{
+            min-height: 100%;
+            background: url(../../css/common/img/bg3.png) repeat 0 0;
+        }
+        body{
+
+            line-height: 1;
+        }
+
+        h6, div, em{
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        
+        h6,em{
+            width:41px;
+            height: 21px;
+            line-height: 22px;
+            text-align: center;
+        }
+        
+        h6{
+            text-align: right;
+            overflow: hidden;
+            margin-right:41px;
+            direction: rtl;
+        }
+
+        aside{
+            background: #dfe3e8;
+            position: fixed;
+            right:0;
+            top:0;
+            height: 100%;
+            padding:10px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<aside>
+<button onclick="findOddOrEven();">全奇偶</button>
+</aside>
+<main>
+
+
+<ul class="list">
+
+</ul>
+</main>
+
+<script>
+
+    var cla = 'highlight';
+
+    function findOddOrEven(){
+
+        $('ul li').each(function(){
+
+            var $th = $(this);
+
+            if(isAlloddOrEven(this.__data__.red)){
+                $th.toggleClass(cla);
+                console.log(this.__data__.red)
+            }
+
+        })
+    }
+
+    $(function(){
+
+        var list = d3.select('ul').selectAll('li').data(ng);
+
+        list.enter().append('li');
+
+        list.append('h6').text(function(d){
+            return d.num;
+        });
+
+        var red = list.append('div');
+
+        var em = red.selectAll('em').data(function(d){
+            return d.red;
+        });
+
+        em.enter().append('em');
+
+        em.text(function(d){
+            return d;
+        });
+
+
+        //////////////////////////////////////////////////////////
+
+        setTimeout(function(){
+
+            $('body').scrollTop((countDm.length-20) * 21);
+
+
+        },2400);
+
+
+    });
+
+
+
+
+
+</script>
+</body>
+</html>

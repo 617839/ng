@@ -3,11 +3,10 @@
 ======================================================
  */
 html, body {
-    color: #656d78;
     background: #fff;
     line-height: 1.6;
     font-size: 14px;
-    font-family: "Microsoft Yahei", FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
+    #font-family: "Microsoft Yahei", FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
     padding-bottom: 15%!important;
 }
 

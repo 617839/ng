@@ -18,11 +18,7 @@ aside button.current{
 	font-weight:bold;
 }
 
-.highlight, .highlight em{
-	color:#fff;
-	background: rgb(192, 0, 0);
-	font-weight: bold;
-}
+
 /*button[data-type="upMarginRef"]{
 	top:40px;
 }

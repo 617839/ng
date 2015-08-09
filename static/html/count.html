@@ -105,6 +105,7 @@
 </div>
 
 <script>
+
     $('body').on('click', '.list-4 li', function (e) {
         $(this).toggleClass('disabled');
     });
@@ -116,6 +117,14 @@
          $('[ng-controller="countCtrl"] ul').eq(index+1).toggleClass('shrink');
 
     });
+
+    setTimeout(function(){
+
+        $('body').scrollTop((countDm.length-20) * 21);
+
+
+    },2400);
+
 </script>
 </body>
 </html>

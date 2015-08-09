@@ -21,6 +21,7 @@
     <button data-type="singleDigitRef">数尾</button>
     <button onclick="showOverlap(event);">overlap</button>
     <button onclick="showZero(event);">zero</button>
+    <button onclick="showOddOrEven(event);">全奇偶</button>
 
 </aside>
 <div class="container">
@@ -29,6 +30,8 @@
 </div>
 
 <script>
+
+    var cla = 'highlight';
 
     var showOverlap = function(e){
 
@@ -63,7 +66,7 @@
 
             $em.each(function(){
 
-                var cla = 'highlight';
+
 
                 var $th = $(this);
 
@@ -80,7 +83,54 @@
 
     };
 
+
+    function showOddOrEven(){
+
+        $('ul li').each(function(){
+
+            var $th = $(this);
+
+
+            if(isAlloddOrEven(this.__data__.group)){
+                $th.toggleClass(cla);
+            }
+
+
+        })
+
+
+    }
+
     var view = function (data) {
+
+
+        var prev;
+
+        data.forEach(function(item, i){
+
+            if(!prev){
+                prev = item.loca;
+                item.x= [];
+                return;
+            }
+
+            var current = item.loca;
+
+            var x = _.difference(current, prev);
+
+            var pl = _.uniq(prev).length;
+            var cl = _.uniq(current).length;
+            var xl = x.length;
+
+            item.x = !xl && pl == cl ? [' '] : [];
+
+            prev = current;
+
+
+        });
+
+        //////////////////////////////////////////////////////////
+
 
         var m = 40;
         var h = 20;
@@ -153,14 +203,17 @@
     $('aside button[data-type]').click(function () {
         var th = $(this);
         var type = th.attr('data-type');
-        var data = NGGLOBAL[type].slice(NGGLOBAL[type].length - 100);
+        var data = NGGLOBAL[type].slice(NGGLOBAL[type].length - 240);
 
         th.addClass('current');
         th.siblings().removeClass('current');
 
         $('title').text('列表' + type);
 
+        $('.'+cla).removeClass(cla);
+
         data = groupRefListModel(data);
+
         view(data);
     });
 
@@ -177,32 +230,6 @@
     }
 
     data = groupRefListModel(data);
-
-
-    var prev;
-
-    data.forEach(function(item, i){
-
-        if(!prev){
-            prev = item.loca;
-            item.x= [];
-            return;
-        }
-
-        var current = item.loca;
-
-        var x = _.difference(current, prev);
-
-        var pl = _.uniq(prev).length;
-        var cl = _.uniq(current).length;
-        var xl = x.length;
-
-        item.x = !xl && pl == cl ? [' '] : [];
-
-        prev = current;
-
-
-    });
 
     console.log(data)
 
