@@ -358,7 +358,24 @@ $(function(){
 		var reg = sortBox.find('input[name="reg"]:checked').val();
 		var name = th.attr('data-name');
 		var val = th.prev('input').val();
-		var attr = '[data-' + name + reg + '="'+ val +'"]';
+		var attr;
+		var filter;
+
+			if(reg == '//'){
+				attr = new RegExp(val);
+
+				filter = function(){
+
+					var str = $(this).attr('data-'+name);
+					str = str.replace(/^\[/i,'').replace(/\]$/i,'');
+					console.log(attr, str);
+					return attr.test(str);
+
+				};
+			}else{
+				attr = '[data-' + name + reg + '="'+ val +'"]';
+				filter = 'li' + attr;
+			}
 		
 		var limit = box.find('li');
 		
@@ -366,20 +383,16 @@ $(function(){
 			limit = box.find('li.selected');
 			limit.find('input[name="itemIsSelected"]:checkbox').prop('checked',false).trigger('change');
 		}
-		
-		var list = limit.filter('li' + attr);
+
+
+		var list = limit.filter(filter);
 		var size = list.length;
 		
 		box.find('.sortInfo b').text(size);
 		
 		list.prependTo( list.parent() ).find('input[name="itemIsSelected"]:checkbox').prop('checked',true).trigger('change');
 		
-		/*list.each(function(){
-			var th = $(this);
-			th.find('input[name="itemIsSelected"]:checkbox').attr('checked',true).trigger('change');
-			th.prependTo( th.parent() );
-		});*/
-		
+
 		$('body').scrollTop(0);
 		
 		sortBox.remove();
@@ -427,13 +440,26 @@ $(function(){
 	})	
 	//删除所选
 	.on('click', '.del', function() {
-		var box = $(this).closest('.layer');
-		var delBox = $('#delBox').empty();
-		box.find('li[optional=1] input[name="itemIsSelected"]:checked').each(function() {
-			$(this).closest('li').appendTo(delBox);
-		});
-		box.find('.info b').text(box.find('li[optional=1]').length);
+
+			if(confirm('确定彻底删除？')){
+
+				var box = $(this).closest('.layer');
+				box.find('li[optional=1] input[name="itemIsSelected"]:checked').each(function() {
+					$(this).closest('li').remove();
+				});
+				box.find('.info b').text(box.find('li[optional=1]').length);
+			}
+
 	})
+	//移动到回收站
+		.on('click', '[role=trash]', function(e){
+			var box = $(this).closest('.layer');
+			var delBox = $('#delBox')//.empty();
+			box.find('li[optional=1] input[name="itemIsSelected"]:checked').each(function() {
+				$(this).closest('li').appendTo(delBox);
+			});
+			box.find('.info b').text(box.find('li[optional=1]').length);
+		})
 	//撤销删除
 	.on('click', '.cancel',function() {
 		var box = $(this).closest('.layer');
@@ -712,10 +738,12 @@ $(function(){
 
 			if(!str) return alert('not set.');
 
-			var arr = str.split(',');
+			str = str.trim();
+
+			var arr = str.split(/\s+/img);
 
 			arr.forEach(function(v, i, list){
-				var a =  v.split(/\s+/img);
+				var a =  v.split('');
 				for(var j in a) a[j] = a[j] * 1;
 				list[i] = a;
 			});

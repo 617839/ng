@@ -96,6 +96,7 @@
 			<label> $ </label><input type="radio" name="reg" value="$" />&nbsp;&nbsp;
 			<label> * </label><input type="radio" name="reg" value="*" />&nbsp;&nbsp;
 			<label> ! </label><input type="radio" name="reg" value="!" />&nbsp;&nbsp;&nbsp;
+			<label> // </label><input type="radio" name="reg" value="//" />&nbsp;&nbsp;&nbsp;
 			
 			<% if(filterPattern){ %>
 				<label> P- </label><input type="checkbox" name="filterPattern" checked />
@@ -134,10 +135,11 @@
 		<span class="info"><b><%= info %></b></span>
 		<button role="countMoney">中奖统计<sup></sup></button>
 		<button role="allComb">组合所有 <sup></sup> </button>
-		<button class="cancel">撤消删除</button>
 		<button class="not">取消所选</button>
 		<button class="reset">反选</button>
-		<button class="del">删除所选</button>
+		<button class="cancel">撤消删除</button>
+		<button class="trash" role="trash">删除所选到回收站</button>
+		<button class="del">彻底删除所选</button>
 		<button class="expandable">收缩</button>
 		<button class="showRef" data-type="<%= type %>">显示参照</button>
 		<button class="toggle">切换细节</button>
