@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ball</title>
+
+    <link rel="stylesheet" type="text/css" href="../../css/common/base.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css"/>
+
+    <script src="../../js/vendor/underscore-1.6.0.min.js"></script>
+    <script src="../../js/vendor/jquery.min.js"></script>
+    <script src="../../js/vendor/d3.min.js"></script>
+
+    <script src="../../js/common/getData.js"></script>
+    <script src="../../js/common/help.js"></script>
+    <script src="../../js/common/common.js"></script>
+    
+    <link rel="stylesheet" href="style.scss">
+
+    <style>
+        html, body{
+            min-height: 100%;
+            background: url(../../css/common/img/bg3.png) repeat 0 0;
+        }
+        body{
+            line-height: 1;
+        }
+
+        h6, div, em{
+            display: inline-block;
+            vertical-align: middle;
+        }
+        
+        
+        h6,em{
+            width:41px;
+            height: 21px;
+            line-height: 22px;
+            text-align: center;
+        }
+        
+        h6{
+            text-align: right;
+            overflow: hidden;
+            margin-right:41px;
+            direction: rtl;
+        }
+
+        aside{
+            background: #dfe3e8;
+            position: fixed;
+            right:0;
+            top:0;
+            height: 100%;
+            padding:10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<aside>
+</aside>
+<main>
+
+<ul class="list">
+
+</ul>
+</main>
+
+<script>
+
+
+
+
+    function render(data){
+
+        var list = d3.select('ul').selectAll('li').data(data);
+
+        list.enter().append('li');
+
+        list.append('h6').text(function(d){
+            return d.num;
+        });
+
+        var red = list.append('div');
+
+        var em = red.selectAll('em').data(function(d){
+            return d.red;
+        });
+
+        em.enter().append('em');
+
+        em.text(function(d){
+            return d;
+        });
+
+    }
+
+
+    !function (){
+
+        var list = downMarginRef;
+
+        //标准: 0开头， 第二位 in [1,2,3,4], same in [0,1,2,3],  length >= 4, 非全奇或全欧，重延比例 >= 3/5,  重延伸分布overlap != 1, 两位数比例 < 2/5
+
+        //original + unique & sort + 重延伸分布 + length + same + 全奇或全偶 + 两位数比例 + 横向重延比例 + 与标准比对结果
+
+
+
+    }();
+
+
+        //////////////////////////////////////////////////////////
+
+/*        setTimeout(function(){
+
+            $('body').scrollTop((countDm.length-20) * 21);
+
+        },2400);*/
+
+
+
+</script>
+</body>
+</html>
