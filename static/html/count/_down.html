@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>count down</title>
+    <link rel="stylesheet" type="text/css" href="../../css/common/base.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common/common.css"/>
+    <script src="../../js/vendor/underscore-1.6.0.min.js"></script>
+    <script src="../../js/vendor/jquery.min.js"></script>
+    <script src="../../js/vendor/d3.min.js"></script>
+    <script src="../../js/common/getData.js"></script>
+    <script src="../../js/common/help.js"></script>
+    <script src="../../js/common/common.js"></script>
+    <style>
+        html, body{
+            min-height: 100%;
+            background: url(../../css/common/img/bg3.png) repeat 0 0;
+        }
+        body{
+            line-height: 1;
+        }
+        h6, div, em{
+            display: inline-block;
+            vertical-align: middle;
+        }
+        h6,em{
+            width:41px;
+            height: 21px;
+            line-height: 22px;
+            text-align: center;
+        }
+        h6{
+            text-align: right;
+            overflow: hidden;
+            margin-right:41px;
+            direction: rtl;
+        }
+        aside{
+            background: #dfe3e8;
+            position: fixed;
+            right:0;
+            top:0;
+            height: 100%;
+            padding:10px;
+        }
+    </style>
+</head>
+<body>
+
+<aside>
+</aside>
+
+<main>
+<ul class="list">
+
+</ul>
+</main>
+
+<script>
+
+    !function(){
+
+        var data = downMarginRef;
+
+        data = groupRefListModel(data);
+
+
+
+        function f(list){
+
+            list = list.map(function(item){
+                var o = {
+                    original: item.slice(),
+                    uniq: _.uniq(item)
+
+                };
+
+            });
+
+
+
+
+        }
+
+
+        var filter = {
+
+            first : {
+                tag : '0开头',
+                handel : function(arr){
+                    return _.indexOf(arr, 0) === 0;
+                }
+            },
+
+            allOddOrEven : {
+                tag : '全奇偶',
+                handle : function(arr){
+                     var isOdd = arr.every(function(item){
+                         return item % 2 == 0;
+                     });
+                    var isEven = arr.every(function(item){
+                        return item % 2 == 1;
+                    });
+                    return isOdd || isEven;
+                }
+            },
+
+            same : {
+                tag: '',
+                handle : function(arr){
+                    _.countBy(arr, function(item){
+                        return item;
+                    })
+                }
+            },
+
+
+
+            second : function(arr){
+                return _.uniq(arr)
+            }
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+    }();
+
+
+
+
+
+    $(function(){
+
+
+
+        //////////////////////////////////////////////////////////
+
+//        setTimeout(function(){
+//
+//            $('body').scrollTop((countDm.length-20) * 21);
+//
+//
+//        },2400);
+
+
+    });
+
+
+
+
+
+</script>
+</body>
+</html>
