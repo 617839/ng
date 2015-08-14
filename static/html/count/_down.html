@@ -62,97 +62,78 @@
 
         var data = downMarginRef;
 
-        data = groupRefListModel(data);
-
-
-
-        function f(list){
-
-            list = list.map(function(item){
-                var o = {
-                    original: item.slice(),
-                    uniq: _.uniq(item)
-
-                };
-
-            });
-
-
-
-
-        }
-
-
-        var filter = {
+        var filters = {
 
             first : {
+                code : 'first',
                 tag : '0开头',
-                handel : function(arr){
-                    return _.indexOf(arr, 0) === 0;
+                handle : function(current, prev){
+                    current.tags[this.code] = _.indexOf(current.uniq, 0) === 0;
                 }
             },
 
             allOddOrEven : {
+                code:'allOddOrEven',
                 tag : '全奇偶',
-                handle : function(arr){
-                     var isOdd = arr.every(function(item){
-                         return item % 2 == 0;
-                     });
+                handle : function(current){
+                    var arr = current.uniq;
+                    var isOdd = arr.every(function(item){
+                        return item % 2 == 0;
+                    });
                     var isEven = arr.every(function(item){
                         return item % 2 == 1;
                     });
-                    return isOdd || isEven;
+                    current.tags[this.code] = isOdd || isEven;
                 }
             },
 
             same : {
-                tag: '',
-                handle : function(arr){
-                    _.countBy(arr, function(item){
+                code:'same',
+                tag: '相同',
+                handle : function(current){
+                    var count =  _.countBy(current.original, function(item){
                         return item;
-                    })
+                    });
+                    current.same = count;
+                    current.tags[this.code] = _.every(count, function(v, k){
+                         return v > 1 && k < 4;
+                    });
                 }
-            },
-
-
-
-            second : function(arr){
-                return _.uniq(arr)
             }
 
+        };
+
+        var list = groupRefListModel(data);
+
+        _.each({original:'group', uniq: 'unique', cys: 'loca'}, function(v, k){
+
+            for(var i in list){
+                var item = list[i];
+                item[k] = item[v];
+                delete item[v];
+            }
+
+        });
+
+        list.reduce(function(prev, current, index, list){
+
+            current.tags = {};
+
+            _.forEach(filters, function(filter){
+
+                filter.handle(current, prev);
+
+            });
+
+            return current;
+        });
 
 
-
-
-
-
-        }
-
-
-
-
+        console.log(list);
 
     }();
 
 
-
-
-
-    $(function(){
-
-
-
-        //////////////////////////////////////////////////////////
-
-//        setTimeout(function(){
-//
-//            $('body').scrollTop((countDm.length-20) * 21);
-//
-//
-//        },2400);
-
-
-    });
 
 
 
