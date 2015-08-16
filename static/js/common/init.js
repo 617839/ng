@@ -86,13 +86,10 @@ $(function(){
 		refName && ( window.groupRefList = window[refName] );
 		window.classifyList = window[name];
 
-
 		q = combineWrap(window.classifyList,groupNum);
 		q = groupWrap(q);
 
-
 		q =	xxUniq(q, gruopSize);
-
 
 		q = groupListModel(q);
 
@@ -632,8 +629,13 @@ $(function(){
 
 			});
 
-			console.log(JSON.stringify(groupList).replace(/],\[/img, '],\r\n['));
+			console.info('before filter length is', groupList.length);
+			groupList = _.uniq(groupList,function(a){return JSON.stringify(a)});
+			console.info('after uniq length is', groupList.length);
+			groupList = filterForGroupByDown(groupList);
+			console.info('after filter length is', groupList.length);
 
+			console.log(JSON.stringify(groupList).replace(/],\[/img, '],\r\n['));
 
 			var numList = [];
 
@@ -770,30 +772,6 @@ $(function(){
 /////////////////////////////////////////////////////////
 //global
 
-function xxReverse(e){
-	var box = $(e.target).parent();
-
-	box.find('span em').each(function(){
-		$(this).click();
-	});
-}
-
-
-function xxUniq(q1, groupSize) {
-
-	var qLength = q1.length;
-	var qItem;
-	while(qLength--){
-		qItem = _.uniq(q1[qLength]);
-		q1[qLength] = qItem;
-		if(qItem.length != groupSize){
-			q1.splice(qLength, 1);
-		}
-	}
-
-	return _.uniq(q1,function(a){return JSON.stringify(a)});
-
-}
 
 
 

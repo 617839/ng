@@ -2,21 +2,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>ball</title>
-
+    <title>count down</title>
     <link rel="stylesheet" type="text/css" href="../../css/common/base.css"/>
     <link rel="stylesheet" type="text/css" href="../../css/common/common.css"/>
-
-    <script src="../../js/vendor/underscore-1.6.0.min.js"></script>
+    <script src="../../js/vendor/underscore-1.8.2.js"></script>
     <script src="../../js/vendor/jquery.min.js"></script>
     <script src="../../js/vendor/d3.min.js"></script>
-
     <script src="../../js/common/getData.js"></script>
     <script src="../../js/common/help.js"></script>
+    <script src="../../js/common/filtersForGroupByDown.js"></script>
     <script src="../../js/common/common.js"></script>
-    
-    <link rel="stylesheet" href="style.scss">
-
     <style>
         html, body{
             min-height: 100%;
@@ -25,27 +20,36 @@
         body{
             line-height: 1;
         }
-
+        li{
+        }
+        li div{
+            display: inline-block;
+            min-width:246px;
+            margin-right:41px;
+        }
+        .cys{
+            min-width:123px;
+        }
+        .count{
+            width:41px;
+            min-width:41px;
+        }
         h6, div, em{
             display: inline-block;
             vertical-align: middle;
         }
-        
-        
         h6,em{
             width:41px;
             height: 21px;
             line-height: 22px;
             text-align: center;
         }
-        
         h6{
             text-align: right;
             overflow: hidden;
             margin-right:41px;
             direction: rtl;
         }
-
         aside{
             background: #dfe3e8;
             position: fixed;
@@ -55,70 +59,126 @@
             padding:10px;
         }
 
+        .tags em{
+            width:6em;
+            overflow: hidden;
+            text-align: left;
+        }
+        .tags em:nth-child(5){
+            width:12em;
+        }
+        .tags em:nth-child(n+6){
+            width:7em;
+        }
+        .apass{
+            #background: #0070c0;
+            color:blue;
+            font-weight: bold;
+            #box-shadow :inset 1px 1px 1px 1px  #0070c0;
+        }
+
     </style>
 </head>
 <body>
 
 <aside>
 </aside>
+
 <main>
+    <ul class="list">
 
-<ul class="list">
-
-</ul>
+    </ul>
 </main>
 
 <script>
 
+    !function(){
+
+        var data = downMarginRef;
+
+        var list = groupRefListModel(data);
+
+        list = tagGroupByDown(list);
+
+//        _.each({original:'group', uniq: 'unique', cys: 'loca'}, function(v, k){
+//
+//            for(var i in list){
+//                var item = list[i];
+//                item[k] = item[v];
+//                delete item[v];
+//            }
+//
+//        });
 
 
 
-    function render(data){
+        function render (data){
 
-        var list = d3.select('ul').selectAll('li').data(data);
+            var li = d3.select('ul').selectAll('li').data(data);
+            li.enter().append('li').classed('highlight', function(d){
+                return false;
+                return !_.every(d.tags, function(item){
+                    return item.pass;
+                });
+            });
 
-        list.enter().append('li');
+//            var $original = li.append('div');
+//            var original =  $original.selectAll('em').data(function(d){
+//                return d.original;
+//            });
+//            original.enter().append('em');
+//            original.text(function(d){
+//                return d;
+//            });
 
-        list.append('h6').text(function(d){
-            return d.num;
-        });
+            var $uniq = li.append('div');
+            var uniq = $uniq.selectAll('em').data(function(d){
+                return d.uniq;
+            });
+            uniq.enter().append('em');
+            uniq.text(function(d){
+                return d;
+            });
 
-        var red = list.append('div');
+            var $cys = li.append('div').classed('cys', true);
+            var cys = $cys.selectAll('em').data(function(d){
+                return d.cys;
+            });
+            cys.enter().append('em');
+            cys.text(function(d){
+                return d;
+            });
 
-        var em = red.selectAll('em').data(function(d){
-            return d.red;
-        });
-
-        em.enter().append('em');
-
-        em.text(function(d){
-            return d;
-        });
-
-    }
-
-
-    !function (){
-
-        var list = downMarginRef;
-
-        //标准: 0开头， 第二位 in [1,2,3,4], same in [0,1,2,3],  length >= 4, 非全奇或全欧，重延比例 >= 3/5,  重延伸分布overlap != 1, 两位数比例 < 2/5
-
-        //original + unique & sort + 重延伸分布 + length + same + 全奇或全偶 + 两位数比例 + 横向重延比例 + 与标准比对结果
+            //count
+            var $count = li.append('div').classed('count', true);
+            $count.append('em').text(function(d){
+                var noPass = _.filter(d.tags, function(item){
+                    return !item.pass;
+                });
+                return noPass.length ? noPass.length : '';
+            });
 
 
+            var $tags = li.append('div').classed({tags:true});
+            var tags = $tags.selectAll('em').data(function(d){
+                return d.tags || [];
+            });
+            tags.enter().append('em');
+            tags.text(function(d){
+                return d.pass ? ' ' : d.tag + ' ' + d.tip;
+            });
+            tags.classed('highlight', function(d){
+                return false;
+            });
+
+        }
+
+
+        ////////////////////////////////////////////
+        //init
+        render (list);
 
     }();
-
-
-        //////////////////////////////////////////////////////////
-
-/*        setTimeout(function(){
-
-            $('body').scrollTop((countDm.length-20) * 21);
-
-        },2400);*/
-
 
 
 </script>

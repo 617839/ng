@@ -999,13 +999,17 @@ function groupRefListModel(arr){
 			return a - b;
 		});
 
+		//obj = {
+		//		group: current.sort(function(a, b){return a-b;}),
+		//		unique : unique,
+		//		loca: loca
+		//};
 		obj = {
-				group: current.sort(function(a, b){return a-b;}),
-                //sort: current.slice().sort(function(a, b){return a-b;}),
-				unique : unique,
-				loca: loca
+			original: current.sort(function(a, b){return a-b;}),
+			uniq : unique,
+			cys: loca
 		};
-		
+
 		result.unshift(obj);
 	}
 	
@@ -1014,12 +1018,37 @@ function groupRefListModel(arr){
 
 
 ///////////////////////////////////////////////////
+
+function xxReverse(e){
+	var box = $(e.target).parent();
+
+	box.find('span em').each(function(){
+		$(this).click();
+	});
+}
+
+
+function xxUniq(q1, groupSize) {
+
+	var qLength = q1.length;
+	var qItem;
+	while(qLength--){
+		qItem = _.uniq(q1[qLength]);
+		q1[qLength] = qItem;
+		if(qItem.length != groupSize){
+			q1.splice(qLength, 1);
+		}
+	}
+
+	return _.uniq(q1,function(a){return JSON.stringify(a)});
+
+}
 ///////////////////////////////////////////////////
 //回调函数
 
 function groupCall(groupnum,patch,size) {
 	
-	var size = patch ? size - patch.length : size;
+	size = patch ? size - patch.length : size;
 
 	var q = size ? group(groupnum, size) : false;
 
@@ -1157,3 +1186,5 @@ function getCurrentLottey(){
 	return currentLottey;
 
 }
+
+

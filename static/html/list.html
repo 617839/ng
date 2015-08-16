@@ -22,7 +22,7 @@
     <button onclick="showOverlap(event);">overlap</button>
     <button onclick="showZero(event);">zero</button>
     <button onclick="showOddOrEven(event);">全奇偶</button>
-
+    <button onclick="findSn(event);">全奇偶</button>
 </aside>
 <div class="container">
     <div class="title"></div>
@@ -32,6 +32,43 @@
 <script>
 
     var cla = 'highlight';
+
+    var findSn = function(e){
+
+        $('ul li').each(function(){
+
+            var $th = $(this);
+
+            var uniq = this.__data__.uniq;
+
+            var result = [];
+            var start;
+            var clone;
+            var prev;
+            var current;
+            for(var i = 0, length = uniq.length; i < length; i++){
+
+                clone = uniq.slice(i);
+
+                for(var j in clone){
+
+                }
+
+
+
+            }
+
+
+            uniq.forEach(function(v){
+
+
+            });
+
+
+
+        });
+
+    };
 
     var showOverlap = function(e){
 
@@ -52,9 +89,7 @@
 
             $prev = $th;
 
-
         })
-
 
     };
 
@@ -65,8 +100,6 @@
             var $em = $(this).find('em');
 
             $em.each(function(){
-
-
 
                 var $th = $(this);
 
@@ -90,19 +123,15 @@
 
             var $th = $(this);
 
-
             if(isAlloddOrEven(this.__data__.group)){
                 $th.toggleClass(cla);
             }
 
-
         })
-
 
     }
 
     var view = function (data) {
-
 
         var prev;
 
