@@ -21,7 +21,9 @@
             line-height: 1;
         }
         li{
+            @width:2000px;
         }
+
         li div{
             display: inline-block;
             min-width:246px;
@@ -60,16 +62,19 @@
         }
 
         .tags em{
-            width:6em;
-            overflow: hidden;
+            /*width:6em;*/
+            /*overflow: hidden;*/
+            /*text-align: left;*/
+        }
+        .tags em:nth-child(n+4){
+            margin-left:41px;
+        }
+        .tags em:nth-child(5), .tags em:nth-child(8){
+            width:123px;
+            margin-left:41px;
             text-align: left;
         }
-        .tags em:nth-child(5){
-            width:12em;
-        }
-        .tags em:nth-child(n+6){
-            width:7em;
-        }
+
         .apass{
             #background: #0070c0;
             color:blue;
@@ -165,10 +170,11 @@
             });
             tags.enter().append('em');
             tags.text(function(d){
-                return d.pass ? ' ' : d.tag + ' ' + d.tip;
+                //return d.pass ? ' ' : d.tag + ' ' + d.tip;
+                return d.tip || d.details;
             });
             tags.classed('highlight', function(d){
-                return false;
+                return !d.pass;
             });
 
         }

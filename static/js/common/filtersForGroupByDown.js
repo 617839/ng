@@ -72,7 +72,8 @@ var _filtersForGroupByDown = {
         tag : '开头',
         handle : function(current, prev){
             var o = _.omit(this, 'handle');
-            var v = o.tip = current.uniq[0];
+            var v = current.uniq[0];
+            o.details = v;
             o.pass = v == 0;
             current.tags.push(o);
         }
@@ -83,7 +84,8 @@ var _filtersForGroupByDown = {
         tag : '第二位',
         handle : function(current, prev){
             var o = _.omit(this, 'handle');
-            var v = o.tip = current.uniq[1];
+            var v = current.uniq[1];
+            o.details = v;
             o.pass = v < 5;
             current.tags.push(o);
         }
@@ -94,7 +96,8 @@ var _filtersForGroupByDown = {
         tag : '第三位',
         handle : function(current, prev){
             var o = _.omit(this, 'handle');
-            var v = o.tip = current.uniq[2];
+            var v = current.uniq[2];
+            o.details = v;
             o.pass =  v < 7;
             current.tags.push(o);
         }
@@ -112,7 +115,7 @@ var _filtersForGroupByDown = {
             var isEven = arr.every(function(item){
                 return item % 2 == 1;
             });
-            o.tip = isOdd ? '全偶' : isEven ? '全奇' : '';
+            o.details = isOdd ? '全偶' : isEven ? '全奇' : '';
             o.pass = !(isOdd || isEven);
             current.tags.push(o);
         }
@@ -126,15 +129,12 @@ var _filtersForGroupByDown = {
             var count =  _.countBy(current.original, function(item){
                 return item;
             });
-
             o.pass = _.every(count, function(v, k){
                 return !(v > 1 && k > 3);
             });
-            if(!o.pass){
-                o.tip = JSON.stringify(_.pick(count, function(v){
+            o.details = JSON.stringify(_.pick(count, function(v){
                     return v > 1;
-                }));
-            }
+            }));
             current.tags.push(o);
         }
     },
@@ -149,7 +149,8 @@ var _filtersForGroupByDown = {
             var cys_p = prev.cys;
             var diff = _.difference(cys_c, cys_p);
             o.pass = diff.length || _.uniq(cys_c).length != _.uniq(cys_p).length ? true : false;
-            o.tip = cys_c.join(' ');
+            o.details = cys_c.join(' ');
+            o.tip = o.pass ? ' ' : o.details;
             current.tags.push(o);
         }
     },
@@ -163,7 +164,7 @@ var _filtersForGroupByDown = {
             var cys = current.cys;
             var a = cys[0] + cys[1];
             var b = cys[0] + cys[1] + cys[2];
-            o.tip = a + '/' + b;
+            o.details = a + '/' + b;
             o.pass = a/b >= 1/2;
             current.tags.push(o);
         }
@@ -207,7 +208,7 @@ var _filtersForGroupByDown = {
 
             o.details = result;
             o.tip = JSON.stringify(_.flatten(result));
-            o.pass = false;
+            o.pass = result.length;
             current.tags.push(o);
         }
     }
