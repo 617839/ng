@@ -22,7 +22,7 @@
     <button onclick="showOverlap(event);">overlap</button>
     <button onclick="showZero(event);">zero</button>
     <button onclick="showOddOrEven(event);">全奇偶</button>
-    <button onclick="findSn(event);">全奇偶</button>
+    <button onclick="findSn(event);">连号</button>
 </aside>
 <div class="container">
     <div class="title"></div>
@@ -35,38 +35,52 @@
 
     var findSn = function(e){
 
-        $('ul li').each(function(){
+        var result = [];
+
+        $('ul li').each(function(ii){
 
             var $th = $(this);
+            var $p = $th.find('p:eq(1)');
 
             var uniq = this.__data__.uniq;
 
-            var result = [];
-            var start;
+            result[ii] = [];
+
             var clone;
             var prev;
             var current;
-            for(var i = 0, length = uniq.length; i < length; i++){
+            var first;
+            var range;
+            var index;
+            var comp;
+            for(var i = 0, length = uniq.length-1; i < length; ){
 
+                comp = [];
+                index = 0;
                 clone = uniq.slice(i);
+                first = clone[0];
+                range = _.range(first, first + clone.length );
 
-                for(var j in clone){
+                clone.forEach(function(v, k){
+                    if(v == range[k]) {
+                        index = k;
+                        comp.push(v);
+                    }
+                });
 
+                if(index > 0){
+                    result[ii].push(comp);
+                    $p.find('em').slice(i, i + index+1).addClass(cla);
+                    i += index;
+                }else{
+                    i += 1;
                 }
-
-
 
             }
 
-
-            uniq.forEach(function(v){
-
-
-            });
-
-
-
         });
+
+        console.log(result);
 
     };
 
@@ -259,8 +273,6 @@
     }
 
     data = groupRefListModel(data);
-
-    console.log(data)
 
     view(data);
 

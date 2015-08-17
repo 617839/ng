@@ -154,19 +154,6 @@ var _filtersForGroupByDown = {
         }
     },
 
-    //Sequential numbering
-    sn : {
-        code:'sn',
-        tag: '连号',
-        handle : function(current, prev){
-            var o = _.omit(this, 'handle');
-
-
-
-            current.tags.push(o);
-        }
-    },
-
     //重延比例 >= 1/2
     cysRadio : {
         code:'cysRadio',
@@ -178,6 +165,49 @@ var _filtersForGroupByDown = {
             var b = cys[0] + cys[1] + cys[2];
             o.tip = a + '/' + b;
             o.pass = a/b >= 1/2;
+            current.tags.push(o);
+        }
+    },
+
+    //Sequential numbering
+    sn : {
+        code:'sn',
+        tag: '连号',
+        handle : function(current, prev){
+            var o = _.omit(this, 'handle');
+            var result = [];
+            var uniq = current.uniq;
+            var clone;
+            var first;
+            var range;
+            var index;
+            var comp;
+            for(var i = 0, length = uniq.length-1; i < length; ){
+
+                comp = [];
+                index = 0;
+                clone = uniq.slice(i);
+                first = clone[0];
+                range = _.range(first, first + clone.length );
+                clone.forEach(function(v, k){
+                    if(v == range[k]) {
+                        index = k;
+                        comp.push(v);
+                    }
+                });
+
+                if(index > 0){
+                    result.push(comp);
+                    i += index;
+                }else{
+                    i += 1;
+                }
+
+            }
+
+            o.details = result;
+            o.tip = JSON.stringify(_.flatten(result));
+            o.pass = false;
             current.tags.push(o);
         }
     }
