@@ -36,6 +36,9 @@
             width:41px;
             min-width:41px;
         }
+        section{
+            display: inline-block;
+        }
         h6, div, em{
             display: inline-block;
             vertical-align: middle;
@@ -60,7 +63,10 @@
             height: 100%;
             padding:10px;
         }
-
+        .tags div{
+            width:auto;
+            min-width:auto;
+        }
         .tags em{
             /*width:6em;*/
             /*overflow: hidden;*/
@@ -163,18 +169,28 @@
                 return noPass.length ? noPass.length : '';
             });
 
-
-            var $tags = li.append('div').classed({tags:true});
-            var tags = $tags.selectAll('em').data(function(d){
+            //tags
+            var $tags = li.append('section').classed({tags:true});
+            var tags = $tags.selectAll('div').data(function(d){
                 return d.tags || [];
             });
-            tags.enter().append('em');
-            tags.text(function(d){
-                //return d.pass ? ' ' : d.tag + ' ' + d.tip;
-                return d.tip || d.details;
-            });
-            tags.classed('highlight', function(d){
+
+            tags.enter().append('div').classed(function(d){
+                var o = {};
+                o[d.code] = true;
+                return o;
+            }).classed('highlight', function(d){
                 return !d.pass;
+            });
+
+            var tag = tags.selectAll('em').data(function(d){
+                return d.details;
+            });
+
+            tag.enter().append('em');
+
+            tag.text(function(d){
+                return d;
             });
 
         }
