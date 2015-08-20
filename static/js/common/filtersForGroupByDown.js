@@ -32,7 +32,7 @@ function filterForGroupByDown(arr, n){
 
         model.noPass = _noPass;
 
-        if(_noPass.length < 3){
+        if(_noPass.length > (localStorage.passRef|| 0)){
             noPass.push(model);
         }else{
             pass.push(model);
@@ -121,26 +121,6 @@ var _filtersForGroupByDown = {
         }
     },
 
-    same : {
-        code:'same',
-        tag: 'same',
-        handle : function(current){
-            var o = _.omit(this, 'handle');
-            var count =  _.countBy(current.original, function(item){
-                return item;
-            });
-            o.pass = _.every(count, function(v, k){
-                return !(v > 1 && k > 3);
-            });
-            o.details = _.pick(count, function(v){
-                    return v > 1;
-            });
-            o.details = _.pairs(o.details);
-            o.details = _.flatten(o.details);
-            //o.details = [];
-            current.tags.push(o);
-        }
-    },
 
     //overlap
     overlap : {
@@ -152,7 +132,7 @@ var _filtersForGroupByDown = {
             var cys_p = prev.cys;
             var diff = _.difference(cys_c, cys_p);
             o.pass = diff.length || _.uniq(cys_c).length != _.uniq(cys_p).length ? true : false;
-            o.details = o.pass ? [] : cys_c;
+            o.details = o.pass ? ['','',''] : cys_c;
             current.tags.push(o);
         }
     },
@@ -172,6 +152,29 @@ var _filtersForGroupByDown = {
         }
     },
 
+    same : {
+        code:'same',
+        tag: 'same',
+        handle : function(current){
+            var o = _.omit(this, 'handle');
+            var count =  _.countBy(current.original, function(item){
+                return item;
+            });
+            o.pass = _.every(count, function(v, k){
+                return !(v > 1 && k > 4);
+            });
+            o.details = _.pick(count, function(v){
+                return v > 1;
+            });
+            o.details = _.pairs(o.details);
+            o.details = o.details.map(function(item){
+                return item.join('');
+            })
+            //o.details = _.flatten(o.details);
+            //o.details = [];
+            current.tags.push(o);
+        }
+    },
     //Sequential numbering
     sn : {
         code:'sn',

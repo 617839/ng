@@ -21,7 +21,7 @@
             line-height: 1;
         }
         li{
-            @width:2000px;
+            width:2000px;
         }
 
         li div{
@@ -65,20 +65,24 @@
         }
         .tags div{
             width:auto;
-            min-width:auto;
+            min-width:41px;
         }
         .tags em{
             /*width:6em;*/
             /*overflow: hidden;*/
             /*text-align: left;*/
         }
-        .tags em:nth-child(n+4){
-            margin-left:41px;
+
+        .tags div{
+            margin-right:0;
         }
-        .tags em:nth-child(5), .tags em:nth-child(8){
-            width:123px;
+        .tags [tag=same]{
             margin-left:41px;
-            text-align: left;
+            width:164px;
+        }
+        .tags [tag=overlap]{
+            margin-left:41px;
+            margin-right:41px;
         }
 
         .apass{
@@ -175,10 +179,8 @@
                 return d.tags || [];
             });
 
-            tags.enter().append('div').classed(function(d){
-                var o = {};
-                o[d.code] = true;
-                return o;
+            tags.enter().append('div').attr('tag', function(d){
+                return d.code;
             }).classed('highlight', function(d){
                 return !d.pass;
             });
