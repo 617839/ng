@@ -1,1 +1,0 @@
-fis release --file fis-conf/release.js --dest remote -D --watch

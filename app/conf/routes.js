@@ -14,7 +14,7 @@ module.exports = {
      */
     filter: {
         before: ['cross-domain'],
-        after:  ['action_map', '404', '500']
+        after:  ['action_map','dir', '404', '500']
     },
 
     /**

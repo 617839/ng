@@ -14,8 +14,10 @@ Thumbs.db
 .tmp_*~
 bower_components/
 node_modules/
-npm-debug.log
+**.log
 
 log/
 *.log
+
+app/static/
 

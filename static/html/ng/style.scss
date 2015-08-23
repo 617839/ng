@@ -1,0 +1,57 @@
+@import "../../css/basic/include/scss.scss";
+
+.ball {
+  $size: 24px;
+  display: inline-block;
+  width: $size;
+  line-height: $size;
+  margin: 0 5px;
+  text-align: center;
+  border-radius: $size/2;
+  background: #E2E2E2;
+  color: #4B4B4B;
+  cursor: pointer;
+  &.checked {
+    color: #fff;
+    background: red;
+  }
+}
+
+.ngBox {
+  margin: 48px 20px 20px 20px;
+  padding: 0 10px 20px 10px;
+  border: solid 1px blue;
+
+  header {
+    @extend .flex-middle;
+    position: relative;
+    top: -28px;
+
+    h2 {
+      @include flex-radio(1);
+    }
+    menu {
+      @include flex-radio(1);
+      text-align: right;
+
+      label{
+        margin:0 0 0 10px;
+      }
+    }
+  }
+
+  section {
+    .li {
+      @extend .flex-middle;
+      > .key {
+      }
+      > .elms {
+
+      }
+      > .set {
+        margin-left:100px;
+      }
+    }
+  }
+
+}

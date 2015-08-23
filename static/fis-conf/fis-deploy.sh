@@ -1,1 +1,0 @@
-fis release --file fis-conf/deploy.js --dest remote -D --pack --md5 --optimize --watch

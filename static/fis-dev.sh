@@ -1,1 +1,2 @@
-fis server start --type node --port 4000 --root ./publish & fis release --file fis-conf/dev.js --dest local -D   --watch
+#! /bin/bash
+fis server start --type node --port 2017 --root ../app && fis release --file ../fis/dev.js --dest local --watch

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>方案-1</title>
+    <link rel="stylesheet" href="../../css/vendor/normalize.css"/>
+    <link rel="stylesheet" href="../../css/vendor/main.css"/>
+    <link rel="stylesheet" href="../../css/basic/basic.scss">
+    <link rel="stylesheet" href="style.scss"/>
+
+    <script src="../../js/vendor/underscore-1.6.0.min.js"></script>
+    <script src="../../js/vendor/jquery-1.10.2.min.js"></script>
+    <script src="../../js/brick/brick.js"></script>
+    <script src="../../js/vendor/template.js"></script>
+
+    <script src="../../js/common/getData.js"></script>
+    <script src="../../js/common/help.js"></script>
+    <script src="main.js"></script>
+</head>
+<body>
+<div class="ngBox" ic-ctrl="ngCtrl" ic-tpl="ng">
+    <header>
+        <h2>ng</h2>
+        <menu>
+            <button role="make" ic-click="make">make</button>
+            <label>5 <input type="radio" name="size" val="5" checked></label>
+            <label>4 <input type="radio" name="size" val="4"></label>
+            <label>6 <input type="radio" name="size" val="6"></label>
+        </menu>
+    </header>
+    <section>
+        <div class="li">
+            <div class="key">
+                <i class="ball">1</i>
+            </div>
+            <div class="elms">
+                <i class="ball" ic-checkbox>1</i>
+            </div>
+            <div class="set">
+                <button ic-dom-remove>-</button>
+                <i class="ball" ic-dom ic-checkbox>1</i>
+                <button ic-dom-clone>+</button>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>
