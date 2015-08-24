@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../css/basic/basic.scss">
     <link rel="stylesheet" href="style.scss"/>
 
-    <script src="../../js/vendor/underscore-1.6.0.min.js"></script>
+    <script src="../../js/vendor/underscore-1.8.2.js"></script>
     <script src="../../js/vendor/jquery-1.10.2.min.js"></script>
     <script src="../../js/brick/brick.js"></script>
     <script src="../../js/vendor/template.js"></script>
@@ -18,7 +18,7 @@
     <script src="main.js"></script>
 </head>
 <body>
-<div class="ngBox" ic-ctrl="ngCtrl" ic-tpl="ng">
+<div class="groupBox" ic-ctrl="groupCtrl">
     <header>
         <h2>ng</h2>
         <menu>
@@ -28,17 +28,22 @@
             <label>6 <input type="radio" name="size" val="6"></label>
         </menu>
     </header>
-    <section>
-        <div class="li">
+    <section ic-tpl="group">
+        <div class="li" ic-for="key,item in model">
             <div class="key">
-                <i class="ball">1</i>
+                <i class="ball" ic-bind="key">1</i>
             </div>
             <div class="elms">
-                <i class="ball" ic-checkbox>1</i>
+                <i class="ball"
+                   ic-checkbox
+                   ic-for="j,v in item"
+                   ic-selected="{{v.selected ? 'true' : 'false'}}"
+                   ic-class="ball {{v.selected ? 'selected' : ''}}"
+                   ic-bind="v.n">1</i>
             </div>
             <div class="set">
                 <button ic-dom-remove>-</button>
-                <i class="ball" ic-dom ic-checkbox>1</i>
+                <i class="ball" ic-dom ic-checkbox ic-bind="key">1</i>
                 <button ic-dom-clone>+</button>
             </div>
         </div>

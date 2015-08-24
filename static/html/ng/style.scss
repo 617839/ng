@@ -1,7 +1,7 @@
 @import "../../css/basic/include/scss.scss";
 
 .ball {
-  $size: 24px;
+  $size: 32px;
   display: inline-block;
   width: $size;
   line-height: $size;
@@ -11,17 +11,18 @@
   background: #E2E2E2;
   color: #4B4B4B;
   cursor: pointer;
-  &.checked {
+  &.selected {
     color: #fff;
     background: red;
   }
 }
 
-.ngBox {
+.groupBox {
   margin: 48px 20px 20px 20px;
   padding: 0 10px 20px 10px;
   border: solid 1px blue;
-
+  -webkit-user-select: none;
+  user-select: none;
   header {
     @extend .flex-middle;
     position: relative;
@@ -43,6 +44,7 @@
   section {
     .li {
       @extend .flex-middle;
+      margin:10px 0;
       > .key {
       }
       > .elms {
