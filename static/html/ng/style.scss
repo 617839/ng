@@ -52,6 +52,9 @@
       }
       > .set {
         margin-left:100px;
+        .ball.selected{
+           background: blue;
+        }
       }
     }
   }

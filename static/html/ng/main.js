@@ -7,7 +7,7 @@ brick.services.reg('groupModel', function(){
     var data = NGGLOBAL.countRm.r;
     var last = data[data.length-1];
     var allDown = last.all.slice();
-    var uniqueDown = _.uniq(allDown).sort(function(a,b){ return a - b;});;
+    var uniqueDown = _.uniq(allDown).sort(function(a,b){ return a - b;});
 
     return {
         pool:[],

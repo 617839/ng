@@ -24,8 +24,6 @@
 
         $scope.vs = function(v) { return v; };
 
-
-
         $scope.active = function(select){
 
             var dob = select && NGGLOBAL[select] || NGGLOBAL.countRm.r;
