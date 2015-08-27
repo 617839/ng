@@ -134,8 +134,10 @@ brick.services.reg('utils', function(){
     exports.combine = function(arr){
         var args = [];
         arr.forEach(function(item, i){
-            args.push(item.group, item.size);
+            args.push( group(item.group, item.size) );
         });
+
+        console.log(JSON.stringify(args));
 
         return combine(args);
     };
