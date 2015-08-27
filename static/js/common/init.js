@@ -323,7 +323,7 @@ $(function(){
 		$th.find('.details .'+refName+' p button').each(function(i){
 			var val = $(this).attr('data-value');
 			obj[map[i]] = JSON.parse(val);
-		})
+		});
 		
 		list.push(obj);
 		
