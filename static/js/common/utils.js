@@ -129,12 +129,12 @@ brick.services.reg('utils', function(){
 
     /**
      *
-     * @param arr => [{group:[0,1,2,3,4,5],size:4},{group:[12,14,20],size:1}]
+     * @param arr => [{numbers:[0,1,2,3,4,5],use:4},{numbers:[12,14,20],use:1}]
      */
     exports.combine = function(arr){
         var args = [];
         arr.forEach(function(item, i){
-            args.push( group(item.group, item.size) );
+            args.push( group(item.numbers, item.use) );
         });
 
         console.log(JSON.stringify(args));
