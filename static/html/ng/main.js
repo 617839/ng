@@ -133,8 +133,8 @@ brick.directives.reg('ic-checkbox', {
     fn: function () {
         $(document.body).on('click', '[ic-checkbox]', function (e) {
             var $th = $(this);
-            if($th.attr('ic-selected') == 'true'){
-                $th.attr('ic-selected', false).removeClass('selected');
+            if($th.attr('ic-selected')){
+                $th.removeAttr('ic-selected').removeClass('selected');
             }else{
                 $th.attr('ic-selected', true).addClass('selected');
             }
