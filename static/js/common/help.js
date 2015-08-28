@@ -632,6 +632,7 @@ function combineWrap(classifyListMap, groupScheme) {
 		number = countList[i];
 		//console.log(2222,classifyListMap[i])
 		item = group(classifyListMap[i], number);
+		console.info(item);
 		args.push(item);
 	}
 

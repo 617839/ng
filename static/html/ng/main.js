@@ -12,11 +12,10 @@ brick.services.reg('groupModel', function(){
     var allDown = last.all.slice();
     var uniqueDown = _.uniq(allDown).sort(function(a,b){ return a - b;});
 
-
     return {
         //    pool结构： = [
         //        {
-        //          id: 0,
+        //          name: 0,
         //          numbers: [
         //            {n: 0, selected: true},
         //            {n: 1, selected: true},
@@ -58,6 +57,9 @@ brick.services.reg('groupModel', function(){
             return o && this._clone(o);
         },
         set: function(){
+
+        },
+        add: function(){
 
         },
         count: function(){

@@ -23,35 +23,33 @@
         <h2>ng</h2>
         <menu>
             <button role="make" ic-click="make">make</button>
-            <label>4 <input type="radio" name="size" val="4"></label>
-            <label>5 <input type="radio" name="size" val="5" checked></label>
-            <label>6 <input type="radio" name="size" val="6"></label>
+            <label>4 <input type="checkbox" name="size" val="4"></label>
+            <label>5 <input type="checkbox" name="size" val="5" checked></label>
+            <label>6 <input type="checkbox" name="size" val="6"></label>
         </menu>
     </header>
     <section ic-tpl="group">
-        <div class="li" ic-for="key,item in model">
-            <div class="key">
-                <i class="ball" ic-bind="key">1</i>
+        <div class="li" ic-for="i, item in model">
+            <div class="name">
+                <i class="ball" ic-bind="item.name">1</i>
             </div>
-            <div class="elms">
+            <div class="numbers">
                 <i class="ball"
                    ic-checkbox
-                   ic-for="j,v in item"
-                   ic-selected="{{v.selected ? 'true' : 'false'}}"
+                   ic-for="j, v in item.numbers"
+                   ic-val="{{v.n}}"
+                   ic-selected="v.selected"
                    ic-class="ball {{v.selected ? 'selected' : ''}}"
                    ic-bind="v.n">1</i>
             </div>
-            <div class="set">
-                <label>0 <input type="radio" name="size" val="0" checked></label>
-                <label>1 <input type="radio" name="size" val="1"></label>
-                <label>2 <input type="radio" name="size" val="2"></label>
-                <label>3 <input type="radio" name="size" val="3"></label>
-                <label>4 <input type="radio" name="size" val="4"></label>
-                <label>5 <input type="radio" name="size" val="5"></label>
-                <label>6 <input type="radio" name="size" val="6"></label>
-<!--                <button ic-dom-remove>-</button>
-                <i class="ball" ic-dom ic-checkbox ic-bind="key">1</i>
-                <button ic-dom-clone>+</button>-->
+            <div class="use" ic-init="arr = [1,2,3,4,5,6];">
+                <i class="ball"
+                   ic-checkbox
+                   ic-for="k, v in arr"
+                   ic-val="{{v}}"
+                   ic-selected="item.use.indexOf(v) > -1"
+                   ic-class="ball {{item.use.indexOf(v) > -1 ? 'selected' : ''}}"
+                   ic-bind="v">1</i>
             </div>
         </div>
     </section>

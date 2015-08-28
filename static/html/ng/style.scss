@@ -45,13 +45,16 @@
     .li {
       @extend .flex-middle;
       margin:10px 0;
-      > .key {
+      > .name {
       }
-      > .elms {
+      > .numbers {
 
       }
-      > .set {
+      > .use {
         margin-left:100px;
+        .ball.selected{
+           background: blue;
+        }
       }
     }
   }
