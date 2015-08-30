@@ -86,7 +86,6 @@ $(function(){
 		refName && ( window.groupRefList = window[refName] );
 		window.classifyList = window[name];
 
-			console.info(classifyList, groupNum)
 		q = combineWrap(window.classifyList,groupNum);
 		q = groupWrap(q);
 

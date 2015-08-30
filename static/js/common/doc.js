@@ -9,8 +9,6 @@ window.NGGLOBAL = window.NGGLOBAL || {};
 //ref window.open 
 NGGLOBAL.win = undefined;
 
-window.loadingFigure = '<span style="position:fixed;top:40%;left:50%;margin:25px auto;display:inline-block;text-align:center;" name="_loading_"><svg width="16" height="16" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" version="1.1"><path d="M 150,0 a 150,150 0 0,1 106.066,256.066 l -35.355,-35.355 a -100,-100 0 0,0 -70.711,-170.711 z" fill="#3d7fe6"><animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 150 150" to="360 150 150" begin="0s" dur="1s" fill="freeze" repeatCount="indefinite" /></path></svg></span>';
-
 window.blueBallIsRandom = 0;
 
 window.blues = [ '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16' ]; 

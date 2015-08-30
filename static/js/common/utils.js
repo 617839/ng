@@ -88,7 +88,6 @@ brick.services.reg('utils', function(){
             for(var i in arr1){
                 item1 = arr1[i];
                 item1 = item1.constructor === Array ? item1 : [item1];
-
                 for(var j in arr2){
                     item1c = item1.slice();
                     item2 = arr2[j];
@@ -96,11 +95,9 @@ brick.services.reg('utils', function(){
 
                     arr3.push(item1c);
                 }
-
             }
 
             return arr3;
-
         }
 
         if(args.length == 1) {
@@ -127,6 +124,8 @@ brick.services.reg('utils', function(){
 
     /////////////////////////////////////////////////////////////////////////
 
+    exports._combine = combine;
+
     /**
      *
      * @param arr => [{numbers:[0,1,2,3,4,5],use:4},{numbers:[12,14,20],use:1}]
@@ -134,11 +133,11 @@ brick.services.reg('utils', function(){
     exports.combine = function(arr){
         var args = [];
         arr.forEach(function(item, i){
-            args.push( group(item.numbers, item.use) );
+            var g = group(item.numbers, item.use);
+            console.log(JSON.stringify(item.numbers), JSON.stringify(item.use), JSON.stringify(g));
+            args.push(g);
         });
-
         console.log(JSON.stringify(args));
-
         return combine(args);
     };
 

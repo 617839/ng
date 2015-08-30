@@ -6,55 +6,83 @@
     <link rel="stylesheet" href="../../css/vendor/normalize.css"/>
     <link rel="stylesheet" href="../../css/vendor/main.css"/>
     <link rel="stylesheet" href="../../css/basic/basic.scss">
+    <link rel="stylesheet" href="../../js/brick/brick.mobile.css">
     <link rel="stylesheet" href="style.scss"/>
 
     <script src="../../js/vendor/underscore-1.8.2.js"></script>
     <script src="../../js/vendor/jquery-1.10.2.min.js"></script>
-    <script src="../../js/brick/brick.js"></script>
-    <script src="../../js/vendor/template.js"></script>
+    <script src="../../js/brick/brick.mobile.js"></script>
 
     <script src="../../js/common/getData.js"></script>
     <script src="../../js/common/help.js"></script>
+    <script src="../../js/common/doc.js"></script>
+    <script src="../../js/common/utils.js"></script>
+    <script src="count-money.js"></script>
+    <script src="xModel.js"></script>
     <script src="main.js"></script>
+    <script src="groupModel.js"></script>
+    <script src="combModel.js"></script>
+
 </head>
 <body>
 <div class="groupBox" ic-ctrl="groupCtrl">
     <header>
         <h2>ng</h2>
         <menu>
-            <button role="make" ic-click="make">make</button>
-            <label>4 <input type="checkbox" name="size" val="4"></label>
-            <label>5 <input type="checkbox" name="size" val="5" checked></label>
-            <label>6 <input type="checkbox" name="size" val="6"></label>
+            <button ic-click="apply">apply</button>
+            <button ic-click="cache">cache</button>
+            <button ic-click="make">make</button>
+            <label>4 <input type="checkbox" name="groupSize" value="4" checked></label>
+            <label>5 <input type="checkbox" name="groupSize" value="5" checked></label>
+            <label>6 <input type="checkbox" name="groupSize" value="6" checked></label>
         </menu>
     </header>
     <section ic-tpl="group">
-        <div class="li" ic-for="i, item in model">
-            <div class="name">
-                <i class="ball" ic-bind="item.name">1</i>
-            </div>
-            <div class="numbers">
-                <i class="ball"
-                   ic-checkbox
-                   ic-for="j, v in item.numbers"
-                   ic-val="{{v.n}}"
-                   ic-selected="v.selected"
-                   ic-class="ball {{v.selected ? 'selected' : ''}}"
-                   ic-bind="v.n">1</i>
-            </div>
-            <div class="use" ic-init="arr = [1,2,3,4,5,6];">
-                <i class="ball"
-                   ic-checkbox
-                   ic-for="k, v in arr"
-                   ic-val="{{v}}"
-                   ic-selected="item.use.indexOf(v) > -1"
-                   ic-class="ball {{item.use.indexOf(v) > -1 ? 'selected' : ''}}"
-                   ic-bind="v">1</i>
-            </div>
-        </div>
+        <ul>
+            <li class="li" ic-for="i, item in model">
+                <div class="name">
+                    <i class="ball" ic-bind="item.name">1</i>
+                </div>
+                <div class="numbers">
+                    <i class="ball"
+                       ic-checkbox="{{i + '-numbers'}}"
+                       ic-for="j, v in item.numbers"
+                       ic-val="{{v.n}}"
+                       ic-selected="v.selected"
+                       ic-class="ball {{v.selected ? 'selected' : ''}}"
+                       ic-bind="v.n">1</i>
+                </div>
+                <div class="use" ic-init="arr = [1,2,3,4,5,6];">
+                    <i class="ball"
+                       ic-checkbox="{{i + '-use'}}"
+                       ic-for="k, v in arr"
+                       ic-val="{{v}}"
+                       ic-selected="item.use.indexOf(v) > -1"
+                       ic-class="ball {{item.use.indexOf(v) > -1 ? 'selected' : ''}}"
+                       ic-bind="v">1</i>
+                </div>
+            </li>
+        </ul>
     </section>
-
 </div>
 
+<div class="panel combineBox" ic-ctrl="combineCtrl" ic-close-target>
+        <header>
+            <button ic-click="setCombPatch">setCombPatch</button>
+            <button ic-click="countMoney">中奖统计<sup></sup></button>
+            <button ic-click="allComb">allComb</button>
+            <button ic-toggle="groupList">toggle</button>
+            <button ic-close>close</button>
+        </header>
+    <div ic-toggle-target="groupList">
+        <ul class="list" ic-tpl="list">
+            <li ic-for="i, group in model">
+                <div class="inline" ic-for="j, v in group" data-prop="{{j}}">
+                    {{JSON.stringify(v)}}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
 </body>
 </html>
