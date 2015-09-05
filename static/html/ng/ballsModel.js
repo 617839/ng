@@ -27,8 +27,10 @@ brick.services.reg('ballsModel', function () {
             prevDown.pop();
 
             var model = list.pop();
+            var x=0;
 
             var _noPass = _.filter(model.tags, function (v) {
+                if(!v.pass) x += v.weight;
                 return !v.pass;
             });
 
@@ -68,6 +70,7 @@ brick.services.reg('ballsModel', function () {
         first: {
             code: 'first',
             tag: '开头',
+            weight:30,
             handle: function (current, prev) {
                 var o = _.omit(this, 'handle');
                 var v = current.uniq[0];
@@ -80,6 +83,7 @@ brick.services.reg('ballsModel', function () {
         second: {
             code: 'second',
             tag: '第二位',
+            weight:20,
             handle: function (current, prev) {
                 var o = _.omit(this, 'handle');
                 var v = current.uniq[1];
@@ -92,6 +96,7 @@ brick.services.reg('ballsModel', function () {
         third: {
             code: 'third',
             tag: '第三位',
+            weight:10,
             handle: function (current, prev) {
                 var o = _.omit(this, 'handle');
                 var v = current.uniq[2];
@@ -104,6 +109,7 @@ brick.services.reg('ballsModel', function () {
         allOddOrEven: {
             code: 'allOddOrEven',
             tag: '',
+            weight:50,
             handle: function (current) {
                 var o = _.omit(this, 'handle');
                 var arr = current.uniq;
@@ -113,7 +119,7 @@ brick.services.reg('ballsModel', function () {
                 var isEven = arr.every(function (item) {
                     return item % 2 == 1;
                 });
-                o.details = isOdd ? ['0'] : isEven ? ['1'] : [];
+                o.details = isOdd ? ['0'] : isEven ? ['0'] : [];
                 o.pass = !(isOdd || isEven);
                 current.tags.push(o);
             }
@@ -124,6 +130,7 @@ brick.services.reg('ballsModel', function () {
         overlap: {
             code: 'overlap',
             tag: 'cys重叠',
+            weight:20,
             handle: function (current, prev) {
                 var o = _.omit(this, 'handle');
                 var cys_c = current.cys;
@@ -139,6 +146,7 @@ brick.services.reg('ballsModel', function () {
         cysRadio: {
             code: 'cysRadio',
             tag: 'cys比例',
+            weight:10,
             handle: function (current, prev) {
                 var o = _.omit(this, 'handle');
                 var cys = current.cys;
@@ -153,6 +161,7 @@ brick.services.reg('ballsModel', function () {
         same: {
             code: 'same',
             tag: 'same',
+            weight:30,
             handle: function (current) {
                 var o = _.omit(this, 'handle');
                 var count = _.countBy(current.original, function (item) {
@@ -167,7 +176,7 @@ brick.services.reg('ballsModel', function () {
                 o.details = _.pairs(o.details);
                 o.details = o.details.map(function (item) {
                     return item.join('');
-                })
+                });
                 //o.details = _.flatten(o.details);
                 //o.details = [];
                 current.tags.push(o);
@@ -177,6 +186,7 @@ brick.services.reg('ballsModel', function () {
         sn: {
             code: 'sn',
             tag: '连号',
+            weight:0,
             handle: function (current, prev) {
                 var o = _.omit(this, 'handle');
                 var result = [];

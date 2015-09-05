@@ -52,7 +52,7 @@
                        ic-class="ball {{v.selected ? 'selected' : ''}}"
                        ic-bind="v.n">1</i>
                 </div>
-                <div class="use" ic-init="arr = [1,2,3,4,5,6];">
+                <div class="use" ic-init="arr = [0,1,2,3,4,5,6];">
                     <i class="ball"
                        ic-checkbox="{{i + '-use'}}"
                        ic-for="k, v in arr"
@@ -81,20 +81,11 @@
             <li ic-for="i, group in model" ic-checkbox="groupList" ic-selected="group.selected" ic-class="{{group.selected?'selected':''}}">
                 <div class="prop" ic-for-start="j, v in group" ic-if-start="['original','uniq','cys'].indexOf(j) > -1" data-prop="{{j}}">
                     <span>{{v.join('&nbsp;&nbsp;')}}</span>
-                    <a href="javascript:;" class="next-btn" ic-click="toggleSizerBox"></a>
-                    <div role="sizerBox">
-                        <div style="padding-bottom:12px;">
-                            <label> ^ <input type="radio" name="reg" value="^" checked />&nbsp;&nbsp;</label>
-                            <label> $ <input type="radio" name="reg" value="$" />&nbsp;&nbsp;</label>
-                            <label> * <input type="radio" name="reg" value="*" />&nbsp;&nbsp;</label>
-                            <label> ! <input type="radio" name="reg" value="!" />&nbsp;&nbsp;&nbsp;</label>
-                            <label> // <input type="radio" name="reg" value="//" />&nbsp;&nbsp;&nbsp;</label>
-                            <label> P- <input type="checkbox" name="pattern" /></label>
-                        </div>
-                        <label> {{j}} </label>&nbsp;
-                        <input type="text" ic-value="{{v.join(',')}}" />&nbsp;
-                        <button data-prop="{{j}}" ic-click="select">select</button>
-                    </div>
+                    <a href="javascript:;"
+                       class="next-btn"
+                       ic-click="toggleSizerBox"
+                       data-property="{{j}}"
+                       data-value="{{v.join(',')}}"></a>
                 </div>
                 <div class="prop" ic-else-if="j == 'noPass'" data-prop="noPass">
                     <span>{{v.length}}</span>
@@ -104,24 +95,33 @@
                     ~
                     <div class="prop" ic-for="k, tag in v" data-prop="{{tag.code}}">
                         <span title="{{tag.tag}}">{{tag.details.join('&nbsp;&nbsp;') || '&nbsp;'}}</span>
-                        <a href="javascript:;" class="next-btn" ic-click="toggleSizerBox"></a>
-                        <div role="sizerBox">
-                            <div style="padding-bottom:12px;">
-                                <label> ^ <input type="radio" name="reg" value="^" checked />&nbsp;&nbsp;</label>
-                                <label> $ <input type="radio" name="reg" value="$" />&nbsp;&nbsp;</label>
-                                <label> * <input type="radio" name="reg" value="*" />&nbsp;&nbsp;</label>
-                                <label> ! <input type="radio" name="reg" value="!" />&nbsp;&nbsp;&nbsp;</label>
-                                <label> // <input type="radio" name="reg" value="//" />&nbsp;&nbsp;&nbsp;</label>
-                                <label> P- <input type="checkbox" name="pattern" /></label>
-                            </div>
-                            <label> {{j+'.'+tag.code}} </label>&nbsp;
-                            <input type="text" ic-value="{{tag.details.join(',')}}" />&nbsp;
-                            <button data-prop="{{j+'.'+ k +'.details'}}" ic-click="select">select</button>
-                        </div>
+                        <a href="javascript:;"
+                           class="next-btn"
+                           data-code="{{j+'.'+tag.code}}"
+                           data-property="{{j+'.'+ k +'.details'}}"
+                           data-value="{{tag.details.join(',')}}"
+                           ic-click="toggleSizerBox"></a>
                     </div>
                 </div>
             </li>
         </ul>
+
+        <div ic-tpl="sizer">
+            <div role="sizerBox">
+                <div style="padding-bottom:12px;">
+                    <label> ^ <input type="radio" name="reg" value="^" checked />&nbsp;&nbsp;</label>
+                    <label> $ <input type="radio" name="reg" value="$" />&nbsp;&nbsp;</label>
+                    <label> * <input type="radio" name="reg" value="*" />&nbsp;&nbsp;</label>
+                    <label> ! <input type="radio" name="reg" value="!" />&nbsp;&nbsp;&nbsp;</label>
+                    <label> // <input type="radio" name="reg" value="//" />&nbsp;&nbsp;&nbsp;</label>
+                    <label> P- <input type="checkbox" name="pattern" ic-checked="model.selected" /></label>
+                </div>
+                <label> {{model.code || model.prop}} </label>&nbsp;
+                <input type="text" ic-value="{{model.value}}" />&nbsp;
+                <button data-prop="{{model.prop}}" ic-click="select">select</button>
+            </div>
+        </div>
+
     </div>
     <div id="balls" class="panel" style="position: absolute;top:48px;display: none;padding:15px;line-height:1.8;font-size:16px;">
 

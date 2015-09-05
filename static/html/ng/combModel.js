@@ -123,8 +123,8 @@ brick.services.reg('combModel', function () {
                 });
                 var use = item.use;
                 if (numbers.length && use.length) {
-                    while (use = item.use.shift()) {
-                        result.push({numbers: numbers.slice(), use: use});
+                    while (use = item.use.shift()+2) {
+                        result.push({numbers: numbers.slice(), use: use-2});
                     }
                 }
             });

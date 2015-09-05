@@ -18,6 +18,8 @@ brick.services.reg('utils', function(){
      */
     function group(nu, groupl, result){
 
+        if(groupl < 1) return [];
+
         var result = result ? result : [];
         var nul = nu.length;
         var outloopl = nul - groupl;

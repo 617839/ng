@@ -65,6 +65,8 @@ brick.controllers.reg('groupCtrl', function(scope){
     var $balls = $elm.find('#balls');
     var $info = $elm.find('[role=info]');
 
+    var sizerTpl = brick.getTpl('sizer');
+
     brick.on('groupModel.change', function(e, msg){
         msg && scope.render('list', msg);
         var selectList = groupModel.selectList();
@@ -83,7 +85,19 @@ brick.controllers.reg('groupCtrl', function(scope){
     scope.toggleSizerBox = function(e){
         var $th = $(this);
         var selected = $th.closest('li[ic-checkbox]').hasClass('selected');
-        $(this).next().toggle().find('[name=pattern]').prop('checked', selected);
+        var $sizerBox = $th.next('[role=sizerBox]');
+        var model = {
+            code: $th.data('code'),
+            prop: $th.data('property'),
+            value: $th.data('value'),
+            selected:selected
+        };
+        if($sizerBox.length){
+            $sizerBox.remove();
+        }else{
+            $th.after( sizerTpl({model: model}));
+        }
+        //$(this).next().toggle().find('[name=pattern]').prop('checked', selected);
     };
 
     scope.select = function(e){
