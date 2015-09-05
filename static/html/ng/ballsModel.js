@@ -113,7 +113,7 @@ brick.services.reg('ballsModel', function () {
                 var isEven = arr.every(function (item) {
                     return item % 2 == 1;
                 });
-                o.details = isOdd ? ['全偶'] : isEven ? ['全奇'] : [];
+                o.details = isOdd ? ['0'] : isEven ? ['1'] : [];
                 o.pass = !(isOdd || isEven);
                 current.tags.push(o);
             }
