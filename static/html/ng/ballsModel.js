@@ -35,6 +35,7 @@ brick.services.reg('ballsModel', function () {
             });
 
             model.noPass = _noPass;
+            model.x = x;
 
             result.push(model);
 

@@ -83,7 +83,7 @@ brick.services.reg('groupModel', function () {
                 if(arr.length) return x(o, arr);
                 return o;
             })(item, arr);
-            return o.join(',');
+            return o.join ? o.join(',') : o;
         },
         sort: function(){
             this.list.sort(function(a, b){

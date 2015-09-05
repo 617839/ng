@@ -87,9 +87,17 @@
                        data-property="{{j}}"
                        data-value="{{v.join(',')}}"></a>
                 </div>
+                <div class="prop" ic-else-if="j == 'x'" data-prop="x">
+                    <div>
+                        <span>{{v}}</span>
+                        <a href="javascript:;" class="next-btn" data-property="x" data-value="{{v}}" ic-click="toggleSizerBox"></a>
+                    </div>
+                </div>
                 <div class="prop" ic-else-if="j == 'noPass'" data-prop="noPass">
-                    <span>{{v.length}}</span>
-                    <a href="javascript:;" class="next-btn" ic-click="toggleSizerBox"></a>
+                    <div>
+                        <span>{{v.length}}</span>
+                        <a href="javascript:;" class="next-btn" data-property="noPass.length" data-value="{{v.length}}" ic-click="toggleSizerBox"></a>
+                    </div>
                 </div>
                 <div ic-else-if="j == 'tags'" data-prop="tags" ic-if-end ic-for-end>
                     ~
@@ -116,7 +124,7 @@
                     <label> // <input type="radio" name="reg" value="//" />&nbsp;&nbsp;&nbsp;</label>
                     <label> P- <input type="checkbox" name="pattern" ic-checked="model.selected" /></label>
                 </div>
-                <label> {{model.code || model.prop}} </label>&nbsp;
+                <label> {{model.code || model.property}} </label>&nbsp;
                 <input type="text" ic-value="{{model.value}}" />&nbsp;
                 <button data-prop="{{model.prop}}" ic-click="select">select</button>
             </div>
