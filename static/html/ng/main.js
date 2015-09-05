@@ -3,18 +3,19 @@
  */
 
 
-brick.controllers.reg('groupCtrl', function (scope) {
+brick.controllers.reg('combCtrl', function (scope) {
 
-    var groupModel = brick.services.get('groupModel');
     var utils = brick.services.get('utils');
+    var combModel = brick.services.get('combModel');
+    var groupModel = brick.services.get('groupModel');
 
     var $elm = scope.$elm;
 
-    brick.on('groupModel.init', function(e, msg){
-        scope.render('group', msg);
+    brick.on('combModel.init', function(e, msg){
+        scope.render('comb', msg);
     });
 
-    groupModel.init();
+    combModel.init();
 
     //////////////////////////////////////////////////////
 
@@ -22,7 +23,7 @@ brick.controllers.reg('groupCtrl', function (scope) {
         var groupSize = $elm.find('[name=groupSize]:checked').map(function(){
             return this.value * 1;
         }).get();
-        groupModel.groupSize(groupSize);
+        combModel.groupSize(groupSize);
     });
 
     $elm.on('ic-checkbox.change', function (e, msg) {
@@ -37,7 +38,7 @@ brick.controllers.reg('groupCtrl', function (scope) {
             v.push({n: this.getAttribute('ic-val'), selected: selected});
         };
         $elm.find('[ic-checkbox=?]'.replace('?', k)).each(call);
-        groupModel.set(k, v);
+        combModel.set(k, v);
     });
 
     scope.make = function (e) {
@@ -45,35 +46,69 @@ brick.controllers.reg('groupCtrl', function (scope) {
     };
 
     scope.cache = function(e){
-        groupModel.cache(true);
+        combModel.cache(true);
     };
 
     scope.apply = function(e){
-        groupModel.cache();
+        combModel.cache();
     }
 
 });
 
-/**
- * define combineCtrl
- */
-brick.controllers.reg('combineCtrl', function(scope){
 
-    var xModel = brick.services.get('xModel');
+brick.controllers.reg('groupCtrl', function(scope){
+
+    var ballsModel = brick.services.get('ballsModel');
     var groupModel = brick.services.get('groupModel');
 
     var $elm = scope.$elm;
+    var $balls = $elm.find('#balls');
+    var $info = $elm.find('[role=info]');
 
-    brick.on('groupModel.combine.change', function(e, msg){
+    brick.on('groupModel.change', function(e, msg){
         msg && scope.render('list', msg);
+        var selectList = groupModel.selectList();
+        $info.text(msg.length + ' # '+ selectList.length);
         $elm.show();
     });
 
+    scope.invert = function(e){
+        groupModel.invert();
+    };
+
+    scope.reselect = function(e){
+        groupModel.reselect();
+    };
+
+    scope.toggleSizerBox = function(e){
+        var $th = $(this);
+        var selected = $th.closest('li[ic-checkbox]').hasClass('selected');
+        $(this).next().toggle().find('[name=pattern]').prop('checked', selected);
+    };
+
+    scope.select = function(e){
+        var $th = $(this);
+        var $box = $th.closest('[role=sizerBox]').hide();
+        var prop = $th.data('prop');
+        var val = $th.prev('input').val();
+        var reg = $box.find('input[name="reg"]:checked').val();
+        var pattern = $box.find('input[name="pattern"]').prop('checked');
+        groupModel.select(prop, val, reg, pattern);
+    };
+
     scope.allComb = function(e){
+        if($balls.is(':visible')){
+            return $balls.hide();
+        }
         var list = groupModel.groupList();
         console.log(list);
-        var ballList = xModel.combine(list);
-        console.table(ballList);
+        var ballList = ballsModel.combine(list);
+        var str = '';
+        for(var i = 0; i < ballList.length; i++){
+            str += (ballList[i].redBall + '').replace(/,/g,'  ') + '<br>';
+        }
+        $balls.empty().toggle().html(str);
+        $(this).find('i').text(ballList.length);
     };
 
     scope.setCombPatch = function(e){
@@ -118,18 +153,17 @@ brick.controllers.reg('combineCtrl', function(scope){
             dob = getCurrentLottey();
         }
 
-        var result = countMoney(window.currentCombList, dob);
+        var result = countMoney(ballsModel.get(), dob);
 
         result.list.sort(function(a, b){
             return a.money - b.money;
         });
 
-        $(this).find('sup').text(result.money);
+        $(this).find('i').text(result.money);
 
         console.log(JSON.stringify(result.list).replace(/},\{/img, '},\r\n{'));
 
         console.log('all money is ' + result.money + '; list length is ' + result.list.length);
-
 
     };
 
@@ -157,37 +191,16 @@ brick.directives.reg('ic-close', {
         $(document.body).on('click', '[ic-close]', function (e) {
             var $th = $(this);
             $th.closest('[ic-close-target]').toggle();
-            /*var name = $th.attr('ic-close');
-            var action = $th.attr('ic-close-action');
-            var $placeholder;
-            if(!name){
-                name = 'ic-id-'+(+new Date);
-                $th.attr('ic-close', name);
-                $placeholder = $('<a style="display: none!important;" ic-close-placeholder="?"></a>'.replace('?', name)).insertAfter($th);
-            }
-            if(action != 'open'){
-                $th.closest('[ic-close-target]').hide();
-                $th.attr('ic-close-action', 'open').text('open');
-                $th.appendTo(document.body);
-            }else{
-                $placeholder = $('a[ic-close-placeholder=?]'.replace('?', name));
-                $th.insertBefore($placeholder);
-                $th.closest('[ic-close-target]').show();
-                $th.attr('ic-close-action', 'close').text('close');
-            }*/
-
         });
     }
 });
 
-/**
- * define ic-checkbox
- */
 brick.directives.reg('ic-checkbox', {
     selfExec: true,
     once: true,
     fn: function () {
         $(document.body).on('click', '[ic-checkbox]', function (e) {
+            if(this !== e.target) return;
             var $th = $(this);
             if (this.hasAttribute('selected')) {
                 $th.removeAttr('selected').removeClass('selected');
@@ -199,10 +212,6 @@ brick.directives.reg('ic-checkbox', {
     }
 });
 
-
-/**
- * define ic-dom-clone
- */
 brick.directives.reg('ic-dom-clone', {
     selfExec: true,
     once: true,
@@ -214,9 +223,6 @@ brick.directives.reg('ic-dom-clone', {
     }
 });
 
-/**
- * define ic-dom-rmove
- */
 brick.directives.reg('ic-dom-remove', {
     selfExec: true,
     once: true,

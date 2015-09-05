@@ -1,11 +1,24 @@
 @import "../../css/basic/include/scss.scss";
 
-.inline{
-  display: inline-block;
+*{
+  box-sizing: border-box;
+}
+body{
+  font-family: sans-self;
+  overflow-y: scroll;
+}
+
+button{
+  -webkit-appearance: none;
+  padding:8px 12px;
+  border:none;
+  color:#fff;
+  background: #BDBCBC;
+  margin-right: 1px;
 }
 
 .flex-mr{
-  @include flex();
+  @extend .flex-middle;
   -webkit-justify-content:flex-end;
   justify-content:flex-end;
 }
@@ -19,17 +32,14 @@
 
   > header:first-child{
     @extend .flex-mr;
-     min-height:48px;
+    min-height:48px;
     padding:0 15px;
     background:#f0f0f0;
   }
 }
 
-
-
-
 body{
-  padding:88px 20px 20px 20px;
+  padding:96px 20px 20px 20px;
 }
 .ball {
   $size: 32px;
@@ -48,7 +58,43 @@ body{
   }
 }
 
-.groupBox {
+.prop{
+  position: relative;
+  display: inline-block;
+  padding-left:1em;
+  >span{
+    margin:0;
+  }
+  [role=sizerBox]{
+    display: none;
+    position: absolute;
+    z-index: 10;
+    width:560px;
+    padding:15px;
+    background: #fff;
+    box-shadow: 0 0 4px 1px #BBB;
+    border: solid 1px #B6B6B6;
+    input{
+      padding: 5px 8px;
+    }
+  }
+}
+
+.next-btn{
+  display: inline-block;
+  width:0.7em;
+  height:0.7em;
+  border-right:solid 1px #ccc;
+  border-top:solid 1px #ccc;
+  transform: rotate(45deg);
+  position:absolute;
+  top:4px;
+  right:0;
+}
+
+
+
+.combBox {
   margin-bottom:30px;
   padding: 0 10px 20px 10px;
   border: solid 1px blue;
@@ -57,7 +103,7 @@ body{
   header {
     @extend .flex-middle;
     position: relative;
-    top: -28px;
+    top: -36px;
 
     h2 {
       @include flex-radio(1);
@@ -93,12 +139,57 @@ body{
 }
 
 
-.combineBox{
+.groupBox{
   display: none;
+  padding-top:48px;
   .list{
     li{
-      padding:15px;
-      border-bottom:solid 1px #ccc; 
+      @extend .flex-middle;
+      font-size:18px;
+      padding:20px 10px;
+      border-bottom:solid 1px #ccc;
+
+      &.selected{
+        background:#FADCDE;
+      }
     }
   }
+}
+
+
+[data-prop=original]{
+  min-width:10em;
+}
+[data-prop=cys]{
+  min-width:6em;
+}
+[data-prop=uniq]{
+  min-width:10em;
+}
+
+[data-prop=tags],[data-prop=noPass]{
+  margin-left:1em;
+}
+[data-prop=noPass]{
+  min-width: 3em;
+}
+
+[data-prop=first], [data-prop=second],[data-prop=third]{
+  min-width:3em;
+}
+
+[data-prop="allOddOrEven"]{
+  min-width:3em;
+}
+[data-prop="overlap"]{
+  min-width:7em;
+}
+[data-prop="cysRadio"]{
+  min-width:5em;
+}
+[data-prop="same"]{
+  min-width:7em;
+}
+[data-prop="sn"]{
+  min-width:8em;
 }

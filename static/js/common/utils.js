@@ -31,7 +31,7 @@ brick.services.reg('utils', function(){
         (function func(item,nuc){
             var itemc;
             var nucc = nuc.slice(0);
-            var margin = groupl- item.length
+            var margin = groupl- item.length;
 
 
             if( margin == 0){
@@ -124,7 +124,18 @@ brick.services.reg('utils', function(){
 
     /////////////////////////////////////////////////////////////////////////
 
+    exports.group = group;
+
     exports._combine = combine;
+
+    exports.clone = function (o) {
+        try {
+            o = JSON.parse(JSON.stringify(o));
+        } catch (e) {
+            console.error('utils.clone: ', e);
+        }
+        return o;
+    };
 
     /**
      *

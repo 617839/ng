@@ -1007,8 +1007,8 @@ function groupRefListModel(arr){
 		//};
 		obj = {
 			original: current.sort(function(a, b){return a-b;}),
-			uniq : unique,
-			cys: loca
+			cys: loca,
+			uniq : unique
 		};
 
 		result.unshift(obj);
