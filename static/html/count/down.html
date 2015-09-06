@@ -167,9 +167,12 @@
             //count
             var $count = li.append('div').classed('count', true);
             $count.append('em').text(function(d){
+                var x = 0;
                 var noPass = _.filter(d.tags, function(item){
+                    if(!item.pass) x += item.weight;
                     return !item.pass;
                 });
+                return x ? x : '';
                 return noPass.length ? noPass.length : '';
             });
 
