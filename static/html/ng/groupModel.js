@@ -19,11 +19,19 @@ brick.services.reg('groupModel', function () {
     var patches = _.filter(_patches, function (v, i) {
         return i < 5 && v.length > 2
     });
+    var patchesThree = _.filter(_patches, function (v, i) {
+        return i < 4 && v.length > 3
+    });
+    patchesThree = patchesThree.map(function(v, i){
+        return [i, i];
+    });
+
     _patches = patches = patches.map(function (v, i) {
         return i;
     });
     patches = utils.group(_patches, 2);
     patches = patches.concat(_patches);
+    patches = patches.concat(patchesThree);
     patches = patches.map(function (v) {
         return _.isArray(v) ? v : [v];
     });

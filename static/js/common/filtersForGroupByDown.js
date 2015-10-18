@@ -109,10 +109,24 @@ var _filtersForGroupByDown = {
         }
     },
 
+    groupSize: {
+        code: 'groupSize',
+        tag: '',
+        weight:0,
+        handle: function (current) {
+            var o = _.omit(this, 'handle');
+            var size = current.uniq.length;
+            o.details = [];
+            o.pass = false;
+            o.weight = size == 5 ? 0 : size == 6 ? 10 : 10;
+            current.tags.push(o);
+        }
+    },
+
     allOddOrEven: {
         code: 'allOddOrEven',
         tag: '',
-        weight:50,
+        weight:60,
         handle: function (current) {
             var o = _.omit(this, 'handle');
             var arr = current.uniq;
@@ -134,7 +148,7 @@ var _filtersForGroupByDown = {
     overlap: {
         code: 'overlap',
         tag: 'cys重叠',
-        weight:20,
+        weight:30,
         handle: function (current, prev) {
             var o = _.omit(this, 'handle');
             var cys_c = current.cys;
@@ -173,7 +187,7 @@ var _filtersForGroupByDown = {
                 return item;
             });
             o.pass = _.every(count, function (v, k) {
-                return !(v > 1 && k > 4);
+                return !(v > 1 && k > 3);
             });
             o.details = _.pick(count, function (v) {
                 return v > 1;
