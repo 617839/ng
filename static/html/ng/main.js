@@ -119,10 +119,10 @@ brick.controllers.reg('groupCtrl', function(scope){
         var ballList = ballsModel.combine(list);
         var str = '';
         for(var i = 0; i < ballList.length; i++){
-            str += (ballList[i].redBall + '').replace(/,/g,'  ') + '<br>';
+            str += ballList[i].red .join(' ') + ' : ' + ballList[i].blue + '<br>';
         }
         $balls.empty().toggle().html(str);
-        $(this).find('i').text(ballList.length);
+        $(this).find('i').text(dFormat(ballList.length));
     };
 
     scope.setCombPatch = function(e){
@@ -173,13 +173,17 @@ brick.controllers.reg('groupCtrl', function(scope){
             return a.money - b.money;
         });
 
-        $(this).find('i').text(result.money);
+        $(this).find('i').text(dFormat(result.money));
 
         console.log(JSON.stringify(result.list).replace(/},\{/img, '},\r\n{'));
 
         console.log('all money is ' + result.money + '; list length is ' + result.list.length);
 
     };
+
+    function dFormat(d){
+        return (d+'').replace(/(\d)(?=(\d\d\d)+(?!\d))/g,'$1,');
+    }
 
 });
 

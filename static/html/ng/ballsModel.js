@@ -234,12 +234,13 @@ brick.services.reg('ballsModel', function () {
     exports.filter = filterForGroupByDown;
 
     exports.get = function(){
-        return this.list.map(function(item){
-            var red = item.redBall.slice();
-            var blue = red.pop();
-            blue = blue.replace(/^\:/img, '');
-            return {red:red,blue:blue};
-        });
+        return this.list;
+        //this.list.map(function(item){
+        //    var red = item.redBall.slice();
+        //    var blue = red.pop();
+        //    blue = blue.replace(/^\:/img, '');
+        //    return {red:red,blue:blue};
+        //});
     };
 
     exports.combine = function (groupList) {
@@ -253,17 +254,22 @@ brick.services.reg('ballsModel', function () {
                 console.log(1, e)
             }
 
-            q = filterByRef(q, window.filterByRefArr);
-            q = redBlueBallModel(q);
+            //q = filterByRef(q, window.filterByRefArr);
+            //q = redBlueBallModel(q);
             numList = numList.concat(q || []);
+            //numList.push(q);
         });
 
+        //numList = _.flatten(numList);
 
-        var showList = numList.map(function (item) {
-            var red = item.redBall.slice();
-            var blue = red.pop();
-            blue = blue.replace(/^\:/img, '');
-            return {red: red, blue: blue};
+
+        numList = numList.map(function (item) {
+            //console.log(item);
+            item.sort(function(a, b){ return a-b});
+            // 顺序提取篮球
+            var blue = blues.shift();
+            blues.push(blue);
+            return {red: item, blue: blue};
         });
 
         console.log(numList);

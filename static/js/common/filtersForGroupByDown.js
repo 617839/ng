@@ -125,6 +125,7 @@ var _filtersForGroupByDown = {
             o.details = isOdd ? ['0'] : isEven ? ['0'] : [];
             o.pass = !(isOdd || isEven);
             current.tags.push(o);
+            current.allOddOrEven = (isOdd || isEven);
         }
     },
 
@@ -142,6 +143,7 @@ var _filtersForGroupByDown = {
             o.pass = diff.length || _.uniq(cys_c).length != _.uniq(cys_p).length ? true : false;
             o.details = o.pass ? ['', '', ''] : cys_c;
             current.tags.push(o);
+            current.overlap = !o.pass;
         }
     },
 

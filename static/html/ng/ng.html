@@ -52,7 +52,7 @@
                        ic-class="ball {{v.selected ? 'selected' : ''}}"
                        ic-bind="v.n">1</i>
                 </div>
-                <div class="use" ic-init="arr = [0,1,2,3,4,5,6];">
+                <div class="use" ic-init="arr = [1,2,3,4,5,6,0];">
                     <i class="ball"
                        ic-checkbox="{{i + '-use'}}"
                        ic-for="k, v in arr"
@@ -100,7 +100,7 @@
                     </div>
                 </div>
                 <div ic-else-if="j == 'tags'" data-prop="tags" ic-if-end ic-for-end>
-                    ~
+<!--                    ~
                     <div class="prop" ic-for="k, tag in v" data-prop="{{tag.code}}">
                         <span title="{{tag.tag}}">{{tag.details.join('&nbsp;&nbsp;') || '&nbsp;'}}</span>
                         <a href="javascript:;"
@@ -109,7 +109,7 @@
                            data-property="{{j+'.'+ k +'.details'}}"
                            data-value="{{tag.details.join(',')}}"
                            ic-click="toggleSizerBox"></a>
-                    </div>
+                    </div>-->
                 </div>
             </li>
         </ul>
