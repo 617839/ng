@@ -22,12 +22,14 @@ brick.services.reg('groupModel', function () {
     var patchesThree = _.filter(_patches, function (v, i) {
         return i < 4 && v.length > 3
     });
+    console.table(patchesThree)
     patchesThree = patchesThree.map(function(v, i){
-        return [i, i];
+        var z = v[0];
+        return [z, z];
     });
 
     _patches = patches = patches.map(function (v, i) {
-        return i;
+        return v[0];
     });
     patches = utils.group(_patches, 2);
     patches = patches.concat(_patches);
