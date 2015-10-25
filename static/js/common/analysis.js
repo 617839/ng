@@ -7,7 +7,7 @@ var _filtersForGroupByDown = {
     first: {
         code: 'first',
         tag: '开头',
-        weight:30,
+        weight:3,
         handle: function (current, prev) {
             var o = _.omit(this, 'handle');
             var v = current.uniq[0];
@@ -20,7 +20,7 @@ var _filtersForGroupByDown = {
     second: {
         code: 'second',
         tag: '第二位',
-        weight:20,
+        weight:2,
         handle: function (current, prev) {
             var o = _.omit(this, 'handle');
             var v = current.uniq[1];
@@ -33,7 +33,7 @@ var _filtersForGroupByDown = {
     third: {
         code: 'third',
         tag: '第三位',
-        weight:10,
+        weight:1,
         handle: function (current, prev) {
             var o = _.omit(this, 'handle');
             var v = current.uniq[2];
@@ -52,7 +52,7 @@ var _filtersForGroupByDown = {
             var size = current.uniq.length;
             o.details = [];
             o.pass = false;
-            o.weight = size == 5 ? 0 : size == 6 ? 10 : 10;
+            o.weight = size == 5 ? 0 : size == 6 ? 2 : size == 4 ? 2 : 4;
             current.tags.push(o);
         }
     },
@@ -60,7 +60,7 @@ var _filtersForGroupByDown = {
     allOddOrEven: {
         code: 'allOddOrEven',
         tag: '',
-        weight:60,
+        weight:6,
         handle: function (current) {
             var o = _.omit(this, 'handle');
             var arr = current.uniq;
@@ -82,7 +82,7 @@ var _filtersForGroupByDown = {
     overlap: {
         code: 'overlap',
         tag: 'cys重叠',
-        weight:30,
+        weight:3,
         handle: function (current, prev) {
             var o = _.omit(this, 'handle');
             var cys_c = current.cys;
@@ -99,7 +99,7 @@ var _filtersForGroupByDown = {
     cysRadio: {
         code: 'cysRadio',
         tag: 'cys比例',
-        weight:10,
+        weight:1,
         handle: function (current, prev) {
             var o = _.omit(this, 'handle');
             var cys = current.cys;
@@ -114,7 +114,7 @@ var _filtersForGroupByDown = {
     same: {
         code: 'same',
         tag: 'same',
-        weight:30,
+        weight:3,
         handle: function (current) {
             var o = _.omit(this, 'handle');
             var count = _.countBy(current.original, function (item) {
@@ -139,7 +139,7 @@ var _filtersForGroupByDown = {
     sn: {
         code: 'sn',
         tag: '连号',
-        weight:0,
+        weight:2,
         handle: function (current, prev) {
             var o = _.omit(this, 'handle');
             var result = [];
@@ -173,7 +173,7 @@ var _filtersForGroupByDown = {
             }
 
             o.details = _.flatten(result);
-            o.pass = result.length;
+            o.pass = !!result.length;
             current.tags.push(o);
         }
     }
