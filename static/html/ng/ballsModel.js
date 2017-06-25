@@ -27,10 +27,10 @@ brick.services.reg('ballsModel', function () {
             prevDown.pop();
 
             var model = list.pop();
-            var x=0;
+            var x = 0;
 
             var _noPass = _.filter(model.tags, function (v) {
-                if(!v.pass) x += v.weight;
+                if (!v.pass) x += v.weight;
                 return !v.pass;
             });
 
@@ -70,7 +70,7 @@ brick.services.reg('ballsModel', function () {
 
     exports.filter = filterForGroupByDown;
 
-    exports.get = function(){
+    exports.get = function () {
         return this.list;
         //this.list.map(function(item){
         //    var red = item.redBall.slice();
@@ -80,7 +80,14 @@ brick.services.reg('ballsModel', function () {
         //});
     };
 
+
+    /**
+     * 根据编组模式列表生成彩票号码列表
+     * @param groupList
+     * @returns {Array}
+     */
     exports.combine = function (groupList) {
+
         var numList = [];
 
         _.forEach(groupList, function (v, i, list) {
@@ -88,46 +95,98 @@ brick.services.reg('ballsModel', function () {
             try {
                 q = combineWrap(window.classifyByDownMargin, v);
             } catch (e) {
-                console.log(1, e)
+                console.error(e);
             }
-
             //q = filterByRef(q, window.filterByRefArr);
             //q = redBlueBallModel(q);
-            numList = numList.concat(q || []);
             //numList.push(q);
+            numList = numList.concat(q || []);
         });
 
         //numList = _.flatten(numList);
 
-
         numList = numList.map(function (item) {
-            //console.log(item);
-            item.sort(function(a, b){ return a-b});
-            // 顺序提取篮球
-            var blue = blues.shift();
-            blues.push(blue);
-            return {red: item, blue: blue};
+            return item.sort(function (a, b) {
+                return a - b
+            });
         });
 
-        console.log(numList);
-        console.log('all comb length is %s', numList.length);
-
-        //var str = '';
-        //
-        //for (var i = 0; i < numList.length; i++) {
-        //    str += (numList[i].redBall + '').replace(/,/g, '  ') + '<br>';
-        //}
-        //
-        //console.log(str);
-
-        this.list = numList;
-
-        return numList;
+        this.list = this.addBlueBallForRedBall(numList);
+        return this.list;
 
     };
 
+    /**
+     * 为每注号码添加篮球号码
+     * @param list 没有添加篮球之前的红球号码列表
+     * @param isUseAllBlueBalls 是否为每个红球号码添加所有的篮球，红球号码会重复翻倍，默认随机添加一个篮球
+     */
+    exports.addBlueBallForRedBall = function (list, isUseAllBlueBalls) {
+        var result = [];
+        //获取所有可用的篮球
+        var blueBalls = this.getAllBalls().blueBalls;
+        var _blueBalls = []; //[1, 5, 16]
+        blueBalls.forEach(function (item) {
+            item.usable && _blueBalls.push(item.number);
+        });
+        if (isUseAllBlueBalls) {
+            _blueBalls.forEach(function (value) {
+                list.forEach(function (item) {
+                    result.push({red: item, blue: value});
+                });
+            });
+            return result;
+        } else {
+            return list.map(function (item) {
+                var blue = _blueBalls.shift();
+                _blueBalls.push(blue);
+                return {red: item, blue: blue};
+            });
+        }
+    };
 
+    /**
+     * 彩票类型 33选6 15选5
+     * @type {number}
+     */
+    exports.type = 33;
+    /**
+     * 获取所有投注的号码球,默认每个号码球都可用。
+     * @param type （33选6、15选5等等，默认33）
+     */
+    exports.getAllBalls = function (type) {
+        var red = this.type = type || this.type;
+        var map = {'33': '16', '15': '0'};
+        var blue = map[red];
+        var redBalls = [];
+        var blueBalls = [];
+        var key = 'allBalls-' + red;
+        //首先尝试从localStore中获取，没有则重新生成
+        var allBalls = localStorage.getItem(key);
+        if (allBalls) {
+            return JSON.parse(allBalls);
+        }
+        for (var i = 1; i <= red; i++) {
+            redBalls.push({number: i, usable: 1});
+        }
+        for (i = 1; i <= blue; i++) {
+            blueBalls.push({number: i, usable: 1});
+        }
+        allBalls = {redBalls: redBalls, blueBalls: blueBalls};
+        localStorage.setItem(key, JSON.stringify(allBalls));
+        return allBalls;
+    };
+
+    /**
+     * 根据过滤结果更新选球号码
+     * @param allBalls
+     */
+    exports.setAllBalls = function (allBalls) {
+        localStorage.setItem('allBalls-' + this.type, JSON.stringify(allBalls));
+    };
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //对外接口
     return exports;
-
 
 });

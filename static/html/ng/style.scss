@@ -55,6 +55,9 @@ body{
   &.selected {
     color: #fff;
     background: red;
+    &.blue{
+      background: blue;
+    }
   }
 }
 
@@ -191,4 +194,11 @@ body{
 }
 [data-prop="sn"]{
   min-width:8em;
+}
+
+#allBallsCtrl{
+  ul li{
+    display: inline-block;
+    padding:10px 0;
+  }
 }

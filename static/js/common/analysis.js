@@ -52,7 +52,7 @@ var _filtersForGroupByDown = {
             var size = current.uniq.length;
             o.details = [];
             o.pass = false;
-            o.weight = size == 5 ? 0 : size == 6 ? 2 : size == 4 ? 2 : 4;
+            o.weight = size == 5 ? 0 : size == 6 ? 1 : size == 4 ? 1 : 3;
             current.tags.push(o);
         }
     },
@@ -60,7 +60,7 @@ var _filtersForGroupByDown = {
     allOddOrEven: {
         code: 'allOddOrEven',
         tag: '',
-        weight:6,
+        weight:7,
         handle: function (current) {
             var o = _.omit(this, 'handle');
             var arr = current.uniq;
@@ -105,7 +105,7 @@ var _filtersForGroupByDown = {
             var cys = current.cys;
             var a = cys[0] + cys[1];
             var b = cys[0] + cys[1] + cys[2];
-            o.details = [a, b];
+            o.details = [(a/b).toFixed(1)*10];
             o.pass = a / b >= 1 / 2;
             current.tags.push(o);
         }
@@ -114,14 +114,14 @@ var _filtersForGroupByDown = {
     same: {
         code: 'same',
         tag: 'same',
-        weight:3,
+        weight:7,
         handle: function (current) {
             var o = _.omit(this, 'handle');
             var count = _.countBy(current.original, function (item) {
                 return item;
             });
             o.pass = _.every(count, function (v, k) {
-                return !(v > 1 && k > 3);
+                return !(v > 1 && k > 4);
             });
             o.details = _.pick(count, function (v) {
                 return v > 1;

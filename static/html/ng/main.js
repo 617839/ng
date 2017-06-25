@@ -2,7 +2,12 @@
  * Created by j on 15-8-23.
  */
 
-
+/**
+ * 组合方案控制器
+ * 用于定制组合方案
+ * 比如组合的长度是4？5？ 6？
+ *
+ */
 brick.controllers.reg('combCtrl', function (scope) {
 
     var utils = brick.services.get('utils');
@@ -55,7 +60,9 @@ brick.controllers.reg('combCtrl', function (scope) {
 
 });
 
-
+/**
+ * 组合列表控制器
+ */
 brick.controllers.reg('groupCtrl', function(scope){
 
     var ballsModel = brick.services.get('ballsModel');
@@ -110,21 +117,36 @@ brick.controllers.reg('groupCtrl', function(scope){
         groupModel.select(prop, val, reg, pattern);
     };
 
+    /**
+     * 根据编组模式生成最终的彩票号码并显示或隐藏。
+     * @param e
+     * @returns {*}
+     */
     scope.allComb = function(e){
+
         if($balls.is(':visible')){
             return $balls.hide();
         }
+
         var list = groupModel.groupList();
-        console.log(list);
+
         var ballList = ballsModel.combine(list);
+
         var str = '';
+
         for(var i = 0; i < ballList.length; i++){
             str += ballList[i].red .join(' ') + ' : ' + ballList[i].blue + '<br>';
         }
+
         $balls.empty().toggle().html(str);
         $(this).find('i').text(dFormat(ballList.length));
     };
 
+    /**
+     *
+     * @param e
+     * @returns {*}
+     */
     scope.setCombPatch = function(e){
 
         var str = prompt('allCombPatch is ' + getAllCombPatch() + '; reset. \r\n example:0 1,0 0 or 0,1,3');
@@ -153,9 +175,14 @@ brick.controllers.reg('groupCtrl', function(scope){
 
     };
 
+    /**
+     * 设置开奖结果，计算奖金
+     * @param e
+     */
     scope.countMoney = function(e){
 
-        var input = prompt(' 开奖结果是: ' + getCurrentLottey() +  ';reset,\r\n example: 4 9 10 24 27 33:9');
+        var lottey = getCurrentLottey();
+        var input = prompt(' 开奖结果是: ' + lottey.red.join(' ') + ':' + lottey.blue +  '; 重新设置\r\n example: 4 9 10 24 27 33:9');
 
         if(input){
             var arr = input.split(':');
@@ -187,10 +214,38 @@ brick.controllers.reg('groupCtrl', function(scope){
 
 });
 
-brick.controllers.reg('ballCtrl', function(scope){
+/**
+ * 红蓝球号码控制器
+ * 显示所有可用的红球和篮球并能够对其过滤，默认全部可用
+ * 比如双色球33个篮球，16个红球默认都可用于生成最后的彩票号码方案。
+ * 可以过滤掉比如篮球15，那么篮球15就不会出现在最终的彩票号码方案中。
+ */
+brick.controllers.reg('allBallsCtrl', function(scope){
+
+    var ballsModel = brick.services.get('ballsModel');
+    var allBalls = ballsModel.getAllBalls();
+
+    var $elm = scope.$elm;
+
+    scope.render('allBalls', allBalls);
+
+    $elm.on('ic-checkbox.change', function (e, msg) {
+        var keys = msg.name.split('-');
+        var redOrBlue = keys[0];
+        var index = keys[1];
+        allBalls[redOrBlue][index].usable = e.target.hasAttribute('selected') ? 1 : 0;
+        ballsModel.setAllBalls(allBalls);
+    });
+
 
 });
 
+
+//////////////////////////////-----------指令相关-----------/////////////////////////////////////////////////////////////
+
+/**
+ * 定义ic-toggle指令;
+ */
 brick.directives.reg('ic-toggle', {
     selfExec: true,
     once: true,
@@ -202,6 +257,9 @@ brick.directives.reg('ic-toggle', {
     }
 });
 
+/**
+ * 定义ic-close指令;
+ */
 brick.directives.reg('ic-close', {
     selfExec: true,
     once: true,
@@ -213,6 +271,9 @@ brick.directives.reg('ic-close', {
     }
 });
 
+/**
+ * 定义ic-checkbox指令;
+ */
 brick.directives.reg('ic-checkbox', {
     selfExec: true,
     once: true,
@@ -230,6 +291,9 @@ brick.directives.reg('ic-checkbox', {
     }
 });
 
+/**
+ * 定义ic-dom-clone指令;
+ */
 brick.directives.reg('ic-dom-clone', {
     selfExec: true,
     once: true,
@@ -241,6 +305,9 @@ brick.directives.reg('ic-dom-clone', {
     }
 });
 
+/**
+ * 定义ic-dom-remove指令;
+ */
 brick.directives.reg('ic-dom-remove', {
     selfExec: true,
     once: true,

@@ -26,6 +26,7 @@
 
 </head>
 <body>
+
 <div class="combBox" ic-ctrl="combCtrl">
     <header>
         <h2>ng</h2>
@@ -66,6 +67,8 @@
         </ul>
     </section>
 </div>
+
+
 <div class="panel groupBox" ic-ctrl="groupCtrl" ic-close-target>
     <header style="position:fixed;width:100%;top:0;z-index:10000;">
         <span role="info" style="margin-right:30px;"></span>
@@ -135,6 +138,37 @@
     <div id="balls" class="panel" style="position: absolute;top:48px;display: none;padding:15px;line-height:1.8;font-size:16px;">
 
     </div>
+</div>
+
+
+<div id="allBallsCtrl" ic-ctrl="allBallsCtrl">
+    <div ic-tpl="allBalls">
+        <section ic-init="redBalls=model.redBalls;">
+            <h2>红球</h2>
+            <ul>
+                <li class="li" ic-for="i, item in redBalls">
+                        <i ic-checkbox="{{'redBalls-' + i}}"
+                           ic-val="{{item.number}}"
+                           ic-selected="item.usable"
+                           ic-class="ball {{item.usable ? 'selected' : ''}}"
+                           ic-bind="item.number">1</i>
+                </li>
+            </ul>
+        </section>
+        <section ic-if="model.blueBalls" ic-init="blueBalls=model.blueBalls;">
+            <h2>蓝球</h2>
+            <ul class="inline">
+                <li class="li" ic-for="i, item in blueBalls">
+                    <i ic-checkbox="{{'blueBalls-' + i}}"
+                       ic-val="{{item.number}}"
+                       ic-selected="item.usable"
+                       ic-class="ball blue {{item.usable ? 'selected' : ''}}"
+                       ic-bind="item.number">1</i>
+                </li>
+            </ul>
+        </section>
+    </div>
+
 </div>
 
 </body>

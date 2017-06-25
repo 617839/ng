@@ -22,7 +22,9 @@ brick.services.reg('groupModel', function () {
     var patchesThree = _.filter(_patches, function (v, i) {
         return i < 4 && v.length > 3
     });
-    console.error(patchesThree)
+
+    console.info(patchesThree);
+
     patchesThree = patchesThree.map(function(v, i){
         var z = v[0];
         return [z, z];
@@ -37,7 +39,8 @@ brick.services.reg('groupModel', function () {
     patches = patches.map(function (v) {
         return _.isArray(v) ? v : [v];
     });
-    console.error(JSON.stringify(patches));
+
+    console.info(JSON.stringify(patches));
 
     return {
         patches:patches,
