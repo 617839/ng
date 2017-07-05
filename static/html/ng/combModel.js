@@ -27,10 +27,12 @@ brick.services.reg('combModel', function () {
 
     return {
         pool: {},
-        numbers: {},
-        use: {},
+        numbers: {}, //记录每个组合条件使用哪几个下间隔数字，比如某个组合条件使用0，1，2
+        use: {},     //记录每个组合条件里的下间隔数字使用几个，比如一个组合方案里0，1，2里使用1个或2个或3个
         list: [],
-        _groupSize: [4, 5, 6],
+        combForGroupFilter:[], //组合条件数据模型用于编组过滤。比如完成编组后参照每个组合条件进行筛选，比如0，1，2里最多2个，最少1个。检查是否符合。
+        _groupSize: [4, 5, 6], //去重后的组合长度
+        //设置或获取组合长度
         groupSize: function (arr) {
             if (!arr) return this._groupSize;
             this._groupSize = arr;
@@ -86,6 +88,7 @@ brick.services.reg('combModel', function () {
             var o = name != void(0) ? pool[name] : pool;
             return o && utils.clone(o);
         },
+        //设置this.numbers 和 this.use
         set: function (k, v) {
             k = k.split('-');
             var name = k[0];
@@ -100,8 +103,8 @@ brick.services.reg('combModel', function () {
             this[type][name] = v;
         },
         add: function () {
-
         },
+        //联结下间隔数字和使用位数，比如，0，1，2里使用2位或3位
         joint: function () {
             var pool = this.pool = {};
             var _numbers = utils.clone(this.numbers);
@@ -114,6 +117,7 @@ brick.services.reg('combModel', function () {
         count: function () {
             var pool = this.joint();
             var result = [];
+            var combForGroupFilter = this.combForGroupFilter = [];
             _.each(pool, function (item, i) {
                 var numbers = item.numbers.filter(function (v) {
                     return v.selected;
@@ -121,11 +125,12 @@ brick.services.reg('combModel', function () {
                 numbers = numbers.map(function (v) {
                     return v.n;
                 });
-                var use = item.use;
+                var use = item.use.slice();
                 if (numbers.length && use.length) {
-                    while (use = item.use.shift()+2) {
-                        result.push({numbers: numbers.slice(), use: use-2});
-                    }
+                    combForGroupFilter.push({numbers: numbers.slice(), use: use});
+                    use.forEach(function(v){
+                        result.push({numbers: numbers.slice(), use: v});
+                    });
                 }
             });
 
@@ -133,11 +138,26 @@ brick.services.reg('combModel', function () {
                 return alert('没有可用的numbers 或 use.');
             }
 
+            console.info('combForGroupFilter is = ', combForGroupFilter);
+
             result = _.groupBy(result, function (item) {
                 return item.numbers.join(',');
             });
+            //console.info(result);
             result = _.values(result);
-            return utils._combine(result);
+            //console.log('>>>', result);
+            result = utils._combine(result);
+            return result;
+        },
+        // 对编组按照组合条件进行过滤
+        filter: function(list){
+            var combForGroupFilter = this.combForGroupFilter;
+            return list.filter(function(arr){
+                return combForGroupFilter.every(function(item){
+                    var r = _.intersection(arr, item.numbers);
+                    return _.contains(item.use, r.length);
+                });
+            });
         }
 
     };

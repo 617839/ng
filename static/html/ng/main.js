@@ -2,6 +2,15 @@
  * Created by j on 15-8-23.
  */
 
+function cc(obj,prefix){
+    var prefix = prefix || '';
+    if(typeof obj == 'object'){
+        console.log(prefix +  ' = ' + JSON.stringify(obj) + ';');
+    }else{
+        console.log(prefix + ' : ' + obj);
+    }
+}
+
 /**
  * 组合方案控制器
  * 用于定制组合方案
@@ -56,7 +65,40 @@ brick.controllers.reg('combCtrl', function (scope) {
 
     scope.apply = function(e){
         combModel.cache();
-    }
+    };
+
+    /**
+     * 设置重复补丁，重0，重1， 重2 ...
+     * @param e
+     * @returns {*}
+     */
+    scope.setCombPatch = function(e){
+
+        var str = prompt('allCombPatch is ' + getAllCombPatch() + '; reset. \r\n example:0 1,0 0 or 0,1,3');
+
+        if(!str) return alert('not set.');
+
+        str = str.trim();
+
+        var arr = str.split(/\s+/img);
+
+        arr.forEach(function(v, i, list){
+            var a =  v.split(/\D+/img);
+            for(var j in a) a[j] = a[j] * 1;
+            list[i] = a;
+        });
+
+        window.allCombPatch = arr;
+
+        str = JSON.stringify(arr);
+
+        console.log('allCombPatch is =>', str);
+
+        var data = getUrlParam('data') || 33;
+
+        localStorage[ 'allCombPatch' + data ] = str;
+
+    };
 
 });
 
@@ -81,14 +123,17 @@ brick.controllers.reg('groupCtrl', function(scope){
         $elm.show();
     });
 
+    //反转选择
     scope.invert = function(e){
         groupModel.invert();
     };
 
+    //清除当前选择
     scope.reselect = function(e){
         groupModel.reselect();
     };
 
+    //
     scope.toggleSizerBox = function(e){
         var $th = $(this);
         var selected = $th.closest('li[ic-checkbox]').hasClass('selected');
@@ -107,6 +152,7 @@ brick.controllers.reg('groupCtrl', function(scope){
         //$(this).next().toggle().find('[name=pattern]').prop('checked', selected);
     };
 
+    //对组合项进行筛选
     scope.select = function(e){
         var $th = $(this);
         var $box = $th.closest('[role=sizerBox]').hide();
@@ -118,7 +164,7 @@ brick.controllers.reg('groupCtrl', function(scope){
     };
 
     /**
-     * 根据编组模式生成最终的彩票号码并显示或隐藏。
+     * 根据编组模式生成最终的彩票号码。
      * @param e
      * @returns {*}
      */
@@ -143,51 +189,18 @@ brick.controllers.reg('groupCtrl', function(scope){
     };
 
     /**
-     *
-     * @param e
-     * @returns {*}
-     */
-    scope.setCombPatch = function(e){
-
-        var str = prompt('allCombPatch is ' + getAllCombPatch() + '; reset. \r\n example:0 1,0 0 or 0,1,3');
-
-        if(!str) return alert('not set.');
-
-        str = str.trim();
-
-        var arr = str.split(/\s+/img);
-
-        arr.forEach(function(v, i, list){
-            var a =  v.split('');
-            for(var j in a) a[j] = a[j] * 1;
-            list[i] = a;
-        });
-
-        window.allCombPatch = arr;
-
-        str = JSON.stringify(arr);
-
-        console.log('allCombPatch is =>', str);
-
-        var data = getUrlParam('data') || 33;
-
-        localStorage[ 'allCombPatch' + data ] = str;
-
-    };
-
-    /**
      * 设置开奖结果，计算奖金
      * @param e
      */
     scope.countMoney = function(e){
 
         var lottey = getCurrentLottey();
-        var input = prompt(' 开奖结果是: ' + lottey.red.join(' ') + ':' + lottey.blue +  '; 重新设置\r\n example: 4 9 10 24 27 33:9');
+        var input = prompt(' 开奖结果是: ' + lottey.red.join(' ') + ':' + lottey.blue +  '; 重新设置\r\n example: 4 9 10 24 27 33:9\r\n4 9 10 24 27 33 9');
 
         if(input){
-            var arr = input.split(':');
-            var blue = arr[1];
-            var red = arr[0].split(/\s+/img);
+            var arr = input.split(/\D+/img);
+            var blue = arr.pop();
+            var red = arr; //[0].split(/\s+/img);
             var dob = {red:red, blue: blue};
             localStorage.setItem('currentLottey', JSON.stringify(dob));
         }else{

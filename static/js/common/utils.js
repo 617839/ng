@@ -3,7 +3,7 @@
  * define utils
  */
 
-brick.services.reg('utils', function(){
+brick.services.reg('utils', function () {
 
     var exports = {};
 
@@ -16,9 +16,9 @@ brick.services.reg('utils', function(){
      * var r = group([1,2,3,4],3);
      * JSON.stringify(r) == "[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]";
      */
-    function group(nu, groupl, result){
+    function group(nu, groupl, result) {
 
-        if(groupl < 1) return [];
+        if (groupl < 1) return [];
 
         var result = result ? result : [];
         var nul = nu.length;
@@ -30,40 +30,40 @@ brick.services.reg('utils', function(){
         item = item.constructor === Array ? item : [item];
 
 
-        (function func(item,nuc){
+        (function func(item, nuc) {
             var itemc;
             var nucc = nuc.slice(0);
-            var margin = groupl- item.length;
+            var margin = groupl - item.length;
 
 
-            if( margin == 0){
+            if (margin == 0) {
                 result.push(item);
                 return;
             }
-            if( margin == 1){
-                for(var j in nuc){
+            if (margin == 1) {
+                for (var j in nuc) {
                     itemc = item.slice(0);
                     itemc.push(nuc[j]);
                     result.push(itemc);
                 }
             }
-            if( margin > 1){
+            if (margin > 1) {
                 itemc = item.slice(0);
                 itemc.push(nucc.shift());
-                func(itemc,nucc);
+                func(itemc, nucc);
 
-                if(item.length + nucc.length >= groupl){
-                    func(item,nucc);
+                if (item.length + nucc.length >= groupl) {
+                    func(item, nucc);
                 }
 
             }
 
-        })(item,nuc);
+        })(item, nuc);
 
 
-        if(nuc.length >= groupl){
+        if (nuc.length >= groupl) {
             return group(nuc, groupl, result);
-        }else{
+        } else {
             return result;
         }
 
@@ -74,23 +74,23 @@ brick.services.reg('utils', function(){
      * var r = _combine([1,2,3],[0],[9]);
      * JSON.stringify(r) == "[[1,0,9],[2,0,9],[3,0,9]]";
      */
-    function _combine(){
+    function _combine() {
         var args = Array.prototype.slice.call(arguments, 0);
         var arr1;
         var arr2;
         var arr3;
 
-        function func(arr1,arr2){
+        function func(arr1, arr2) {
             var arr3 = [];
-            var item1,item2,item1c;
+            var item1, item2, item1c;
 
-            if(arr1.length == 0) return arr2;
-            if(arr2.length == 0) return arr1;
+            if (arr1.length == 0) return arr2;
+            if (arr2.length == 0) return arr1;
 
-            for(var i in arr1){
+            for (var i in arr1) {
                 item1 = arr1[i];
                 item1 = item1.constructor === Array ? item1 : [item1];
-                for(var j in arr2){
+                for (var j in arr2) {
                     item1c = item1.slice();
                     item2 = arr2[j];
                     item1c = item1c.concat(item2);
@@ -102,15 +102,15 @@ brick.services.reg('utils', function(){
             return arr3;
         }
 
-        if(args.length == 1) {
+        if (args.length == 1) {
             return args[0];
         }
-        if(args.length > 1){
+        if (args.length > 1) {
             arr1 = args.shift();
             arr2 = args.shift();
-            arr3 = func(arr1,arr2);
+            arr3 = func(arr1, arr2);
             args.unshift(arr3);
-            return _combine.apply(null,args);
+            return _combine.apply(null, args);
         }
     }
 
@@ -119,7 +119,7 @@ brick.services.reg('utils', function(){
      * @param arr {Array}
      * @returns {*}
      */
-    function combine(arr){
+    function combine(arr) {
         return (_combine.apply(null, arr));
     }
 
@@ -143,11 +143,11 @@ brick.services.reg('utils', function(){
      *
      * @param arr => [{numbers:[0,1,2,3,4,5],use:4},{numbers:[12,14,20],use:1}]
      */
-    exports.combine = function(arr){
+    exports.combine = function (arr) {
         var args = [];
-        arr.forEach(function(item, i){
+        arr.forEach(function (item, i) {
             var g = group(item.numbers, item.use);
-            console.log(JSON.stringify(item.numbers), JSON.stringify(item.use), JSON.stringify(g));
+            console.log(JSON.stringify(item.numbers), JSON.stringify(item.use), '\n', JSON.stringify(g));
             args.push(g);
         });
         console.log(JSON.stringify(args));

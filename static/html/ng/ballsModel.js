@@ -68,8 +68,16 @@ brick.services.reg('ballsModel', function () {
 
 ///////////////////////////////////////////////////////
 
+    /**
+     *
+     * @type {filterForGroupByDown}
+     */
     exports.filter = filterForGroupByDown;
 
+    /**
+     *
+     * @returns {*|exports.list}
+     */
     exports.get = function () {
         return this.list;
         //this.list.map(function(item){

@@ -31,6 +31,7 @@
     <header>
         <h2>ng</h2>
         <menu>
+            <button ic-click="setCombPatch">setCombPatch</button>
             <button ic-click="apply">apply</button>
             <button ic-click="cache">cache</button>
             <button ic-click="make">make</button>
@@ -43,7 +44,7 @@
         <ul>
             <li class="li" ic-for="i, item in model">
                 <div class="name">
-                    <i class="ball" ic-bind="item.name">1</i>
+                    <i class="ball" ic-bind="item.name || 'I'" title="这是组合条件{{i*1+1}}">1</i>
                 </div>
                 <div class="numbers">
                     <i class="ball"
@@ -74,7 +75,7 @@
         <span role="info" style="margin-right:30px;"></span>
         <button ic-click="invert">反选</button>
         <button ic-click="reselect">重选</button>
-        <button ic-click="setCombPatch">setCombPatch</button>
+
         <button ic-click="countMoney">中奖统计 <i></i></button>
         <button ic-click="allComb" ic-toggle="ballList">allComb <i></i></button>
         <button ic-toggle="groupList">toggle</button>

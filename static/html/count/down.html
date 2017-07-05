@@ -38,6 +38,9 @@
             min-width:41px;
             color:blue;
         }
+        .count em{
+            //text-align: justify;
+        }
         section{
             display: inline-block;
         }
@@ -63,11 +66,12 @@
             right:0;
             top:0;
             height: 100%;
-            padding:10px;
+            #padding:10px;
         }
         .tags div{
             width:auto;
             min-width:41px;
+            margin-right:0;
         }
         .tags em{
             /*width:6em;*/
@@ -75,9 +79,6 @@
             /*text-align: left;*/
         }
 
-        .tags div{
-            margin-right:0;
-        }
         .tags [tag=cysRadio]{
             margin-left:41px;
         }
@@ -90,7 +91,10 @@
             margin-right:41px;
         }
 
-        .tags [tag=allOddOrEven], .tags [tag=overlap]{
+        .tags [tag=allOddOrEven]{
+
+        }
+        .tags [tag=overlap]{
             display: none;
         }
 
@@ -172,12 +176,14 @@
             var $count = li.append('div').classed('count', true);
             $count.append('em').text(function(d){
                 var x = 0;
+                var l = 0;
                 var noPass = _.filter(d.tags, function(item){
                     if(!item.pass) x += item.weight;
                     return !item.pass;
                 });
-                return x ? x : '';
-                return noPass.length ? noPass.length : '';
+                x = x ? x : '';
+                l = noPass.length ? noPass.length : '';
+                return l + ' ' + x;
             });
 
             //tags

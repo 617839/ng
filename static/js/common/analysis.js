@@ -1,13 +1,18 @@
 /**
  * Created by j on 15/10/25.
+ * 对下间隔组合的可能性进行筛选评判
+ * 譬如 3 4 7 11 14 15 这种下间隔组合的可能性微乎其微，不是没有
+ * 我要做的是根据以往的数据对组合进行筛选评判
+ * 譬如 0 0 1 3 4 15 ，这种组合就是几率最高的
  */
 //
 var _filtersForGroupByDown = {
 
+    //下间隔组合的第一位，通常是0，每次开奖号码都会和上期号码有重复
     first: {
         code: 'first',
         tag: '开头',
-        weight:3,
+        weight: 3, // 权重
         handle: function (current, prev) {
             var o = _.omit(this, 'handle');
             var v = current.uniq[0];
@@ -17,10 +22,11 @@ var _filtersForGroupByDown = {
         }
     },
 
+    //下间隔组合的第二位，基本是1，2 ，3
     second: {
         code: 'second',
         tag: '第二位',
-        weight:2,
+        weight: 2,
         handle: function (current, prev) {
             var o = _.omit(this, 'handle');
             var v = current.uniq[1];
@@ -30,37 +36,40 @@ var _filtersForGroupByDown = {
         }
     },
 
+    //第三位通常小于7
     third: {
         code: 'third',
         tag: '第三位',
-        weight:1,
+        weight: 1,
         handle: function (current, prev) {
             var o = _.omit(this, 'handle');
             var v = current.uniq[2];
             o.details = [v];
-            o.pass = v < 7;
+            o.pass = v < 10;
             current.tags.push(o);
         }
     },
 
-    groupSize: {
-        code: 'groupSize',
-        tag: '',
-        weight:0,
-        handle: function (current) {
-            var o = _.omit(this, 'handle');
-            var size = current.uniq.length;
-            o.details = [];
-            o.pass = false;
-            o.weight = size == 5 ? 0 : size == 6 ? 1 : size == 4 ? 1 : 3;
-            current.tags.push(o);
-        }
-    },
+    //组合数字去重后的长度，长度5最多，4，6其次，3很少见，其它基本没有
+    //groupSize: {
+    //    code: 'groupSize',
+    //    tag: '',
+    //    weight: 0,
+    //    handle: function (current) {
+    //        var o = _.omit(this, 'handle');
+    //        var size = current.uniq.length;
+    //        o.details = [];
+    //        o.pass = false;
+    //        o.weight = size == 5 ? 0 : size == 6 ? 1 : size == 4 ? 1 : 3;
+    //        current.tags.push(o);
+    //    }
+    //},
 
+    // 组合数字全为奇数或偶数，全奇数或全偶数可能性很低
     allOddOrEven: {
         code: 'allOddOrEven',
-        tag: '',
-        weight:7,
+        tag: '全奇偶',
+        weight: 7,
         handle: function (current) {
             var o = _.omit(this, 'handle');
             var arr = current.uniq;
@@ -77,12 +86,11 @@ var _filtersForGroupByDown = {
         }
     },
 
-
     //overlap
     overlap: {
         code: 'overlap',
         tag: 'cys重叠',
-        weight:3,
+        weight: 3,
         handle: function (current, prev) {
             var o = _.omit(this, 'handle');
             var cys_c = current.cys;
@@ -99,22 +107,23 @@ var _filtersForGroupByDown = {
     cysRadio: {
         code: 'cysRadio',
         tag: 'cys比例',
-        weight:1,
+        weight: 1,
         handle: function (current, prev) {
             var o = _.omit(this, 'handle');
             var cys = current.cys;
             var a = cys[0] + cys[1];
             var b = cys[0] + cys[1] + cys[2];
-            o.details = [(a/b).toFixed(1)*10];
+            o.details = [(a / b).toFixed(1) * 10];
             o.pass = a / b >= 1 / 2;
             current.tags.push(o);
         }
     },
 
+    //组合里重复的数字是否是0， 1， 2， 3， 4
     same: {
         code: 'same',
-        tag: 'same',
-        weight:7,
+        tag: '重号',
+        weight: 7,
         handle: function (current) {
             var o = _.omit(this, 'handle');
             var count = _.countBy(current.original, function (item) {
@@ -135,11 +144,12 @@ var _filtersForGroupByDown = {
             current.tags.push(o);
         }
     },
+
     //Sequential numbering
     sn: {
         code: 'sn',
         tag: '连号',
-        weight:2,
+        weight: 2,
         handle: function (current, prev) {
             var o = _.omit(this, 'handle');
             var result = [];

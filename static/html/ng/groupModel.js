@@ -12,18 +12,21 @@ brick.services.reg('groupModel', function () {
     var data = NGGLOBAL.countRm.r;
     var last = data[data.length - 1];
     var allDown = last.all.slice();
+    console.info('allDown = ', allDown);
 
+    //补丁功能，主要是在unique编组里添加重复的下间隔，比如重0，重1，那就添加一个0或一个1，一个编组里3个0，或3个1，那就添加两个0或两个1
     var _patches = _.groupBy(allDown, function (v) {
         return v;
     });
+    //console.info('_patches = ', _patches);
     var patches = _.filter(_patches, function (v, i) {
-        return i < 5 && v.length > 2
+        //return v.length >= 1;
+        return i < 5 && v.length > 2;
     });
     var patchesThree = _.filter(_patches, function (v, i) {
-        return i < 4 && v.length > 3
+        return i < 4 && v.length > 3;
     });
-
-    console.info(patchesThree);
+    //console.info(patchesThree);
 
     patchesThree = patchesThree.map(function(v, i){
         var z = v[0];
@@ -40,7 +43,7 @@ brick.services.reg('groupModel', function () {
         return _.isArray(v) ? v : [v];
     });
 
-    console.info(JSON.stringify(patches));
+    console.info('重复补丁=', JSON.stringify(patches));
 
     return {
         patches:patches,
@@ -104,13 +107,15 @@ brick.services.reg('groupModel', function () {
             });
         },
         select: function(prop, val, flag, pattern){
+            if(flag == '^') val = '^' + val;
+            if(flag == '$') val = val + '$';
             var reg = new RegExp(val);
             var b = flag != '!';
             var that = this;
             var list = this.list;
             list.forEach(function(item){
                 var s = that.find(item, prop);
-                console.log(reg, s);
+               //console.log(reg, s);
                 if(!pattern){
                     if(reg.test(s) === b){
                         item.selected = true;
@@ -138,12 +143,15 @@ brick.services.reg('groupModel', function () {
         },
         combine: function () {
             var groupSize = combModel.groupSize();
-            var args = combModel.count();
+            var args = combModel.count();  console.info('组合条件参数 = ', args);
             var list = [];
+            if(!args){
+                return alert('组合参数有错误！请检查！');
+            }
             args.forEach(function (v) {
                 var result = utils.combine(v);
                 list.push(result);
-                console.info(JSON.stringify(result));
+                //console.info(JSON.stringify(result));
             });
             list = _.flatten(list, true);
 
@@ -161,7 +169,14 @@ brick.services.reg('groupModel', function () {
                 return JSON.stringify(a)
             });
 
+            //console.log('base list is = ', list);
+            //组合模式过滤
+            list = combModel.filter(list);
+
+            //填充重复补丁
             list = this.patch(list);
+
+            //添加筛选标签及评级权重
             list = ballsModel.filter(list);
 
             this.list = list;
