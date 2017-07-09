@@ -42,6 +42,15 @@ brick.services.reg('combModel', function () {
                 return {n: v.n, selected: !v.selected};
             });
         },
+        _fillByCys: function(){
+            var prevDown = downMarginRef.slice(downMarginRef.length - 1);
+            var arr = utils.countCys(_.uniq(prevDown[0]), uniqueDown);
+            var cy = [].concat(arr[0]).concat(arr[1]);
+            var numbers = uniqueDown.map(function (v, i) {
+                return {n: v, selected: _.contains(cy, v)};
+            });
+            return numbers;
+        },
         _size: function () {
             var c = {};
             allDown.forEach(function (v, i) {
@@ -53,13 +62,18 @@ brick.services.reg('combModel', function () {
             });
             this.numbers[0] = down;
             this.numbers[1] = this._rev(down);
-            var a = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+            var a = [2, 3, 4, 5, 6, 7, 8, 9];
             var item;
             while (item = a.shift()) {
                 this.numbers[item] = uniqueDown.map(function (v, i) {
                     return {n: v, selected: false};
                 });
             }
+
+            //var cy = this._fillByCys();
+            //this.numbers[10] = cy;
+            //this.numbers[11] = this._rev(cy);
         },
         init: function () {
             this._size();
@@ -154,8 +168,8 @@ brick.services.reg('combModel', function () {
             var combForGroupFilter = this.combForGroupFilter;
             return list.filter(function(arr){
                 return combForGroupFilter.every(function(item){
-                    var r = _.intersection(arr, item.numbers);
-                    return _.contains(item.use, r.length);
+                    var r = _.intersection(arr, item.numbers); //计算编组与组合条件交集长度
+                    return _.contains(item.use, r.length);     //交集长度应该在使用范围内
                 });
             });
         }

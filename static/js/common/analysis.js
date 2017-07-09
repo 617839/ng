@@ -69,7 +69,7 @@ var _filtersForGroupByDown = {
     allOddOrEven: {
         code: 'allOddOrEven',
         tag: '全奇偶',
-        weight: 7,
+        weight: 10,
         handle: function (current) {
             var o = _.omit(this, 'handle');
             var arr = current.uniq;
@@ -103,17 +103,35 @@ var _filtersForGroupByDown = {
         }
     },
 
+    //编组最后一个数字是否与上一期编组最后一个数字相同 last same with prev last
+    cw: {
+        code: 'cw',
+        tag: '重尾',
+        weight: 40,
+        handle: function (current, prev) {
+            var o = _.omit(this, 'handle');
+            var cUniq = current.uniq;
+            var cLast = cUniq[cUniq.length - 1];
+            var pUniq = prev.uniq;
+            var pLast = pUniq[pUniq.length - 1];
+            o.pass = cLast != pLast;
+            o.details = o.pass ? [' '] : [cLast];
+            current.tags.push(o);
+        }
+    },
+
     //重延比例 >= 1/2
     cysRadio: {
         code: 'cysRadio',
         tag: 'cys比例',
-        weight: 1,
+        weight: 40,
         handle: function (current, prev) {
             var o = _.omit(this, 'handle');
             var cys = current.cys;
             var a = cys[0] + cys[1];
             var b = cys[0] + cys[1] + cys[2];
-            o.details = [(a / b).toFixed(1) * 10];
+            o.details = [(a / b).toFixed(1), a + '/' + b];
+           // o.details = [a + '/' + b];
             o.pass = a / b >= 1 / 2;
             current.tags.push(o);
         }
@@ -123,7 +141,7 @@ var _filtersForGroupByDown = {
     same: {
         code: 'same',
         tag: '重号',
-        weight: 7,
+        weight: 5,
         handle: function (current) {
             var o = _.omit(this, 'handle');
             var count = _.countBy(current.original, function (item) {
@@ -149,7 +167,7 @@ var _filtersForGroupByDown = {
     sn: {
         code: 'sn',
         tag: '连号',
-        weight: 2,
+        weight: 5,
         handle: function (current, prev) {
             var o = _.omit(this, 'handle');
             var result = [];
@@ -160,7 +178,6 @@ var _filtersForGroupByDown = {
             var index;
             var comp;
             for (var i = 0, length = uniq.length - 1; i < length;) {
-
                 comp = [];
                 index = 0;
                 clone = uniq.slice(i);
@@ -179,10 +196,10 @@ var _filtersForGroupByDown = {
                 } else {
                     i += 1;
                 }
-
             }
 
-            o.details = _.flatten(result);
+            result = _.flatten(result);
+            o.details = result.length ? result : ['-'];
             o.pass = !!result.length;
             current.tags.push(o);
         }

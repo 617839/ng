@@ -71,7 +71,7 @@
         .tags div{
             width:auto;
             min-width:41px;
-            margin-right:0;
+            #margin-right:0;
         }
         .tags em{
             /*width:6em;*/
@@ -79,12 +79,14 @@
             /*text-align: left;*/
         }
 
+        .tags [tag=first],.tags [tag=second]{
+            margin-right:0;
+        }
+
         .tags [tag=cysRadio]{
-            margin-left:41px;
         }
         .tags [tag=same]{
-            margin-left:41px;
-            width:164px;
+            width:124px;
         }
         .tags [tag=overlap]{
             margin-left:41px;
@@ -92,7 +94,7 @@
         }
 
         .tags [tag=allOddOrEven]{
-
+            display: none;
         }
         .tags [tag=overlap]{
             display: none;
@@ -128,7 +130,15 @@
 
         list = tagGroupByDown(list);
 
-        console.log(list);
+        var fn = function(list){
+            list = list.map(function(item){
+                return item.uniq.join('-');
+            });
+            list = _.countBy(list);
+            //console.log(list);
+        };
+
+       console.log(list);
 
         function render (data){
 
@@ -161,7 +171,7 @@
             });
 
             var $cys = li.append('div').classed('cys', true).classed('highlight', function(d){
-                console.info(d);
+                //console.info(d);
                 return d.overlap;
             });
             var cys = $cys.selectAll('em').data(function(d){
@@ -183,7 +193,7 @@
                 });
                 x = x ? x : '';
                 l = noPass.length ? noPass.length : '';
-                return l + ' ' + x;
+                return l + ' ' + (x > 30 ? 'X' : x);
             });
 
             //tags

@@ -141,6 +141,32 @@ brick.services.reg('groupModel', function () {
             this.sort();
             brick.broadcast('groupModel.change', this.list);
         },
+        filter: function(list){
+            var lll = list.length;
+            //参照以往编组数据去重
+            list = (function(list){
+                var arr = groupRefListModel(downMarginRef);
+                arr = arr.map(function(item){
+                    return item.uniq.join('-');
+                });
+
+                return list.filter(function(v){
+                    v = _.uniq(v);
+                    if(_.contains(arr, v.join('-'))){
+                        return false;
+                    }else{
+                        //console.info(v.join(' '));
+                        return true;
+                    }
+                    return !_.contains(arr, v.join('-'));
+                });
+
+            })(list);
+
+            console.info('通过参照以往编组数据去重，减少了 = ', lll - list.length);
+
+            return filterForGroupByDown(list);
+        },
         combine: function () {
             var groupSize = combModel.groupSize();
             var args = combModel.count();  console.info('组合条件参数 = ', args);
@@ -177,7 +203,7 @@ brick.services.reg('groupModel', function () {
             list = this.patch(list);
 
             //添加筛选标签及评级权重
-            list = ballsModel.filter(list);
+            list = this.filter(list);
 
             this.list = list;
             brick.broadcast('groupModel.change', list);

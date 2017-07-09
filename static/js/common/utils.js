@@ -7,11 +7,52 @@ brick.services.reg('utils', function () {
 
     var exports = {};
 
-    /////////////////////////////////////////////////////////////////
+    /**
+     * 计算重延伸
+     * @param referArr  Array
+     * @param countArr  Array
+     * @returns {*[]}   Array
+     * example:
+     * var r = countCys([0,2],[0,1,2,3,5,6]);
+     * JSON.stringify(r) == "[[0,2],[1,3],[5,6]]";
+     */
+    function countCys(referArr, countArr) {  console.log('yyy', referArr, countArr);
+        var c = [];  //重
+        var y = [];  //延
+        var s = [];  //伸
+        var result = [c, y, s];
+        var v, v2;
+
+        outerloop:
+            for (var i in countArr) {
+                v = countArr[i];
+                for (var j in referArr) {
+                    v2 = referArr[j];
+                    if (v == v2) {
+                        c.push(v);
+                        continue outerloop;
+                    }
+                }
+
+                for (var k in referArr) {
+                    v2 = referArr[k];
+                    if (Math.abs(v - v2) == 1) {
+                        y.push(v);
+                        continue outerloop;
+                    }
+                }
+
+                s.push(v);
+            }
+
+
+        console.info('zzz', result);
+
+        return result;
+    }
 
     /*
      * 对数字进行编组
-     *
      * example:
      * var r = group([1,2,3,4],3);
      * JSON.stringify(r) == "[[1,2,3],[1,2,4],[1,3,4],[2,3,4]]";
@@ -123,12 +164,15 @@ brick.services.reg('utils', function () {
         return (_combine.apply(null, arr));
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /////////////////////////////////////////////////////////////////////////
+    exports.countCys = countCys;
 
     exports.group = group;
 
     exports._combine = combine;
+
+
 
     exports.clone = function (o) {
         try {

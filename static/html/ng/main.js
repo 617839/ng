@@ -56,7 +56,11 @@ brick.controllers.reg('combCtrl', function (scope) {
     });
 
     scope.make = function (e) {
-        groupModel.combine();
+        try{
+            groupModel.combine();
+        }catch(e){
+            console.error(e);
+        }
     };
 
     scope.cache = function(e){

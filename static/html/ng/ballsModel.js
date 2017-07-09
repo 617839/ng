@@ -4,90 +4,29 @@
 
 brick.services.reg('ballsModel', function () {
 
-
     var exports = {};
 
-    //filter for group by down
-//标准: 0开头， 第二位 in [1,2,3,4], same in [0,1,2,3],  length >= 4, 非全奇或全欧，重延比例 >= 3/5,  重延伸分布overlap != 1, 两位数比例 < 2/5
-//original + unique & sort + 重延伸分布 + length + same + 全奇或全偶 + 两位数比例 + 横向重延比例 + 与标准比对结果
-
-    function filterForGroupByDown(arr) {
-
-        var prevDown = downMarginRef.slice(downMarginRef.length - 3);
-
-        var result = [];
-
-        arr.forEach(function (currentDown) {
-
-            prevDown.push(currentDown);
-            var list = groupRefListModel(prevDown);
-
-            tagGroupByDown(list);
-
-            prevDown.pop();
-
-            var model = list.pop();
-            var x = 0;
-
-            var _noPass = _.filter(model.tags, function (v) {
-                if (!v.pass) x += v.weight;
-                return !v.pass;
-            });
-
-            model.noPass = _noPass;
-            model.x = x;
-
-            result.push(model);
-
-        });
-
-        return result;
-
-    }
-
-//
-    function tagGroupByDown(list) {
-
-        list.reduce(function (prev, current, index, list) {
-
-            current.tags = [];
-
-            _.forEach(_filtersForGroupByDown, function (filter) {
-
-                filter.handle(current, prev);
-
-            });
-
-            return current;
-        });
-
-        return list;
-
-    }
-
-
-///////////////////////////////////////////////////////
-
     /**
-     *
-     * @type {filterForGroupByDown}
+     * 彩票类型 33选6 15选5
+     * @type {number}
      */
-    exports.filter = filterForGroupByDown;
+    exports.type = 33;
 
     /**
-     *
+     * 获取号码列表
      * @returns {*|exports.list}
      */
     exports.get = function () {
         return this.list;
-        //this.list.map(function(item){
-        //    var red = item.redBall.slice();
-        //    var blue = red.pop();
-        //    blue = blue.replace(/^\:/img, '');
-        //    return {red:red,blue:blue};
-        //});
     };
 
+    /**
+     *
+     */
+    exports.filter = function(){
+
+
+    };
 
     /**
      * 根据编组模式列表生成彩票号码列表
@@ -95,9 +34,7 @@ brick.services.reg('ballsModel', function () {
      * @returns {Array}
      */
     exports.combine = function (groupList) {
-
         var numList = [];
-
         _.forEach(groupList, function (v, i, list) {
             var q;
             try {
@@ -119,15 +56,14 @@ brick.services.reg('ballsModel', function () {
             });
         });
 
-        this.list = this.addBlueBallForRedBall(numList);
+        this.list = this.addBlueBallForRedBall(numList, false);
         return this.list;
-
     };
 
     /**
      * 为每注号码添加篮球号码
      * @param list 没有添加篮球之前的红球号码列表
-     * @param isUseAllBlueBalls 是否为每个红球号码添加所有的篮球，红球号码会重复翻倍，默认随机添加一个篮球
+     * @param isUseAllBlueBalls Bool 是否为每组红球号码添加所有的篮球，红球号码会重复翻倍，默认为每组红球按序添加一个篮球
      */
     exports.addBlueBallForRedBall = function (list, isUseAllBlueBalls) {
         var result = [];
@@ -153,11 +89,7 @@ brick.services.reg('ballsModel', function () {
         }
     };
 
-    /**
-     * 彩票类型 33选6 15选5
-     * @type {number}
-     */
-    exports.type = 33;
+
     /**
      * 获取所有投注的号码球,默认每个号码球都可用。
      * @param type （33选6、15选5等等，默认33）
